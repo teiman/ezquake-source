@@ -646,7 +646,7 @@ void MOpt_CfgSaveAllOn(void) {
 	Cvar_SetValue(&cfg_save_userinfo, 2);
 }
 
-const char* MOpt_legacywrite_enum[] = { "off", "non-qw dir frontend.cfg", "also config.cfg", "non-qw config.cfg" };
+const char* MOpt_legacywrite_enum[] = { "off", "non-qw dir frontend.cfg", "also config.tk.cfg", "non-qw config.tk.cfg" };
 const char* MOpt_userinfo_enum[] = { "off", "all but player", "all" };
 
 void MOpt_LoadCfg(void) {

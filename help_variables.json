@@ -864,7 +864,7 @@
       "type": "enum",
       "values": [
         {
-          "description": "Do not execute config.cfg and frontend.cfg in gamedir ever.",
+          "description": "Do not execute config.tk.cfg and frontend.cfg in gamedir ever.",
           "name": "0"
         },
         {

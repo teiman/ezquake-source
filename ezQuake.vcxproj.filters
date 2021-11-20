@@ -93,6 +93,9 @@
     <Filter Include="Source Files\Renderer\Vulkan\Shaders\SPIR-V">
       <UniqueIdentifier>{cd33a0e2-d403-4b98-9bf6-152511821ca0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Docs">
+      <UniqueIdentifier>{7659004d-8cf1-4849-9100-092eb1a2c2d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cl_cam.c">
@@ -1963,5 +1966,10 @@
     <Image Include="ezquake.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Docs\notes.txt">
+      <Filter>Source Files\Docs</Filter>
+    </Text>
   </ItemGroup>
 </Project>

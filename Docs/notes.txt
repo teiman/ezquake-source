@@ -1,0 +1,26 @@
+
+
+Adding a command to the buffere to be executed 
+			Cbuf_AddText ("exec frontend.cfg\n");
+
+Changing the value 
+			Cvar_SetValue(&cfg_save_aliases, 1);
+
+Play a sound
+			S_LocalSound("misc/basekey.wav");
+
+Drawing stuff
+	UI_DrawBox(x + (w-INPUTBOXWIDTH) / 2, y + (h-INPUTBOXHEIGHT) / 2, INPUTBOXWIDTH, INPUTBOXHEIGHT);
+	UI_Print_Center(x, y + h/2 - 8, w, "Enter the config file name", false);
+	CEditBox_Draw(&filenameeb, x + (w-INPUTBOXWIDTH)/2 + 16, y + h/2 + 8, true);
+
+Defining a new cvar
+	cvar_t cl_chasecam = {"cl_chasecam", "1"};		// "through the eyes" view
+
+
+
+
+
+
+
+

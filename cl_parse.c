@@ -1531,23 +1531,23 @@ void CL_ParseServerData (void)
 
 	if (cfg_legacy_exec.value && (cflag || cfg_legacy_exec.value >= 2)) 
 	{
-		snprintf (fn, sizeof(fn), "%s/%s", cls.gamedir, "config.cfg");
+		snprintf (fn, sizeof(fn), "%s/%s", cls.gamedir, "config.tk.cfg");
 		Cbuf_AddText ("cl_warncmd 0\n");
 		if ((f = fopen(fn, "r")) != NULL) 
 		{
 			fclose(f);
 			if (!strcmp(cls.gamedirfile, com_gamedirfile))
-				Cbuf_AddText ("exec config.cfg\n");
+				Cbuf_AddText ("exec config.tk.cfg\n");
 			else
-				Cbuf_AddText (va("exec ../%s/config.cfg\n", cls.gamedirfile));
+				Cbuf_AddText (va("exec ../%s/config.tk.cfg\n", cls.gamedirfile));
 		} 
 		else if (cfg_legacy_exec.value == 3 && strcmp(cls.gamedir, "qw"))
 		{
-			snprintf (fn, sizeof(fn), "qw/%s", "config.cfg");
+			snprintf (fn, sizeof(fn), "qw/%s", "config.tk.cfg");
 			if ((f = fopen(fn, "r")) != NULL) 
 			{
 				fclose(f);
-				Cbuf_AddText ("exec config.cfg\n");
+				Cbuf_AddText ("exec config.tk.cfg\n");
 			}
 		}
 		snprintf (fn, sizeof(fn), "%s/%s", cls.gamedir, "frontend.cfg");
