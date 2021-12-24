@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_R_BUFFERS_HEADER
-#define EZQUAKE_R_BUFFERS_HEADER
+#ifndef TKQUAKE_R_BUFFERS_HEADER
+#define TKQUAKE_R_BUFFERS_HEADER
 
 typedef enum {
 	r_buffer_none,
@@ -89,4 +89,4 @@ extern api_buffers_t buffers;
 
 void R_CreateInstanceVBO(void);
 
-#endif // EZQUAKE_R_BUFFERS_HEADER
+#endif // TKQUAKE_R_BUFFERS_HEADER

@@ -96,6 +96,9 @@
     <Filter Include="Source Files\Docs">
       <UniqueIdentifier>{7659004d-8cf1-4849-9100-092eb1a2c2d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Headers">
+      <UniqueIdentifier>{927b8234-5f4f-463e-95d7-4404095388f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cl_cam.c">
@@ -164,7 +167,7 @@
     <ClCompile Include="cvar.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ezquake-icon.c">
+    <ClCompile Include="tkquake-icon.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="fchecks.c">
@@ -1267,198 +1270,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="adivtab.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="anorm_dots.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="anorms.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="block8.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="block16.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bspfile.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cl_view.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="client.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cmd.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cmodel.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="common.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="common_draw.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config_manager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="console.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="crc.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cvar.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cvar_groups.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="draw.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="embed_tcl.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="fchecks.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="fmod.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="fs.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="hash.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ignore.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="image.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="irc.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="irc_filter.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="keys.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="localtime.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="logging.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mathlib.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="modelgen.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="movie.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="movie_avi.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mvd_utils.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mvd_utils_common.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="net.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="parser.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pmove.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="protocol.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="q_shared.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="qsound.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="qtv.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="quakedef.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="qwsvdef.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rulesets.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="screen.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sha1.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="spritegn.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stats_grid.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sys.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="teamplay.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="textencoding.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tp_msgs.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tp_triggers.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tr_types.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="utils.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="version.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vid.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="wad.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="winamp.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="zone.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="in_raw.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="pr_comp.h">
       <Filter>Source Files\Server</Filter>
     </ClInclude>
@@ -1482,9 +1293,6 @@
     </ClInclude>
     <ClInclude Include="sv_world.h">
       <Filter>Source Files\Server</Filter>
-    </ClInclude>
-    <ClInclude Include="fonts.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="hud_common.h">
       <Filter>Source Files\HUD</Filter>
@@ -1576,17 +1384,8 @@
     <ClInclude Include="vx_tracker.h">
       <Filter>Source Files\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="macro_definitions.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="macro_ids.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cmdline_params.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cmdline_params_ids.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="vk_local.h">
       <Filter>Source Files\Renderer\Vulkan</Filter>
@@ -1768,8 +1567,212 @@
     <ClInclude Include="help_internal.h">
       <Filter>Source Files\Documentation</Filter>
     </ClInclude>
+    <ClInclude Include="adivtab.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="anorm_dots.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="anorms.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="block8.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="block16.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="bspfile.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="central.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="cl_view.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="client.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="cmd.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="cmdline_params.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="cmdline_params_ids.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="cmodel.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="common_draw.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="console.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="config_manager.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="crc.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="cvar.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="cvar_groups.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="draw.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="embed_tcl.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="fchecks.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="localtime.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="keys.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="irc_filter.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="irc.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="in_raw.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ignore.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="hash.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="fs.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="fonts.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="logging.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="macro_definitions.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="mathlib.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="modelgen.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="movie.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="movie_avi.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="mvd_utils.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="mvd_utils_common.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="net.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="parser.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="pmove.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="protocol.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="q_shared.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="qsound.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="qtv.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="quakedef.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="qwsvdef.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="rulesets.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="screen.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="sha1.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="spritegn.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="stats_grid.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="sys.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="teamplay.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="textencoding.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="tp_msgs.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="tp_triggers.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="tr_types.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="vid.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="wad.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="winamp.h">
+      <Filter>Source Files\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="zone.h">
+      <Filter>Source Files\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

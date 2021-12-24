@@ -334,7 +334,7 @@ void Con_CheckResize (void) {
 	int i, j, width, oldwidth, oldtotallines, numlines, numchars;
 	wchar *tempbuf;
 
-	width = (vid.width >> 3) - 2;
+	width = (vid.width >> 3) - 2;	
 
 	if (width == con_linewidth)
 		return;
@@ -351,7 +351,7 @@ void Con_CheckResize (void) {
 		}
 		else
 #endif
-			width = 38;
+		width = 38;
 
 		con_linewidth = width;
 		con_totallines = con.maxsize / con_linewidth;
@@ -848,7 +848,7 @@ void SCR_DrawNotify(int posX, int posY, float scale, int notifyTime, int notifyL
 
 	notifyCols = bound(10, notifyCols, con_linewidth);
 
-	v = 0;
+	v = 8;//Tei Ofset text, give some margin
 	if (notifyLines) {
 		int first_line = Con_FirstNotifyLine(notifyLines, timeout);
 
@@ -903,7 +903,8 @@ void Con_DrawConsole (int lines) {
 		return;
 
 	// draw the background
-	Draw_ConsoleBackground (lines);
+	// Tei: we don't want a background
+	//Draw_ConsoleBackground (lines);
 
 	// draw the text
 	con_vislines = lines;

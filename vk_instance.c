@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018 ezQuake team
+Copyright (C) 2018 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -86,7 +86,7 @@ qbool VK_CreateInstance(SDL_Window* window, VkInstance* instance)
 	const char** extensionStrings;
 
 	appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-	appInfo.pApplicationName = "ezQuake";
+	appInfo.pApplicationName = "tkQuake";
 	appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
 	appInfo.pEngineName = "?";
 	appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);

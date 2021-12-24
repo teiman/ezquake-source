@@ -508,7 +508,7 @@ inrange:
 			header.length = sv.multicast.cursize - 2;
 			// header.type_id = ...; < up to the mod to fill this part in
 
-			// write to dem_multiple(0), which will be skipped by all major clients (ezQuake, FTE, fod)
+			// write to dem_multiple(0), which will be skipped by all major clients (tkQuake, FTE, fod)
 			if (MVDWrite_HiddenBlockBegin(sv.multicast.cursize + sizeof(header.length))) {
 				MVD_SZ_Write(&header.length, sizeof(header.length));
 				MVD_SZ_Write(sv.multicast.data, sv.multicast.cursize);
@@ -731,12 +731,13 @@ void SV_WriteClientdataToMessage (client_t *client, sizebuf_t *msg)
 	}
 
 	// send a damage message if the player got hit this frame
-	if (ent->v.dmg_take || ent->v.dmg_save)
-	{
+	if (ent->v.dmg_take || ent->v.dmg_save){
 		other = PROG_TO_EDICT(ent->v.dmg_inflictor);
 		MSG_WriteByte (msg, svc_damage);
 		MSG_WriteByte (msg, ent->v.dmg_save);
 		MSG_WriteByte (msg, ent->v.dmg_take);
+		
+		//Tei comment: send real origin?
 		for (i=0 ; i<3 ; i++)
 			MSG_WriteCoord (msg, other->v.origin[i] + 0.5*(other->v.mins[i] + other->v.maxs[i]));
 
@@ -754,8 +755,7 @@ void SV_WriteClientdataToMessage (client_t *client, sizebuf_t *msg)
 	}
 
 	// a fixangle might get lost in a dropped packet.  Oh well.
-	if (ent->v.fixangle)
-	{
+	if (ent->v.fixangle){
 		ent->v.fixangle = 0;
 		demo.fixangle[clnum] = true;
 
@@ -787,8 +787,7 @@ void SV_WriteClientdataToMessage (client_t *client, sizebuf_t *msg)
 		for (i=0 ; i < 3 ; i++)
 			MSG_WriteAngle (msg, ent->v.angles[i] );
 
-		if (sv.mvdrecording)
-		{
+		if (sv.mvdrecording){
 			MSG_WriteByte (&demo.datagram, svc_setangle);
 			MSG_WriteByte (&demo.datagram, clnum);
 			for (i=0 ; i < 3 ; i++)
@@ -813,10 +812,9 @@ void SV_WriteClientdataToMessage (client_t *client, sizebuf_t *msg)
 	}
 	else
 #endif
-	if ((SERVER_EXTENSIONS & Z_EXT_SERVERTIME) && (client->extensions & Z_EXT_SERVERTIME))
-	{	//the zquake ext causes the server to send out peridoic timings, allowing for moderatly accurate game time.
-		if (realtime - client->lastservertimeupdate > 5)
-		{
+	if ((SERVER_EXTENSIONS & Z_EXT_SERVERTIME) && (client->extensions & Z_EXT_SERVERTIME)){	
+		//the zquake ext causes the server to send out peridoic timings, allowing for moderatly accurate game time.
+		if (realtime - client->lastservertimeupdate > 5){
 			MSG_WriteByte(msg, svc_updatestatlong);
 			MSG_WriteByte(msg, STAT_TIME);
 			MSG_WriteLong(msg, (int) (sv.time * 1000));
@@ -849,8 +847,7 @@ void SV_UpdateClientStats (client_t *client)
 		ent = svs.clients[client->spec_track - 1].edict;
 
 	// in case of trackent we have to reflect his stats like for spectator.
-	if (fofs_trackent)
-	{
+	if (fofs_trackent){
 		int trackent = ((eval_t *)((byte *)&(client->edict)->v + fofs_trackent))->_int;
 		if (trackent < 1 || trackent > MAX_CLIENTS || svs.clients[trackent - 1].state != cs_spawned)
 			trackent = 0;
@@ -867,28 +864,29 @@ void SV_UpdateClientStats (client_t *client)
 	stats[STAT_NAILS] = ent->v.ammo_nails;
 	stats[STAT_ROCKETS] = ent->v.ammo_rockets;
 	stats[STAT_CELLS] = ent->v.ammo_cells;
-	if (!client->spectator || client->spec_track > 0)
+
+	if (!client->spectator || client->spec_track > 0) {
 		stats[STAT_ACTIVEWEAPON] = ent->v.weapon;
+	}
+
 	// stuff the sigil bits into the high bits of items for sbar
 	stats[STAT_ITEMS] = (int) ent->v.items | ((int) PR_GLOBAL(serverflags) << 28);
+
 	if (fofs_items2)	// ZQ_ITEMS2 extension
 		stats[STAT_ITEMS] |= (int)EdictFieldFloat(ent, fofs_items2) << 23;
 
-	if (ent->v.health > 0 || client->spectator) // viewheight for PF_DEAD & PF_GIB is hardwired
+	if (ent->v.health > 0 || client->spectator) { // viewheight for PF_DEAD & PF_GIB is hardwired
 		stats[STAT_VIEWHEIGHT] = ent->v.view_ofs[2];
+	}
 
 	for (i=0 ; i<MAX_CL_STATS ; i++)
-		if (stats[i] != client->stats[i])
-		{
+		if (stats[i] != client->stats[i]) {
 			client->stats[i] = stats[i];
-			if (stats[i] >=0 && stats[i] <= 255)
-			{
+			if (stats[i] >=0 && stats[i] <= 255)	{
 				ClientReliableWrite_Begin(client, svc_updatestat, 3);
 				ClientReliableWrite_Byte(client, i);
 				ClientReliableWrite_Byte(client, stats[i]);
-			}
-			else
-			{
+			} else {
 				ClientReliableWrite_Begin(client, svc_updatestatlong, 6);
 				ClientReliableWrite_Byte(client, i);
 				ClientReliableWrite_Long(client, stats[i]);

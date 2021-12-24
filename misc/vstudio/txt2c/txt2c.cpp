@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2016-2020 ezQuake team (https://github.com/ezquake/).
+Copyright (C) 2016-2020 tkQuake team (https://github.com/tkquake/).
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

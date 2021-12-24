@@ -112,6 +112,7 @@ typedef struct
 	float	weapon;
 	string_t	weaponmodel;
 	float	weaponframe;
+	//float	weaponskin;//Tei
 	float	currentammo;
 	float	ammo_shells;
 	float	ammo_nails;
@@ -160,5 +161,6 @@ typedef struct
 } entvars_t;
 
 #define PROGHEADER_CRC 54730
+#define TKQUAKE_CRC 62902 
 
 #endif /* !__PROGDEFS_H__ */

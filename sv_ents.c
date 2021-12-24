@@ -441,14 +441,14 @@ static void SV_MVD_WritePlayersToClient ( void )
 #endif
 		dcl->angles[2] = 0; // no roll angle
 
-		if (ent->v.health <= 0)
-		{	// don't show the corpse looking around...
+		if (ent->v.health <= 0) {	// don't show the corpse looking around...
 			dcl->angles[0] = 0;
 			dcl->angles[1] = ent->v.angles[1];
 			dcl->angles[2] = 0;
 		}
 
 		dcl->weaponframe = ent->v.weaponframe;
+		//dcl->weaponskin  = ent->v.weaponskin;//Tei
 		dcl->frame       = ent->v.frame;
 		dcl->skinnum     = ent->v.skin;
 		dcl->model       = ent->v.modelindex;
@@ -601,15 +601,16 @@ static void SV_WritePlayersToClient (client_t *client, client_frame_t *frame, by
 		if (ent->v.mins[2] != -24)
 			pflags |= PF_GIB;
 
-		if (cl->spectator)
-		{	// only sent origin and velocity to spectators
+		if (cl->spectator) {	// only sent origin and velocity to spectators
 			pflags &= PF_VELOCITY1 | PF_VELOCITY2 | PF_VELOCITY3;
-		}
-		else if (ent == self_ent)
-		{	// don't send a lot of data on personal entity
+
+		} else if (ent == self_ent)	{	
+			// don't send a lot of data on personal entity
 			pflags &= ~(PF_MSEC|PF_COMMAND);
 			if (ent->v.weaponframe)
 				pflags |= PF_WEAPONFRAME;
+			//if (ent->v.weaponskin)
+			//	pflags |= PF_WEAPONSKIN;//Tei
 		}
 
 		// Z_EXT_PM_TYPE protocol extension
@@ -659,6 +660,9 @@ static void SV_WritePlayersToClient (client_t *client, client_frame_t *frame, by
 
 		if (client->spec_track && client->spec_track - 1 == j && ent->v.weaponframe)
 			pflags |= PF_WEAPONFRAME;
+
+		//if (client->spec_track && client->spec_track - 1 == j && ent->v.weaponskin)
+		//	pflags |= PF_WEAPONSKIN;//Tei
 
 		MSG_WriteByte (msg, svc_playerinfo);
 		MSG_WriteByte (msg, j);
@@ -730,6 +734,9 @@ static void SV_WritePlayersToClient (client_t *client, client_frame_t *frame, by
 
 		if (pflags & PF_WEAPONFRAME)
 			MSG_WriteByte (msg, ent->v.weaponframe);
+
+		//if (pflags & PF_WEAPONSKIN)
+		//	MSG_WriteByte(msg, ent->v.weaponskin);//Tei
 	}
 }
 

@@ -1,6 +1,6 @@
 /*
 Copyright (C) 2001-2002 A Nourai
-Copyright (C) 2015 ezQuake team
+Copyright (C) 2015 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

@@ -1,6 +1,6 @@
 #version 120
 
-#ezquake-definitions
+#tkquake-definitions
 
 uniform vec3 cameraPosition;
 

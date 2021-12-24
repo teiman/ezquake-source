@@ -563,6 +563,8 @@ static void GLC_DrawCachedAliasOutlineFrame(model_t* model, GLenum primitive, in
 	GL_DrawArrays(primitive, firstVert, verts);
 }
 
+
+//Tei: this is the shell effect that cover model 
 void GLC_PowerupShellColor(int layer_no, int effects, float* color)
 {
 	// set color: alpha so we can see colour underneath still

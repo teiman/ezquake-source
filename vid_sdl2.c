@@ -43,7 +43,7 @@ void Sys_ActiveAppChanged (void);
 #include <GL/gl.h>
 #endif
 
-#include "ezquake-icon.c"
+#include "tkquake-icon.c"
 #include "keys.h"
 #include "tr_types.h"
 #include "input.h"
@@ -65,7 +65,7 @@ SDL_GLContext GLC_SDL_CreateContext(SDL_Window* window);
 
 #ifdef __linux__
 // This is hack to ignore keyboard events we receive between FOCUS_GAINED & TAKE_FOCUS
-// Without it the keys you press to switch back to ezQuake will fire, which is probably not desired
+// Without it the keys you press to switch back to tkQuake will fire, which is probably not desired
 // Affects X11 only - might also be needed on FreeBSD/OSX?
 static qbool block_keyboard_input = false;
 #endif
@@ -77,7 +77,7 @@ static cvar_t in_ignore_deadkeys = { "in_ignore_deadkeys", "1", CVAR_SILENT };
 #define APPLE_LALT_HELD_DOWN 2
 #endif
 
-#define	WINDOW_CLASS_NAME	"ezQuake"
+#define	WINDOW_CLASS_NAME	"tkQuake"
 
 #define VID_RENDERER_MIN 0
 #define VID_RENDERER_MAX 1
@@ -101,6 +101,8 @@ static void vid_reload_callback(cvar_t* var, char* string, qbool* cancel);
 static void GrabMouse(qbool grab, qbool raw);
 static void HandleEvents(void);
 static void VID_UpdateConRes(void);
+void vid_FitToScreen(void);
+
 void IN_Restart_f(void);
 
 static SDL_Window       *sdl_window;
@@ -180,20 +182,31 @@ cvar_t r_fullscreen               = {"vid_fullscreen",             "1",       CV
 cvar_t r_displayRefresh           = {"vid_displayfrequency",       "0",       CVAR_LATCH_GFX | CVAR_AUTO };
 cvar_t vid_displayNumber          = {"vid_displaynumber",          "0",       CVAR_LATCH_GFX | CVAR_AUTO };
 cvar_t vid_usedesktopres          = {"vid_usedesktopres",          "1",       CVAR_LATCH_GFX | CVAR_AUTO };
-cvar_t vid_win_borderless         = {"vid_win_borderless",         "0",       CVAR_LATCH_GFX };
-cvar_t vid_width                  = {"vid_width",                  "0",       CVAR_LATCH_GFX | CVAR_AUTO };
-cvar_t vid_height                 = {"vid_height",                 "0",       CVAR_LATCH_GFX | CVAR_AUTO };
-cvar_t vid_win_width              = {"vid_win_width",              "640",     CVAR_LATCH_GFX };
-cvar_t vid_win_height             = {"vid_win_height",             "480",     CVAR_LATCH_GFX };
+cvar_t vid_win_borderless         = {"vid_win_borderless",         "1",       CVAR_LATCH_GFX };//Tei we want borderless. Changed default value to 1
+
+cvar_t vid_width                  = {"vid_width",                  "640",       CVAR_AUTO };//Tei we want borderless. Made it RW.
+cvar_t vid_height                 = {"vid_height",                 "480",       CVAR_AUTO };//Tei we want borderless. Made it RW.
+
+cvar_t vid_win_width = { "vid_win_width",              "640",     CVAR_AUTO };
+cvar_t vid_win_height = { "vid_win_height",             "480",     CVAR_AUTO };
+
 cvar_t vid_hwgammacontrol         = {"vid_hwgammacontrol",         "2",       CVAR_LATCH_GFX };
 cvar_t vid_minimize_on_focus_loss = {"vid_minimize_on_focus_loss", CVAR_DEF1, CVAR_LATCH_GFX };
 // TODO: Move the in_* cvars
 cvar_t in_raw                     = {"in_raw",                     "1",       CVAR_ARCHIVE | CVAR_SILENT, in_raw_callback};
-cvar_t in_grab_windowed_mouse     = {"in_grab_windowed_mouse",     "1",       CVAR_ARCHIVE | CVAR_SILENT, in_grab_windowed_mouse_callback};
+cvar_t in_grab_windowed_mouse     = {"in_grab_windowed_mouse",     "1",       CVAR_ARCHIVE | CVAR_SILENT, in_grab_windowed_mouse_callback};//
 cvar_t vid_grab_keyboard          = {"vid_grab_keyboard",          CVAR_DEF2, CVAR_LATCH_GFX }; /* Needs vid_restart thus vid_.... */
 #ifdef EZ_MULTIPLE_RENDERERS
 cvar_t vid_renderer               = {"vid_renderer",               "0",       CVAR_LATCH_GFX };
 #endif
+
+
+//Tei splitplayers support
+cvar_t vid_splitplayers = { "vid_splitplayers",               "0",       CVAR_SILENT| CVAR_AUTO }; // is splitplayers enabled? 
+cvar_t vid_splitplayer_order = { "vid_splitplayer_order",               "0",       CVAR_SILENT| CVAR_AUTO }; // order of the player? 0,1,2... 
+cvar_t vid_splitplayer_max = { "vid_splitplayer_max",               "0",       CVAR_SILENT | CVAR_AUTO };// max number of split players?  0, 2, 4.. 
+//Tei /splitplayers support
+
 cvar_t vid_gl_core_profile        = {"vid_gl_core_profile",        "0",       CVAR_LATCH_GFX };
 
 #ifdef X11_GAMMA_WORKAROUND
@@ -210,8 +223,8 @@ cvar_t vid_vsync_lag_tweak        = {"vid_vsync_lag_tweak",        "1.0"        
 cvar_t r_swapInterval             = {"vid_vsync",                  "0",       CVAR_SILENT };
 cvar_t r_win_save_pos             = {"vid_win_save_pos",           "1",       CVAR_SILENT };
 cvar_t r_win_save_size            = {"vid_win_save_size",          "1",       CVAR_SILENT };
-cvar_t vid_xpos                   = {"vid_xpos",                   "3",       CVAR_SILENT };
-cvar_t vid_ypos                   = {"vid_ypos",                   "39",      CVAR_SILENT };
+cvar_t vid_xpos                   = {"vid_xpos",                   "3",       CVAR_SILENT };//Tei windowborderless changes
+cvar_t vid_ypos                   = {"vid_ypos",                   "39",      CVAR_SILENT };//Tei windowborderless changes
 cvar_t vid_win_displayNumber      = {"vid_win_displaynumber",      "0",       CVAR_SILENT };
 cvar_t r_conwidth                 = {"vid_conwidth",               "0",       CVAR_NO_RESET | CVAR_SILENT | CVAR_AUTO, conres_changed_callback };
 cvar_t r_conheight                = {"vid_conheight",              "0",       CVAR_NO_RESET | CVAR_SILENT | CVAR_AUTO, conres_changed_callback };
@@ -1235,8 +1248,8 @@ static int VID_SetWindowIcon(SDL_Window *sdl_window)
 	return 0;
 #else
 	SDL_Surface *icon_surface;
-        icon_surface = SDL_CreateRGBSurfaceFrom((void *)ezquake_icon.pixel_data, ezquake_icon.width, ezquake_icon.height, ezquake_icon.bytes_per_pixel * 8,
-                ezquake_icon.width * ezquake_icon.bytes_per_pixel,
+        icon_surface = SDL_CreateRGBSurfaceFrom((void *)tkquake_icon.pixel_data, tkquake_icon.width, tkquake_icon.height, tkquake_icon.bytes_per_pixel * 8,
+                tkquake_icon.width * tkquake_icon.bytes_per_pixel,
                 0x000000FF,0x0000FF00,0x00FF0000,0xFF000000);
 
 	if (icon_surface) {
@@ -1360,6 +1373,23 @@ static void VID_SetWindowResolution(void)
 	}
 
 	SDL_SetWindowMinimumSize(sdl_window, 320, 240);
+
+	if (r_fullscreen.integer) {
+		
+	} else {
+		
+
+		/*
+		if (!vid_splitplayers.integer) {//BUG: is not loaded when checked 
+			//Tei: For window mode we let SDL know we are cool and we like the fullscreen.
+			// ...but only if is not splitplayer mode, because then we don't actually want to use the fullscreen width
+			// and splitplayers mode would not work with this on
+
+			Com_Printf("SDL set to windowborderless\n");
+			SDL_SetWindowFullscreen(sdl_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		}
+		*/
+	}
 }
 
 static void VID_SDL_Init(void)
@@ -1663,7 +1693,13 @@ static void VID_ParseCmdLine(void)
 {
 	int i, w = 0, h = 0, display = 0;
 
-	if (COM_CheckParm(cmdline_param_client_windowedmode) || COM_CheckParm(cmdline_param_client_startwindowed)) {
+	Com_Printf("[VID_ParseCmdLine] Parsing cmdline parameters\n");
+
+	//Tei: new command -fullscreen for fullscreen
+	if (  COM_CheckParm(cmdline_param_client_fullscreen) ) {
+		Cvar_LatchedSetValue(&r_fullscreen, 1);
+	} else {
+		//Tei: by default windowmode 
 		Cvar_LatchedSetValue(&r_fullscreen, 0);
 	}
 
@@ -1679,8 +1715,8 @@ static void VID_ParseCmdLine(void)
 		Cvar_LatchedSetValue(&vid_usedesktopres, 0);
 	}
 
-	w = ((i = COM_CheckParm(cmdline_param_client_video_width))  && i + 1 < COM_Argc()) ? Q_atoi(COM_Argv(i + 1)) : 0;
-	h = ((i = COM_CheckParm(cmdline_param_client_video_height)) && i + 1 < COM_Argc()) ? Q_atoi(COM_Argv(i + 1)) : 0;
+	w = ( (i = COM_CheckParm(cmdline_param_client_video_width))  && (i + 1 < COM_Argc()) ) ? Q_atoi(COM_Argv(i + 1)) : 0;
+	h = ( (i = COM_CheckParm(cmdline_param_client_video_height)) && (i + 1 < COM_Argc()) ) ? Q_atoi(COM_Argv(i + 1)) : 0;
 
 	display = ((i = COM_CheckParm(cmdline_param_client_video_displaynumber)) && i + 1 < COM_Argc()) ? Q_atoi(COM_Argv(i + 1)) : 0;
 	if (i) {
@@ -1715,6 +1751,34 @@ static void VID_ParseCmdLine(void)
 		Cvar_LatchedSetValue(&vid_renderer, 1);
 	}
 #endif
+
+	
+
+	//Tei: splitplayers support
+	Cvar_Register(&vid_splitplayers);
+	Cvar_Register(&vid_splitplayer_order);
+	Cvar_Register(&vid_splitplayer_max);
+
+	if (COM_CheckParm(cmdline_param_client_splitplayers)) {
+		Com_Printf("SPLITPLAYERS mode activated\n");
+		Cvar_Set(&vid_splitplayers, "1");
+	} else {
+		Com_Printf("SPLITPLAYERS sorry, not mode detected\n");
+	}
+
+	if (COM_CheckParm(cmdline_param_client_splitplayer1d2)) {
+		Com_Printf("SPLITPLAYERS: Player 1 of 2\n");
+		Cvar_Set(&vid_splitplayer_order, "1");
+		Cvar_Set(&vid_splitplayer_max, "2");
+	}
+
+
+	if (COM_CheckParm(cmdline_param_client_splitplayer2d2)) {
+		Com_Printf("SPLITPLAYERS: Player 2 of 2\n");
+		Cvar_Set(&vid_splitplayer_order, "2");
+		Cvar_Set(&vid_splitplayer_max, "2");
+	}
+	//Tei: /splitplayers support
 }
 
 void GFX_Init(void);
@@ -1829,6 +1893,8 @@ static void VID_ModeList_f(void)
 	}
 }
 
+void VID_FitToScreen_f();
+
 void VID_RegisterCommands(void) 
 {
 	if (!host_initialized) {
@@ -1837,6 +1903,8 @@ void VID_RegisterCommands(void)
 		Cmd_AddCommand(CVAR_RELOAD_GFX_COMMAND, VID_Reload_f);
 		Cmd_AddCommand("vid_displaylist", VID_DisplayList_f);
 		Cmd_AddCommand("vid_modelist", VID_ModeList_f);
+		Cmd_AddCommand("vid_fittoscreen", VID_FitToScreen_f);//Tei: just for debugging, but may be usefull for somebody
+		
 		Cmd_AddLegacyCommand("vid_framebuffer_palette", vid_software_palette.name);
 	}
 }
@@ -2021,4 +2089,76 @@ int VID_RenderHeight2D(void)
 		return glConfig.vidHeight;
 	}
 	return glheight;
+}
+
+
+/**
+*
+* Intended to make the window fit the screen in window mode
+* 
+*/
+void VID_FitToScreen_f() {
+	SDL_DisplayMode current;
+
+	//We don't do things this way for fullscreen
+	if (r_fullscreen.integer) {
+		Com_Printf("Fullscreen mode enabled, doing nothing...\n");
+		return;
+	}
+
+	//Read parameters
+	SDL_GetCurrentDisplayMode(VID_DisplayNumber(r_fullscreen.value), &current);		
+	
+	Com_Printf_State(PRINT_ALL, "Resizing window to desktop space\n");
+	
+	int desired_w = current.w;
+	int desired_h = current.h;
+	int desired_xpos = 0;
+
+	//With splitplayers mode, we only use half the screen and shift the screen based 
+	// on the splitplayer_order 
+	if (vid_splitplayers.integer && vid_splitplayer_max.integer == 2) {
+		Com_Printf_State(PRINT_ALL, "Resizing window to half a screen (splitplayer mode)\n");
+
+		desired_w = current.w / 2;
+
+		if (vid_splitplayer_order.integer == 2) {
+			desired_xpos = current.w / 2;
+			
+		}
+
+		Com_Printf("Splitplayers desired_w=%d\n", desired_w);
+	} else {
+		Com_Printf("Splitplayers NOT ENABLED. sp=%d, sp.max=%d\n", vid_splitplayers.integer, vid_splitplayer_max.integer);		
+	}
+
+
+	if (vid_splitplayers.integer) {
+		desired_h = desired_h - 32;
+	}
+
+	/*
+	Com_Printf("vid_splitplayer_order=%d\n", vid_splitplayer_order.integer);
+	Com_Printf("vid_splitplayer_max=%d\n", vid_splitplayer_max.integer);
+
+	Com_Printf("Changing to vid_width=%d\n", desired_w);
+	Com_Printf("Changing to vid_height=%d\n", desired_h);
+	*/
+
+	con_suppress = true;
+	Cvar_SetValue(&vid_xpos, desired_xpos);
+	Cvar_SetValue(&vid_ypos, 0);
+	Cvar_SetValue(&vid_win_width, desired_w);
+	Cvar_SetValue(&vid_win_height, desired_h);	
+	Cvar_SetValue(&vid_width, desired_w);
+	Cvar_SetValue(&vid_height, desired_h);
+	Cbuf_AddText("vid_restart\n");
+	con_suppress = false;	
+
+	//Discord chat:
+	// 
+	//Spoike — 
+	//SDL_SetWindowFullscreen(sdlwindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	//Spoike —
+	//	it tells SDL2 to give you a 'fullscreen_desktop' window instead of a regular window or forced - fullscreen mode.
 }

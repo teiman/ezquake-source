@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_FONTS_HEADER
-#define EZQUAKE_FONTS_HEADER
+#ifndef TKQUAKE_FONTS_HEADER
+#define TKQUAKE_FONTS_HEADER
 
 #ifdef EZ_FREETYPE_SUPPORT
 void FontInitialise(void);

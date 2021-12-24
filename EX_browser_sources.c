@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2011 azazello and ezQuake team
+Copyright (C) 2011 azazello and tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -186,7 +186,7 @@ static void Precache_Source(source_data *s)
 		SYSTEMTIME tm;
 		char tmp_path[MAX_OSPATH] = {0};
 
-		snprintf(&tmp_path[0], sizeof(tmp_path), "%s/ezquake/%s", com_basedir, name);
+		snprintf(&tmp_path[0], sizeof(tmp_path), "%s/tkquake/%s", com_basedir, name);
 		if (GetFileLocalTime(tmp_path, &tm))
 		{
 			Reset_Source(s);
@@ -265,7 +265,7 @@ int SB_Cache_Source(const source_data *s, const struct curl_buf *curl_buf)
 	filename_buf_len = SB_URL_To_Filename_Length(s->address.url);
 	filename = Q_malloc(filename_buf_len);
 	SB_URL_to_FileName(s->address.url, filename, filename_buf_len);
-	if (!FS_FCreateFile(filename, &f, "ezquake/sb/cache", "wb+")) {
+	if (!FS_FCreateFile(filename, &f, "tkquake/sb/cache", "wb+")) {
 		Com_Printf_State(PRINT_FAIL, "SB_Cache_Source() Can't create cache file");
 		Q_free(filename);
 		return 0;
@@ -777,7 +777,7 @@ qbool SB_Sources_Dump(void)
 	FILE *f;
 	int i;
 
-	if (!FS_FCreateFile(SOURCES_LIST_FILENAME, &f, "ezquake", "wt")) {
+	if (!FS_FCreateFile(SOURCES_LIST_FILENAME, &f, "tkquake", "wt")) {
 		return false;
 	}
  
@@ -1058,7 +1058,7 @@ void DumpSource(source_data *s)
 //    f = fopen(buf, "wt");
 //    if (f == NULL)
 //        return;
-    if (!FS_FCreateFile(buf, &f, "ezquake", "wt"))
+    if (!FS_FCreateFile(buf, &f, "tkquake", "wt"))
         return;
 
     for (i=0; i < s->serversn; i++)

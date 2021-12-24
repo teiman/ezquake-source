@@ -91,7 +91,7 @@ cvar_t  scr_scoreboard_login_flagfile  = { "scr_scoreboard_login_flagfile", "fla
 //cvar_t  hud_ranks_separate  = {"scr_ranks_separate",   "1"};
 // <-- mqwcl 0.96 oldhud customisation
 
-mpic_t		*sb_nums[2][11];
+mpic_t		*sb_nums[3][11];
 mpic_t		*sb_colon, *sb_slash;
 mpic_t		*sb_ibar;
 mpic_t		*sb_sbar;
@@ -196,6 +196,7 @@ void Sbar_Changed (void) {
 }
 
 /************************************ INIT ************************************/
+mpic_t* Draw_CacheWadPicShadow(char* name, char* shadow, int code);
 
 void Sbar_Init(void)
 {
@@ -204,6 +205,7 @@ void Sbar_Init(void)
 	for (i = 0; i < 10; i++) {
 		sb_nums[0][i] = Draw_CacheWadPic(va("num_%i", i), WADPIC_NUM_0 + i);
 		sb_nums[1][i] = Draw_CacheWadPic(va("anum_%i", i), WADPIC_ANUM_0 + i);
+		sb_nums[2][i] = Draw_CacheWadPicShadow(va("banum_%i", i), va("anum_%i", i), WADPIC_BANUM_0 + i);
 	}
 
 	sb_nums[0][10] = Draw_CacheWadPic("num_minus", WADPIC_NUM_MINUS);
@@ -1269,6 +1271,8 @@ static void Sbar_DeathmatchOverlay(int start)
 	}
 #endif
 
+	//Con_Printf("hi there!\n");
+
 	if (cls.state == ca_active && !cls.demoplayback) {
 		// request new ping times every two seconds
 		if (cls.realtime - cl.last_ping_request >= 2) {
@@ -1498,16 +1502,13 @@ static void Sbar_DeathmatchOverlay(int start)
 		if (p == 0) {
 			// 0 - white
 			color.c = RGBA_TO_COLOR(0xFF, 0xFF, 0xFF, 0xFF);
-		}
-		else if (p < 3) {
+		} else if (p < 3) {
 			// 1-2 - yellow
 			color.c = RGBA_TO_COLOR(0xCC, 0xDD, 0xDD, 0xFF);
-		}
-		else if (p < 6) {
+		} else if (p < 6) {
 			// 3-5 orange
 			color.c = RGBA_TO_COLOR(0xFF, 0x55, 0x00, 0xFF);
-		}
-		else {	// 6+ - red
+		} else {	// 6+ - red
 			color.c = RGBA_TO_COLOR(0xFF, 0x00, 0x00, 0xFF);
 		}
 		Draw_SColoredStringAligned(x, y, num, &color, 1, scale, alpha, proportional, text_align_right, x + 3 * FONT_WIDTH);
@@ -2187,10 +2188,17 @@ void Sbar_Draw(void) {
 	// main screen deathmatch rankings
 	// if we're dead show team scores in team games
 	if (cl.stats[STAT_HEALTH] <= 0 && !cl.spectator) {
+
+		//Tei: we don't want to show the scores when the player is dead, why would we want that in coop?
+		// ..and showing the stats ruin the feel of the death screen.
+		// the player can still check the scoreboard any time he want. 
+
+		/*
 		if (cl.teamplay && !sb_showscores)
 			Sbar_TeamOverlay();
 		else
 			Sbar_DeathmatchOverlay (0);
+		*/
 	} else if (sb_showscores) {
 		Sbar_DeathmatchOverlay (0);
 	} else if (sb_showteamscores) {
@@ -2214,8 +2222,7 @@ void Sbar_Draw(void) {
 
 	if (vid.width >= 512 && sb_lines > 0 
 			&& cl.gametype == GAME_DEATHMATCH && !scr_centerSbar.value 
-			&& MULTIVIEWTHISPOV())
-	{
+			&& MULTIVIEWTHISPOV()) {
 		Sbar_MiniDeathmatchOverlay ();
 	}
 }

@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_R_PROGRAM_HEADER
-#define EZQUAKE_R_PROGRAM_HEADER
+#ifndef TKQUAKE_R_PROGRAM_HEADER
+#define TKQUAKE_R_PROGRAM_HEADER
 
 typedef enum {
 	r_program_none,
@@ -168,4 +168,4 @@ void R_ProgramCompileAll(void);
 // Switches between sub-programs (allows multiple copies of the same program with different flags)
 void R_ProgramSetSubProgram(r_program_id program_id, int sub_index);
 
-#endif // EZQUAKE_R_PROGRAM_HEADER
+#endif // TKQUAKE_R_PROGRAM_HEADER

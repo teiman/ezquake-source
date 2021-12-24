@@ -403,7 +403,7 @@ qbool COM_WriteToUniqueTempFile(char *path, int path_buffer_size, const char* ex
 #else
 	{
 		int fd = 0;
-		strlcat(path, "/ezquakeXXXXXX", path_buffer_size);
+		strlcat(path, "/tkquakeXXXXXX", path_buffer_size);
 		if (ext[0]) {
 			int ext_len = 0;
 
@@ -1521,7 +1521,7 @@ void Com_Printf (char *fmt, ...)
 		CL_SearchForReTriggers (msg, RE_PRINT_INTERNAL);
 
 	// write it to the scrollable buffer
-	//	Con_Print (va("ezQuake: %s", msg));
+	//	Con_Print (va("tkQuake: %s", msg));
 	Con_PrintW (str2wcs(msg));
 }
 

@@ -499,7 +499,7 @@ qbool CL_CheckOrDownloadFile(char *filename)
 	{
 		if (cls.mvdplayback == QTV_PLAYBACK)
 		{
-			if (!(cls.qtv_ezquake_ext & QTV_EZQUAKE_EXT_DOWNLOAD)) 
+			if (!(cls.qtv_tkquake_ext & QTV_TKQUAKE_EXT_DOWNLOAD)) 
 			{
 				Com_Printf ("Unable to download %s, this QTV does't support download\n", filename);
 				return true;
@@ -530,7 +530,7 @@ qbool CL_CheckOrDownloadFile(char *filename)
 
 	if (cls.mvdplayback == QTV_PLAYBACK) 
 	{
-		QTV_Cmd_Printf(QTV_EZQUAKE_EXT_DOWNLOAD, "download \"%s\"", filename);
+		QTV_Cmd_Printf(QTV_TKQUAKE_EXT_DOWNLOAD, "download \"%s\"", filename);
 	}
 	else 
 	{
@@ -633,7 +633,7 @@ void CL_Prespawn (void)
 	// done with modellist, request first of static signon messages, in case of qtv it different
 	if (cls.mvdplayback == QTV_PLAYBACK)
 	{
-		QTV_Cmd_Printf(QTV_EZQUAKE_EXT_DOWNLOAD, "qtvspawn %i", cl.servercount);
+		QTV_Cmd_Printf(QTV_TKQUAKE_EXT_DOWNLOAD, "qtvspawn %i", cl.servercount);
 	}
 	else 
 	{
@@ -1127,7 +1127,7 @@ void CL_ParseDownload (void)
 
 		if (cls.mvdplayback == QTV_PLAYBACK)
 		{
-			if (cls.qtv_ezquake_ext & QTV_EZQUAKE_EXT_DOWNLOAD)
+			if (cls.qtv_tkquake_ext & QTV_TKQUAKE_EXT_DOWNLOAD)
 				skip_download = false;
 		}
 
@@ -1531,23 +1531,23 @@ void CL_ParseServerData (void)
 
 	if (cfg_legacy_exec.value && (cflag || cfg_legacy_exec.value >= 2)) 
 	{
-		snprintf (fn, sizeof(fn), "%s/%s", cls.gamedir, "config.tk.cfg");
+		snprintf (fn, sizeof(fn), "%s/%s", cls.gamedir, "config_tk.cfg");
 		Cbuf_AddText ("cl_warncmd 0\n");
 		if ((f = fopen(fn, "r")) != NULL) 
 		{
 			fclose(f);
 			if (!strcmp(cls.gamedirfile, com_gamedirfile))
-				Cbuf_AddText ("exec config.tk.cfg\n");
+				Cbuf_AddText ("exec config_tk.cfg\n");
 			else
-				Cbuf_AddText (va("exec ../%s/config.tk.cfg\n", cls.gamedirfile));
+				Cbuf_AddText (va("exec ../%s/config_tk.cfg\n", cls.gamedirfile));
 		} 
 		else if (cfg_legacy_exec.value == 3 && strcmp(cls.gamedir, "qw"))
 		{
-			snprintf (fn, sizeof(fn), "qw/%s", "config.tk.cfg");
+			snprintf (fn, sizeof(fn), "qw/%s", "config_tk.cfg");
 			if ((f = fopen(fn, "r")) != NULL) 
 			{
 				fclose(f);
-				Cbuf_AddText ("exec config.tk.cfg\n");
+				Cbuf_AddText ("exec config_tk.cfg\n");
 			}
 		}
 		snprintf (fn, sizeof(fn), "%s/%s", cls.gamedir, "frontend.cfg");
@@ -1571,6 +1571,7 @@ void CL_ParseServerData (void)
 		Cbuf_AddText ("cl_warncmd 1\n");
 	}
 
+	Cbuf_AddText("exec base_tk.cfg\n");
 
 	// parse player slot, high bit means spectator
 	if (cls.mvdplayback)
@@ -1638,7 +1639,7 @@ void CL_ParseServerData (void)
 	if (cls.mvdplayback == QTV_PLAYBACK) 
 	{
 		cls.qtv_donotbuffer = true; // do not try buffering before "skins" not received
-		QTV_Cmd_Printf(QTV_EZQUAKE_EXT_DOWNLOAD, "qtvsoundlist %i %i", cl.servercount, 0);
+		QTV_Cmd_Printf(QTV_TKQUAKE_EXT_DOWNLOAD, "qtvsoundlist %i %i", cl.servercount, 0);
 	}
 	else 
 	{
@@ -1716,7 +1717,7 @@ void CL_ParseSoundlist (void)
 
 	if (cls.mvdplayback == QTV_PLAYBACK)
 	{
-		QTV_Cmd_Printf(QTV_EZQUAKE_EXT_DOWNLOAD, "qtvmodellist %i %i", cl.servercount, 0);
+		QTV_Cmd_Printf(QTV_TKQUAKE_EXT_DOWNLOAD, "qtvmodellist %i %i", cl.servercount, 0);
 	}
 	else 
 	{
@@ -3733,8 +3734,12 @@ void CL_ParseServerMessage (void)
 			case svc_lightstyle:
 				{
 					i = MSG_ReadByte ();
-					if (i >= MAX_LIGHTSTYLES)
-						Host_Error ("svc_lightstyle > MAX_LIGHTSTYLES");
+					if (i >= MAX_LIGHTSTYLES) {
+						Con_Printf("ERROR: svc_lightstyle > MAX_LIGHTSTYLES");
+						MSG_ReadString();//we get rid of it 
+						break;
+					}
+
 					strlcpy(cl_lightstyle[i].map, MSG_ReadString(), sizeof(cl_lightstyle[i].map));
 					cl_lightstyle[i].length = strlen(cl_lightstyle[i].map);
 					break;
@@ -4415,6 +4420,7 @@ static void CL_ParseDamageDone(int size)
 	if (player + 1 == attacker_ent && player + 1 != targ_ent) {
 		qbool team_damage = (targ_ent >= 1 && targ_ent <= MAX_CLIENTS && cl.players[targ_ent - 1].teammate);
 
+		//Com_Printf("damage: %d", damage);
 		CL_SpawnDamageIndicator(deathtype, targ_ent, damage, splash_damage, team_damage);
 	}
 }

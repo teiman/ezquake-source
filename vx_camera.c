@@ -56,32 +56,27 @@ void CameraRandomPoint (vec3_t org)
 void CameraUpdate (qbool dead)
 {
 	vec3_t dest, destangles;
-	if ((cls.demoplayback || cl.spectator) && cl_camera_tpp.integer == 1)
+	if (cl_camera_tpp.integer == 1)
 		cameratype = C_CHASECAM;
-	else if ((cls.demoplayback || cl.spectator) && cl_camera_tpp.integer == 2)
-	{
+	else if (cl_camera_tpp.integer == 2) {
 		if (cameratype == C_NORMAL)
 			CameraRandomPoint (cl.simorg);
 		cameratype = C_EXTERNAL;
-	}
-	else if (dead && (cls.demoplayback || cl.spectator) && amf_camera_death.value)
-	{
+	} else if (dead && (cls.demoplayback || cl.spectator) && amf_camera_death.value) {
 		if (cameratype == C_NORMAL)
 			CameraRandomPoint (cl.simorg);
 		cameratype = C_EXTERNAL;
-	}
-	else
+	} else
 		cameratype = C_NORMAL;
-	if (cameratype == C_NORMAL)
-	{
+
+	if (cameratype == C_NORMAL)	{
 		VectorCopy (cl.simorg, camera_pos);
 		VectorCopy (cl.simangles, camera_angles);
 		return;
 	}
 
 	//CHASECAM
-	if (cameratype == C_CHASECAM)
-	{
+	if (cameratype == C_CHASECAM){
 		if (!dead)
 		{
 			float	dist = amf_camera_chase_dist.value;
@@ -94,23 +89,18 @@ void CameraUpdate (qbool dead)
 				dest[i] = r_refdef.vieworg[i] + forward[i] * dist;
 			dest[2] = dest[2] + height;
 			CL_TraceLine (r_refdef.vieworg, dest, impact, normal);
-			if (!VectorCompare(dest, impact))
-			{
+			if (!VectorCompare(dest, impact)){
 				dest[0] = impact[0] + forward[0] * 8 + normal[0] * 4;
 				dest[1] = impact[1] + forward[1] * 8 + normal[1] * 4;
 				dest[2] = impact[2] + forward[2] * 8 + normal[2] * 4;
 			}
 			VectorCopy(cl.simangles, destangles);
-		}
-		else
-		{
+		} else {
 			cameratype = C_EXTERNAL;
 			//cameratype = C_NORMAL;
 			return;
 		}
-	}
-	else if (cameratype == C_EXTERNAL)
-	{
+	} else if (cameratype == C_EXTERNAL) {
 		vec3_t normal, impact, vec;
 		CL_TraceLine (camera_pos, cl.simorg, impact, normal);
 		if (!VectorCompare(cl.simorg, impact))

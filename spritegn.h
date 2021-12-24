@@ -84,6 +84,7 @@ typedef struct {
 #define SPR_VP_PARALLEL				2
 #define SPR_ORIENTED				3
 #define SPR_VP_PARALLEL_ORIENTED	4
+#define SPR_TEI_TYPEHACK			5
 
 typedef struct {
 	int			origin[2];

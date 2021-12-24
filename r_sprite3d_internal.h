@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_GL_SPRITE3D_INTERNAL
-#define EZQUAKE_GL_SPRITE3D_INTERNAL
+#ifndef TKQUAKE_GL_SPRITE3D_INTERNAL
+#define TKQUAKE_GL_SPRITE3D_INTERNAL
 
 // Internal only
 #define MAX_3DSPRITES_PER_BATCH    16384  // Batches limited to this so they can't break other functionality

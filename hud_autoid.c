@@ -31,7 +31,7 @@ $Id: cl_screen.c,v 1.156 2007-10-29 00:56:47 qqshka Exp $
 // Not static so it can be toggled in menu
 cvar_t scr_autoid                                  = { "scr_autoid", "5" };
 static cvar_t scr_autoid_weapons                   = { "scr_autoid_weapons", "2" };
-static cvar_t scr_autoid_namelength                = { "scr_autoid_namelength", "0" };
+static cvar_t scr_autoid_namelength                = { "scr_autoid_namelength", "16" };
 static cvar_t scr_autoid_barlength                 = { "scr_autoid_barlength", "16" };
 static cvar_t scr_autoid_weaponicon                = { "scr_autoid_weaponicon", "1" };
 static cvar_t scr_autoid_scale                     = { "scr_autoid_scale", "1" };
@@ -116,9 +116,9 @@ void SCR_SetupAutoID(void)
 		return;
 	}
 
-	if (!cls.demoplayback && !cl.spectator) {
-		return;
-	}
+	//if (!cls.demoplayback && !cl.spectator) {
+	//	return;
+	//}
 
 	if (cl.spectator) {
 		tracknum = Cam_TrackNum();
@@ -184,17 +184,15 @@ static void SCR_DrawAutoIDStatus(autoid_player_t *autoid_p, int x, int y, float 
 	char armor_name[20];
 	char weapon_name[20];
 	int bar_length;
-
+		
 	if (scr_autoid_barlength.integer > 0) {
 		bar_length = scr_autoid_barlength.integer;
-	}
-	else if (scr_autoid_namelength.integer >= 1) {
+	} else if (scr_autoid_namelength.integer >= 1) {
 		float fixed = FontFixedWidth(scr_autoid_namelength.integer, false, scale, proportional);
 		float particular = Draw_StringLength(autoid_p->player->name, -1, scale, proportional);
 
 		bar_length = min(fixed, particular) * 0.5;
-	}
-	else {
+	} else {
 		bar_length = Draw_StringLength(autoid_p->player->name, -1, scale, proportional) * 0.5;
 	}
 
@@ -217,14 +215,12 @@ static void SCR_DrawAutoIDStatus(autoid_player_t *autoid_p, int x, int y, float 
 		if (health > 100 && health <= 200) {
 			health_length = Q_rint((bar_length / 100.0) * (health - 100));
 			Draw_AlphaFillRGB(x - bar_length * scale, y - AUTOID_HEALTHBAR_OFFSET_Y * scale, health_length * 2 * scale, 4 * scale, RGBAVECT_TO_COLOR(scr_autoid_healthbar_mega_color.color));
-		}
-		else if (health > 200 && health <= 250) {
+		} else if (health > 200 && health <= 250) {
 			// Super health.
 			health_length = Q_rint((bar_length / 100.0) * (health - 200));
 			Draw_AlphaFillRGB(x - bar_length * scale, y - AUTOID_HEALTHBAR_OFFSET_Y * scale, bar_length * 2 * scale, 4 * scale, RGBAVECT_TO_COLOR(scr_autoid_healthbar_mega_color.color));
 			Draw_AlphaFillRGB(x - bar_length * scale, y - AUTOID_HEALTHBAR_OFFSET_Y * scale, health_length * 2 * scale, 4 * scale, RGBAVECT_TO_COLOR(scr_autoid_healthbar_two_mega_color.color));
-		}
-		else if (health > 250) {
+		} else if (health > 250) {
 			// Crazy health.
 			// This will never happen during a normal game.
 			Draw_AlphaFillRGB(x - bar_length * scale, y - AUTOID_HEALTHBAR_OFFSET_Y * scale, bar_length * 2 * scale, 4 * scale, RGBAVECT_TO_COLOR(scr_autoid_healthbar_unnatural_color.color));
@@ -404,7 +400,11 @@ void SCR_DrawAutoID(void)
 	float scale;
 	qbool proportional = scr_autoid_proportional.integer;
 
-	if (!scr_autoid.value || (!cls.demoplayback && !cl.spectator) || cl.intermission) {
+	/*if (!scr_autoid.value || (!cls.demoplayback && !cl.spectator) || cl.intermission) {
+		return;
+	}*/
+
+	if (cl.intermission) {
 		return;
 	}
 

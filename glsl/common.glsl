@@ -1,5 +1,5 @@
 
-// This file included in all .glsl files (inserted at #ezquake-definitions point)
+// This file included in all .glsl files (inserted at #tkquake-definitions point)
 
 #define MAX_DLIGHTS 32
 

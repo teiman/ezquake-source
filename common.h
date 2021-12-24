@@ -70,7 +70,8 @@ typedef enum
 // per-level limits
 #define CL_MAX_EDICTS           2048	// FIXME: ouch! ouch! ouch!
 #define MAX_EDICTS              2048    // can't encode more than this, see SV_WriteDelta
-#define MAX_EDICTS_SAFE         512     // lower limit, to make sure no client limits exceeded
+//#define MAX_EDICTS_SAFE         512     // lower limit, to make sure no client limits exceeded
+#define MAX_EDICTS_SAFE         2048    //Tei: experimental
 #define MAX_LIGHTSTYLES         64
 #define MAX_MODELS              512	    // can't encode more than this, see SV_WriteDelta
 #define MAX_VWEP_MODELS         32	    // could be increased to 256
@@ -102,6 +103,7 @@ typedef enum
 #define STAT_VIEWHEIGHT         16		// Z_EXT_VIEWHEIGHT protocol extension
 #define STAT_TIME               17		// Z_EXT_TIME extension
 #define STAT_MATCHSTARTTIME     18		// Server should send this as msec (int)
+//#define STAT_WEAPONSKIN			19		//Tei
 
 // item flags
 #define	IT_SHOTGUN              1

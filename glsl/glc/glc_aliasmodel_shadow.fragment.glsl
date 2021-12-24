@@ -1,6 +1,6 @@
 #version 120
 
-#ezquake-definitions
+#tkquake-definitions
 
 void main()
 {

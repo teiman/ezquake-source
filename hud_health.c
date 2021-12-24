@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2011 azazello and ezQuake team
+Copyright (C) 2011 azazello and tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -41,10 +41,16 @@ static qbool HUD_HealthLow(void)
 	}
 }
 
+float health_visible = 100;
+double health_update_finished = 0;
+
 static void SCR_HUD_DrawHealth(hud_t *hud)
 {
 	static cvar_t *scale = NULL, *style, *digits, *align, *proportional;
 	static int value;
+
+	qbool is_low = HUD_HealthLow();
+
 	if (scale == NULL) {
 		// first time called
 		scale = HUD_FindVar(hud, "scale");
@@ -55,8 +61,49 @@ static void SCR_HUD_DrawHealth(hud_t *hud)
 	}
 
 	value = HUD_Stats(STAT_HEALTH);
+	if ( fabs(value-health_visible)>=1  ) {
+
+		if (value < health_visible) {
+			is_low = true;
+		}
+
+		//Do we need to update the health ammount?
+		if (cl.time > health_update_finished || cl.time < 10 /* so it resets at the begin of a level */) {
+
+			//If the difference is big, the change to it will be bigger than if is small
+			float delta = fabs(value - health_visible);
+			float inc = 1;
+
+			if (delta > 30) {
+				inc = 20;
+			} else if (delta > 20) {
+				inc = 10;
+			} else if (delta > 10) {
+				inc = 5;
+			} else {
+				inc = 1;
+			}
+			
+			health_update_finished = cl.time + 0.1;
+
+			if (value > health_visible) {
+				health_visible+= inc;
+			} else if (value < health_visible) {
+				health_visible-= inc;
+			} else {
+				health_visible = value;
+
+				health_update_finished = 0;
+					//Reset this so we don't run on problems.
+			}			
+		}
+
+	}
+
+	value = health_visible;
+
 	if (cl.spectator == cl.autocam) {
-		SCR_HUD_DrawNum(hud, (value < 0 ? 0 : value), HUD_HealthLow(), scale->value, style->value, digits->value, align->string, proportional->integer);
+		SCR_HUD_DrawNum(hud, (value < 0 ? 0 : value), is_low, scale->value, style->value, digits->value, align->string, proportional->integer);
 	}
 }
 
@@ -116,6 +163,8 @@ static void SCR_HUD_DrawBarHealth(hud_t *hud)
 
 void Health_HudInit(void)
 {
+	Con_Printf("[HudInit] ...\n");
+
 	HUD_Register(
 		"bar_health", NULL, "Health bar.",
 		HUD_PLUSMINUS, ca_active, 0, SCR_HUD_DrawBarHealth,
@@ -135,10 +184,10 @@ void Health_HudInit(void)
 	HUD_Register(
 		"health", NULL, "Part of your status - health level.",
 		HUD_INVENTORY, ca_active, 0, SCR_HUD_DrawHealth,
-		"1", "face", "after", "center", "0", "0", "0", "0 0 0", NULL,
+		"1", "face", "left", "center", "0", "0", "0", "0 0 0", NULL,
 		"style", "0",
 		"scale", "1",
-		"align", "right",
+		"align", "left",
 		"digits", "3",
 		"proportional", "0",
 		NULL

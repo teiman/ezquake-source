@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2011 ezQuake team
+Copyright (C) 2011 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -30,23 +30,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define QTV_VERSION			1.0f		// we are support up to this QTV version
 
-// { QTV_EZQUAKE_EXT
+// { QTV_TKQUAKE_EXT
 
-#define QTV_EZQUAKE_EXT		"QTV_EZQUAKE_EXT"
+#define QTV_TKQUAKE_EXT		"QTV_TKQUAKE_EXT"
 
-#define QTV_EZQUAKE_EXT_DOWNLOAD	(1<<0)		// well, this is not just download, but also different connection process
-#define QTV_EZQUAKE_EXT_SETINFO		(1<<1)		// does't qtv server/client support setinfo
-#define QTV_EZQUAKE_EXT_QTVUSERLIST	(1<<2)		// does't qtv server/client support qtvuserlist command
+#define QTV_TKQUAKE_EXT_DOWNLOAD	(1<<0)		// well, this is not just download, but also different connection process
+#define QTV_TKQUAKE_EXT_SETINFO		(1<<1)		// does't qtv server/client support setinfo
+#define QTV_TKQUAKE_EXT_QTVUSERLIST	(1<<2)		// does't qtv server/client support qtvuserlist command
 
-#define QTV_EZQUAKE_EXT_NUM ( QTV_EZQUAKE_EXT_DOWNLOAD | QTV_EZQUAKE_EXT_SETINFO | QTV_EZQUAKE_EXT_QTVUSERLIST )
+#define QTV_TKQUAKE_EXT_NUM ( QTV_TKQUAKE_EXT_DOWNLOAD | QTV_TKQUAKE_EXT_SETINFO | QTV_TKQUAKE_EXT_QTVUSERLIST )
 
 // }
 
 // this just can't be done as macro, so I wrote function
-char *QTV_CL_HEADER(float qtv_ver, int qtv_ezquake_ext);
+char *QTV_CL_HEADER(float qtv_ver, int qtv_tkquake_ext);
 
 // qqshka: It's all messy.
-// For example ezquake (and FTE?) expect maximum message is MSG_BUF_SIZE == 8192 with mvd header which have not fixed size,
+// For example tkquake (and FTE?) expect maximum message is MSG_BUF_SIZE == 8192 with mvd header which have not fixed size,
 // however fuhquake uses less msg size as I recall.
 // mvd header max size is 10 bytes.
 // 

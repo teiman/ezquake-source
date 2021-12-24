@@ -30,7 +30,7 @@ cvar_t cl_loadFragfiles = {"cl_loadFragfiles", "1"};
 cvar_t cl_useimagesinfraglog = {"cl_useimagesinfraglog", "0"};
 
 #define FUH_FRAGFILE_VERSION_1_00	"1.00" /* for compatibility with fuh */
-#define FRAGFILE_VERSION_1_00		"ezquake-1.00" /* fuh suggest such format */
+#define FRAGFILE_VERSION_1_00		"tkquake-1.00" /* fuh suggest such format */
 
 typedef enum msgtype_s {
 	mt_fragged,
@@ -201,10 +201,10 @@ static void LoadFragFile(char *filename, qbool quiet)
 	strlcpy(fragfilename, filename, sizeof(fragfilename));
 	COM_ForceExtensionEx(fragfilename, ".dat", sizeof(fragfilename));
 
-	// if it fragfile.dat then try to load from ezquake dir first,
+	// if it fragfile.dat then try to load from tkquake dir first,
 	// because we have a bit different fragfile format comparing to fuhquake
-	if (!strcasecmp(fragfilename, "fragfile.dat") && (buffer = (char *) FS_LoadHeapFile("../ezquake/fragfile.dat", NULL)))
-		strlcpy(fragfilename, "ezquake/fragfile.dat", sizeof(fragfilename));
+	if (!strcasecmp(fragfilename, "fragfile.dat") && (buffer = (char *) FS_LoadHeapFile("../tkquake/fragfile.dat", NULL)))
+		strlcpy(fragfilename, "tkquake/fragfile.dat", sizeof(fragfilename));
 
 	if (!buffer && !(buffer = (char *)FS_LoadHeapFile(fragfilename, NULL))) {
 		if (!quiet)
@@ -239,7 +239,7 @@ static void LoadFragFile(char *filename, qbool quiet)
 					token = FRAGFILE_VERSION_1_00; // so we compatible with old fuh format, because our format include all fuh features + our
 
 				if (!strcasecmp(token, FRAGFILE_VERSION_1_00) && (token = strchr(token, '-'))) {
-					token++; // find float component of string like this "ezquake-x.yz"
+					token++; // find float component of string like this "tkquake-x.yz"
 					fragdefs.version = (int) (100 * Q_atof(token));
 					gotversion = true;
 				} else {

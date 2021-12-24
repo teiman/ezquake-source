@@ -1,6 +1,6 @@
 #version 120
 
-#ezquake-definitions
+#tkquake-definitions
 
 varying vec4 TextureCoord;
 varying vec4 fsColor;

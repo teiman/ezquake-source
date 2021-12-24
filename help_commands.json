@@ -305,7 +305,7 @@
     "description": "Centers the player's view ahead after +lookup or +lookdown."
   },
   "cfg_load": {
-    "description": "This will do a cfg_reset and then execute filename.cfg (ezquake/configs).",
+    "description": "This will do a cfg_reset and then execute filename.cfg (tkquake/configs).",
     "syntax": "<filename>"
   },
   "cfg_reset": {
@@ -313,14 +313,14 @@
   },
   "cfg_save": {
     "description": "This command will dump all aliases, bindings, plus commands, msg_triggers, teamplay settings and variables to filename.cfg .\nUser made variables (created with set/seta) are saved as well.",
-    "remarks":"configs saved with cfg_save are saved in quake/ezquake/configs/*.cfg",
+    "remarks":"configs saved with cfg_save are saved in quake/tkquake/configs/*.cfg",
     "syntax": "<filename>"
   },
   "check_maps": {
     "system-generated": true
   },
   "cl_messages": {
-    "description": "Prints amount and size of messages sent from server to ezQuake client."
+    "description": "Prints amount and size of messages sent from server to tkQuake client."
   },
   "clear": {
     "description": "This command clears the console screen of any text."
@@ -530,7 +530,7 @@
     "syntax": "<expression>"
   },
   "exec": {
-    "description": "Executes a config file from \\qw, \\id1 or \\ezquake."
+    "description": "Executes a config file from \\qw, \\id1 or \\tkquake."
   },
   "f_modified": {
     "description": "All the usual dm models, sounds, palettes etc are included in the check.\nIn Team Fortress the TF flag, dispensers and sentry guns are also checked. There is also an f_modified command which will print your f_modified response.",
@@ -965,7 +965,7 @@
     "system-generated": true
   },
   "loadcharset": {
-    "description": "You can change your console font from within ezQuake. Put all your charset images in qw/textures/charsets/*.png (and *.tga) and use /loadcharset XXX to load XXX.png (or tga).\n\"/loadcharset original\" will restore the 8bit font in your gfx.wad (this is default).",
+    "description": "You can change your console font from within tkQuake. Put all your charset images in qw/textures/charsets/*.png (and *.tga) and use /loadcharset XXX to load XXX.png (or tga).\n\"/loadcharset original\" will restore the 8bit font in your gfx.wad (this is default).",
     "remarks": "This command is just a 'shortcut' for the new gl_consolefont variable."
   },
   "loadfont": {
@@ -976,7 +976,7 @@
     "syntax": "<filename>"
   },
   "loadloc": {
-    "description": "Loads a loc file (must be located in id1/locs, qw/locs, or ezquake/locs.\nThe \".loc\" extension is optional, for example, \"loadloc dm6\"; if the file name has no extension, use its explicit name (\"loadloc dm6.\").",
+    "description": "Loads a loc file (must be located in id1/locs, qw/locs, or tkquake/locs.\nThe \".loc\" extension is optional, for example, \"loadloc dm6\"; if the file name has no extension, use its explicit name (\"loadloc dm6.\").",
     "syntax": "<filename>"
   },
   "loadpak": {
@@ -1052,7 +1052,7 @@
     "description": "Prints a list of the macros and their meaning for autorecording and autoscreenshots."
   },
   "match_save": {
-    "description": "If you are using 'match_auto_record 1' then a temp demo will be recorded to c:\\quake\\ezquake\\temp\\_!_temp_!_.qwd each time a map starts.\nThis temp demo will be overwritten when the next match starts.\nIf you want to keep the temp demo, use the \"match_save\" command. This will move the demo to the same folder and filename that easyrecord would have used."
+    "description": "If you are using 'match_auto_record 1' then a temp demo will be recorded to c:\\quake\\tkquake\\temp\\_!_temp_!_.qwd each time a map starts.\nThis temp demo will be overwritten when the next match starts.\nIf you want to keep the temp demo, use the \"match_save\" command. This will move the demo to the same folder and filename that easyrecord would have used."
   },
   "menu_demos": {
     "description": "This command will display the demos menu."
@@ -1243,7 +1243,7 @@
     "description": "Set the password to enter a password protected server."
   },
   "path": {
-    "description": "Shows what paths ezQuake is using."
+    "description": "Shows what paths tkQuake is using."
   },
   "pause": {
     "description": "Pauses a game.",
@@ -1495,7 +1495,7 @@
     "syntax": "<filename>"
   },
   "say": {
-    "description": "Broadcasts a string to all other players.\n\nExample:\nsay ezQuake rules!"
+    "description": "Broadcasts a string to all other players.\n\nExample:\nsay tkQuake rules!"
   },
   "say_team": {
     "description": "Broadcasts a string to teammates.\n\nExample:\nsay_team stop boring!"
@@ -1572,7 +1572,7 @@
     "description": "Reports the current server info."
   },
   "serverstatus": {
-    "description": "Prints the status of the ezQuake server."
+    "description": "Prints the status of the tkQuake server."
   },
   "set": {
     "arguments": [
@@ -1679,7 +1679,7 @@
     "description": "Reports a list of sounds in the cache."
   },
   "spectator_password": {
-    "description": "Sets spectator password to ezQuake local server.",
+    "description": "Sets spectator password to tkQuake local server.",
     "remarks": "Spectators must use \"spectator <password>\" to connect to a server with a spectator password."
   },
   "speed": {
@@ -2008,7 +2008,7 @@
     "syntax": "<red> <green> <blue> <intensity>"
   },
   "validate_clients": {
-    "description": "This shows authed ezQuake users, non-authed and non-ezQuake users."
+    "description": "This shows authed tkQuake users, non-authed and non-tkQuake users."
   },
   "version": {
     "description": "Prints client version number and date into the console."
@@ -2017,7 +2017,7 @@
     "system-generated": true
   },
   "vid_forcemode": {
-    "description": "This command will force ezQuake to use a certain video mode."
+    "description": "This command will force tkQuake to use a certain video mode."
   },
   "vid_fullscreen": {
     "description": "This command will switch to a fullscreen video mode specified in the \"vid_fullscreen_mode\" variable."

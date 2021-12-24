@@ -864,7 +864,7 @@ void CL_BaseMove(usercmd_t* cmd)
 		static float zoomspeed = 0;
 		extern cvar_t cam_thirdperson, cam_lockpos;
 
-		if ((cls.demoplayback || cl.spectator) && cam_thirdperson.integer && !cam_lockpos.integer) {
+		if ( cam_thirdperson.integer && !cam_lockpos.integer) {
 			zoomspeed -= CL_KeyState(&in_forward, false) * cls.trueframetime * cam_zoomaccel.value;
 			zoomspeed += CL_KeyState(&in_back, false) * cls.trueframetime * cam_zoomaccel.value;
 			if (!CL_KeyState(&in_forward, false) && !CL_KeyState(&in_back, false)) {

@@ -52,7 +52,7 @@ extern cvar_t cl_iDrive;
 
 static void FChecks_VersionResponse (void)
 {
-	Cbuf_AddText (va("say ezQuake %s " QW_PLATFORM ":" QW_RENDERER "\n", VersionString()));
+	Cbuf_AddText (va("say tkQuake %s " QW_PLATFORM ":" QW_RENDERER "\n", VersionString()));
 }
 
 static char *FChecks_FServerResponse_Text(void)
@@ -75,7 +75,7 @@ static void FChecks_FServerResponse (void)
 	if (!text)
 		return;
 
-	Cbuf_AddText(va("say ezQuake f_server response: %s\n", text));
+	Cbuf_AddText(va("say tkQuake f_server response: %s\n", text));
 }
 
 static void FChecks_SkinsResponse (float fbskins)

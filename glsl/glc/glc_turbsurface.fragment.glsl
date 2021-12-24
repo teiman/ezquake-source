@@ -1,6 +1,6 @@
 #version 120
 
-#ezquake-definitions
+#tkquake-definitions
 
 #ifdef FLAT_COLOR
 uniform vec4 color;

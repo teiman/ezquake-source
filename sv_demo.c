@@ -697,6 +697,8 @@ static qbool SV_MVDWritePacketsEx (int num)
 				flags |= DF_SKINNUM;
 			if (cl->weaponframe != last_cl->weaponframe)
 				flags |= DF_WEAPONFRAME;
+			//if (cl->weaponskin != last_cl->weaponskin)
+			//	flags |= DF_WEAPONSKIN; //Tei
 
 			MSG_WriteByte (&msg, svc_playerinfo);
 			MSG_WriteByte (&msg, i);
@@ -723,6 +725,9 @@ static qbool SV_MVDWritePacketsEx (int num)
 
 			if (flags & DF_WEAPONFRAME)
 				MSG_WriteByte (&msg, cl->weaponframe);
+
+			//if (flags & DF_WEAPONSKIN)
+			//	MSG_WriteByte(&msg, cl->weaponskin);//Tei
 
 			cl->flags = flags;
 
@@ -1498,7 +1503,9 @@ void SV_MVD_SendInitialGamestate(mvddest_t* dest)
 				| DF_EFFECTS | DF_SKINNUM 
 				| (ent->v.health <= 0 ? DF_DEAD : 0)
 				| (ent->v.mins[2] != -24 ? DF_GIB : 0)
-				| DF_WEAPONFRAME | DF_MODEL;
+				| DF_WEAPONFRAME | DF_MODEL 
+				//| DF_WEAPONSKIN
+				; //Tei
 
 		VectorCopy(ent->v.origin, origin);
 		VectorCopy(ent->v.angles, angles);
@@ -1541,6 +1548,9 @@ void SV_MVD_SendInitialGamestate(mvddest_t* dest)
 
 		if (flags & DF_WEAPONFRAME)
 			MSG_WriteByte (&buf, ent->v.weaponframe);
+
+		//if (flags & DF_WEAPONSKIN)
+		//	MSG_WriteByte(&buf, ent->v.weaponskin);//Tei
 
 		if (buf.cursize > MAX_MSGLEN/2)
 		{

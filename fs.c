@@ -694,7 +694,7 @@ void FS_InitFilesystemEx( qbool guess_cwd ) {
 
 	FS_ShutDown();
 
-	if (guess_cwd) { // so, com_basedir directory will be where ezquake*.exe located
+	if (guess_cwd) { // so, com_basedir directory will be where tkquake*.exe located
 		char *e;
 
 #if defined(_WIN32)
@@ -708,7 +708,7 @@ void FS_InitFilesystemEx( qbool guess_cwd ) {
 		com_basedir[0] = 0; // FIXME: MAC / FreeBSD
 #endif
 
-		// strip ezquake*.exe, we need only path
+		// strip tkquake*.exe, we need only path
 		for (e = com_basedir+strlen(com_basedir)-1; e >= com_basedir; e--)
 			if (*e == '/' || *e == '\\')
 			{
@@ -747,9 +747,9 @@ void FS_InitFilesystemEx( qbool guess_cwd ) {
 	if (com_homedir[0])
 	{
 #ifdef _WIN32
-		strlcat(com_homedir, "/ezQuake", sizeof(com_homedir));
+		strlcat(com_homedir, "/tkQuake", sizeof(com_homedir));
 #else
-		strlcat(com_homedir, "/.ezquake", sizeof(com_homedir));
+		strlcat(com_homedir, "/.tkquake", sizeof(com_homedir));
 #endif
 		Com_Printf("Using home directory \"%s\"\n", com_homedir);
 	}
@@ -757,7 +757,7 @@ void FS_InitFilesystemEx( qbool guess_cwd ) {
 	// start up with id1 by default
 	snprintf(&tmp_path[0], sizeof(tmp_path), "%s/%s", com_basedir, "id1");
 	FS_AddGameDirectory(tmp_path, FS_LOAD_FILE_ALL);
-	snprintf(&tmp_path[0], sizeof(tmp_path), "%s/%s", com_basedir, "ezquake");
+	snprintf(&tmp_path[0], sizeof(tmp_path), "%s/%s", com_basedir, "tkquake");
 	FS_AddGameDirectory(tmp_path, FS_LOAD_FILE_ALL);
 	snprintf(&tmp_path[0], sizeof(tmp_path), "%s/%s", com_basedir, "qw");
 	FS_AddGameDirectory(tmp_path, FS_LOAD_FILE_ALL);
@@ -822,7 +822,7 @@ char *FS_LegacyDir(char *media_dir)
 	}
 
 	switch (cl_mediaroot.integer) {
-		case 1:  //			/home/qqshka/ezquake/<demo_dir>
+		case 1:  //			/home/qqshka/tkquake/<demo_dir>
 			while(media_dir[0] == '/' || media_dir[0] == '\\')
 				media_dir++; // skip precending / probably smart
 
@@ -1036,7 +1036,7 @@ vfsfile_t *FS_OpenVFS(const char *filename, char *mode, relativeto_t relativeto)
 			if (vfs)
 				return vfs;
 		}
-		snprintf(fullname, sizeof(fullname), "%s/ezquake/%s", com_basedir, filename);
+		snprintf(fullname, sizeof(fullname), "%s/tkquake/%s", com_basedir, filename);
 		return VFSOS_Open(fullname, mode);
  */
 	case FS_HOME:
@@ -1112,7 +1112,7 @@ static qbool FS_PakOper_NoPath(char* pakfile, pak_operation_t op)
 	// snprintf(pathbuf, sizeof(pathbuf), "addons/%s.pak", pakfile);
 	// if (FS_PakOperation(pathbuf, op)) return true;
 
-	snprintf(pathbuf, sizeof(pathbuf), "ezquake/%s.pak", pakfile);
+	snprintf(pathbuf, sizeof(pathbuf), "tkquake/%s.pak", pakfile);
 	if (FS_PakOperation(pathbuf, op)) return true;
 
 	snprintf(pathbuf, sizeof(pathbuf), "qw/%s.pak", pakfile);
@@ -1956,7 +1956,7 @@ void FS_InitModuleFS (void)
  * 3) Need to add Sys_EnumerateFiles for sys_mac.c
  * 		D-Kure: I have noooo idea what the mac eqivalent functions are.
  *
- * 4) Replace some of the functions (marked with VFS-XXX) with the ezquake equivlant
+ * 4) Replace some of the functions (marked with VFS-XXX) with the tkquake equivlant
  * 		D-Kure: This functions seem to be in common.c and are marked 
  * 		        FS_* instead of COM_*.
  *

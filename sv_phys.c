@@ -41,11 +41,11 @@ solid_edge items only clip against bsp models.
 
 */
 
-cvar_t	sv_maxvelocity		= { "sv_maxvelocity","2000"};
+cvar_t	sv_maxvelocity		= { "sv_maxvelocity","3000"};
 
-cvar_t	sv_gravity		= { "sv_gravity", "800"};
+cvar_t	sv_gravity		= { "sv_gravity", "700"};//Tei our player is more dynamic
 cvar_t	sv_stopspeed		= { "sv_stopspeed", "100"};
-cvar_t	sv_maxspeed		= { "sv_maxspeed", "320"};
+cvar_t	sv_maxspeed		= { "sv_maxspeed", "2000"};
 cvar_t	sv_spectatormaxspeed 	= { "sv_spectatormaxspeed", "500"};
 cvar_t	sv_accelerate		= { "sv_accelerate", "10"};
 cvar_t	sv_airaccelerate	= { "sv_airaccelerate", "10"};

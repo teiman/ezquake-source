@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2011 azazello and ezQuake team
+Copyright (C) 2011 azazello and tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,6 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "fonts.h"
 #include "teamplay.h"
 #include "vx_stuff.h"
+
+float HUD_CalcBobY(void);
+float HUD_CalcBobX(void);
 
 static int TP_IsArmorLow(void)
 {
@@ -56,6 +59,8 @@ static void SCR_HUD_DrawArmor(hud_t *hud)
 {
 	int level;
 	qbool low;
+	textcolor tcolor;
+
 	static cvar_t *scale = NULL, *style, *digits, *align, *pent_666, *proportional, *hidezero;
 
 	if (scale == NULL) {
@@ -69,23 +74,36 @@ static void SCR_HUD_DrawArmor(hud_t *hud)
 		hidezero = HUD_FindVar(hud, "hidezero"); //Hide armor number if zero
 	}
 
+	tcolor = text_blue;
+
 	if (HUD_Stats(STAT_HEALTH) > 0) {
 		if ((HUD_Stats(STAT_ITEMS) & IT_INVULNERABILITY) && pent_666->integer) {
 			level = 666;
 			low = true;
-		}
-		else {
+			tcolor = text_red;
+		} else {
 			level = HUD_Stats(STAT_ARMOR);
-			low = HUD_ArmorLow();
+			low = HUD_ArmorLow();			
 		}
-	}
-	else {
+	} else {
 		level = 0;
 		low = true;
 	}
-	if (level == 0 && hidezero->integer == 1) return;
+
+	if (level == 0 && hidezero->integer == 1) {
+		return;
+	}
+
+	//level = 90032;
+
 	if (cl.spectator == cl.autocam) {
-		SCR_HUD_DrawNum(hud, level, low, scale->value, style->value, digits->value, align->string, proportional->integer);
+		//void SCR_HUD_DrawNum(
+		//	hud_t * hud, int num, qbool low,
+		//	float scale, int style, int digits, char* s_align, qbool proportional		
+
+		SCR_HUD_DrawNum(hud, level, tcolor,
+			scale->value, style->value, digits->value, 
+			align->string, proportional->integer);		
 	}
 }
 
@@ -161,6 +179,9 @@ static void SCR_HUD_DrawArmorIcon(hud_t *hud)
 			else {
 				return;
 			}
+
+			x = x + (float)HUD_CalcBobX();
+			y = y + (float)HUD_CalcBobY();
 
 			Draw_SPic(x, y, pic, scale);
 		}

@@ -81,11 +81,11 @@ void QTV_Init(void)
 
 //=================================================
 
-char *QTV_CL_HEADER(float qtv_ver, int qtv_ezquake_ext)
+char *QTV_CL_HEADER(float qtv_ver, int qtv_tkquake_ext)
 {
 	static char header[1024];
 
-	snprintf(header, sizeof(header), "QTV\n" "VERSION: %g\n" QTV_EZQUAKE_EXT ": %d\n", qtv_ver, qtv_ezquake_ext);
+	snprintf(header, sizeof(header), "QTV\n" "VERSION: %g\n" QTV_TKQUAKE_EXT ": %d\n", qtv_ver, qtv_tkquake_ext);
 
 	return header;
 }
@@ -173,7 +173,7 @@ void QTV_ForwardToServerEx (qbool skip_if_no_params, qbool use_first_argument)
 	sizebuf_t buf;
 
 	if (    cls.mvdplayback != QTV_PLAYBACK
-		|| !playbackfile /* || cls.qtv_ezquake_ext & QTV_EZQUAKE_EXT_CLC_STRINGCMD ???*/
+		|| !playbackfile /* || cls.qtv_tkquake_ext & QTV_TKQUAKE_EXT_CLC_STRINGCMD ???*/
 	   )
 		return;
 
@@ -265,7 +265,7 @@ void QTV_Cmd_Printf(int qtv_ext, char *fmt, ...)
 	char msg[1024] = {0};
 	tokenizecontext_t tmpcontext;
 
-	if (cls.mvdplayback != QTV_PLAYBACK || (qtv_ext & cls.qtv_ezquake_ext) != qtv_ext)
+	if (cls.mvdplayback != QTV_PLAYBACK || (qtv_ext & cls.qtv_tkquake_ext) != qtv_ext)
 		return; // no point for this, since it not qtv playback or qtv server do not support it
 
 	va_start (argptr, fmt);

@@ -667,7 +667,7 @@ void CL_Download_f (void){
 
 	if (cls.mvdplayback == QTV_PLAYBACK)
 	{
-		QTV_Cmd_Printf(QTV_EZQUAKE_EXT_DOWNLOAD, "download \"%s\"", filename);
+		QTV_Cmd_Printf(QTV_TKQUAKE_EXT_DOWNLOAD, "download \"%s\"", filename);
 	}
 	else
 	{

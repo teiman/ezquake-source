@@ -1,6 +1,6 @@
 #version 120
 
-#ezquake-definitions
+#tkquake-definitions
 
 uniform sampler2D primarySampler;
 #ifdef MIXED_SAMPLING
@@ -20,7 +20,7 @@ void main()
 #endif
 
 #ifdef PREMULT_ALPHA_HACK
-	// Some people prefer the smoothing effect from ezQuake < 3.5,
+	// Some people prefer the smoothing effect from tkQuake < 3.5,
 	//   caused by the alpha being blended incorrectly & effectively applied twice
 	gl_FragColor.r *= gl_FragColor.a;
 	gl_FragColor.g *= gl_FragColor.a;

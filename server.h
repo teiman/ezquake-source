@@ -396,6 +396,7 @@ typedef struct
 	vec3_t			origin;
 	vec3_t			angles;
 	int				weaponframe;
+	//int				weaponskin;
 	int				frame;
 	int				skinnum;
 	int				model;

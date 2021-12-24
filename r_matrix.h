@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018 ezQuake team
+Copyright (C) 2018 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_R_MATRIX_HEADER
-#define EZQUAKE_R_MATRIX_HEADER
+#ifndef TKQUAKE_R_MATRIX_HEADER
+#define TKQUAKE_R_MATRIX_HEADER
 
 qbool R_Project3DCoordinates(float objx, float objy, float objz, float* winx, float* winy, float* winz);
 
@@ -55,4 +55,4 @@ void R_MultiplyVector3fv(const float* matrix, const vec3_t vector, float* result
 
 void R_RotateForEntity(const struct entity_s* e);
 
-#endif // EZQUAKE_R_MATRIX_HEADER
+#endif // TKQUAKE_R_MATRIX_HEADER

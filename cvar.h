@@ -92,8 +92,8 @@ typedef struct cvar_group_s {
 	struct cvar_group_s *next;
 } cvar_group_t;
 #else
-#define Cvar_SetCurrentGroup(...)		// ezquake compatibility
-#define Cvar_ResetCurrentGroup(...)		// ezquake compatibility
+#define Cvar_SetCurrentGroup(...)		// tkquake compatibility
+#define Cvar_ResetCurrentGroup(...)		// tkquake compatibility
 #endif
 
 // registers a cvar that already has the name, string, and optionally the
@@ -176,7 +176,7 @@ void Cvar_ResetCurrentGroup(void);
 qbool Cvar_CreateTempVar (void);	// when parsing config.cfg
 void Cvar_CleanUpTempVars (void);	// clean up afterwards
 #else
-// ezquake compatibility - integrate into mvdsv?
+// tkquake compatibility - integrate into mvdsv?
 #define IsRegexp(...) false
 #define ReSearchInit(...) false
 #define ReSearchInitEx(...) false

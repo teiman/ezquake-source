@@ -71,7 +71,7 @@ cvar_t con_completion_color_changed_mark	= {"con_completion_color_changed_mark",
 cvar_t con_completion_padding				= {"con_completion_padding", "2"};
 
 cvar_t	cl_savehistory = {"cl_savehistory", "1"};
-#define		HISTORY_FILE_NAME	"ezquake/.ezquake_history"
+#define		HISTORY_FILE_NAME	"tkquake/.tkquake_history"
 
 wchar	key_lines[CMDLINES][MAXCMDLINE];
 int		key_linepos;

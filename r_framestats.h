@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_R_FRAMESTATS_HEADER
-#define EZQUAKE_R_FRAMESTATS_HEADER
+#ifndef TKQUAKE_R_FRAMESTATS_HEADER
+#define TKQUAKE_R_FRAMESTATS_HEADER
 
 typedef enum {
 	polyTypeWorldModel,
@@ -45,4 +45,4 @@ typedef struct r_frame_stats_s {
 extern r_frame_stats_t frameStats, prevFrameStats;
 extern cvar_t r_speeds;
 
-#endif // EZQUAKE_R_FRAMESTATS_HEADER
+#endif // TKQUAKE_R_FRAMESTATS_HEADER

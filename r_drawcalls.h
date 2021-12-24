@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_R_DRAWCALLS_HEADER
-#define EZQUAKE_R_DRAWCALLS_HEADER
+#ifndef TKQUAKE_R_DRAWCALLS_HEADER
+#define TKQUAKE_R_DRAWCALLS_HEADER
 
 // draw calls
 typedef enum {
@@ -24,4 +24,4 @@ typedef struct {
 
 extern r_drawcalls_t drawcalls;
 
-#endif // EZQUAKE_R_DRAWCALLS_HEADER
+#endif // TKQUAKE_R_DRAWCALLS_HEADER

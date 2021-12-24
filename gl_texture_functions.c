@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018 ezQuake team
+Copyright (C) 2018 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -384,7 +384,7 @@ void GL_CreateTextureNames(GLenum textureUnit, GLenum target, GLsizei n, GLuint*
 	}
 
 	// glCreateTextures() shouldn't require this, but textures can't be sampled from buggy AMD drivers (reporting x.y.13399) otherwise
-	// see https://github.com/ezQuake/ezquake-source/issues/416
+	// see https://github.com/tkQuake/tkquake-source/issues/416
 	for (i = 0; i < n; ++i) {
 		GL_BindTextureToTarget(textureUnit, target, textures[i]);
 	}

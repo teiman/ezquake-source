@@ -2972,8 +2972,7 @@ void TP_FindPoint (void)
 	vars.pointtime = cls.realtime;
 }
 
-void TP_ParseWeaponModel(model_t *model)
-{
+void TP_ParseWeaponModel(model_t *model) {
 	static model_t *last_model = NULL;
 
 	if (cl.teamfortress && (!cl.spectator || Cam_TrackNum() != -1)) {

@@ -40,7 +40,12 @@ static texture_ref Mod_LoadExternalSpriteSkin(char *identifier, int framenum)
 		texmode |= TEX_NOSCALE;
 	}
 
+	Con_Printf("Trying to load from identifier [%s]\n", identifier);
+
 	snprintf (loadpath, sizeof(loadpath), "textures/sprites/%s", identifier);
+
+	Con_Printf("Trying to load from [%s]\n", loadpath);
+
 	texnum = R_LoadTextureImage (loadpath, identifier, 0, 0, texmode);
 
 	if (!R_TextureReferenceIsValid(texnum)) {

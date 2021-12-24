@@ -160,17 +160,17 @@ cvar_t	teamplay = {"teamplay","0",CVAR_SERVERINFO};
 cvar_t	maxclients = {"maxclients","24",CVAR_SERVERINFO};
 cvar_t	maxspectators = {"maxspectators","8",CVAR_SERVERINFO};
 cvar_t	maxvip_spectators = {"maxvip_spectators","0"/*,CVAR_SERVERINFO*/};
-cvar_t	deathmatch = {"deathmatch","3",CVAR_SERVERINFO};
+cvar_t	deathmatch = {"deathmatch","0",CVAR_SERVERINFO};//Tei default to coop
 cvar_t	watervis = {"watervis","0",CVAR_SERVERINFO};
 cvar_t	serverdemo = {"serverdemo","",CVAR_SERVERINFO | CVAR_ROM};
 
 cvar_t	samelevel = {"samelevel","1"}; // dont delete this variable - it used by mods
 cvar_t	skill = {"skill", "1"}; // dont delete this variable - it used by mods
-cvar_t	coop = {"coop", "0"}; // dont delete this variable - it used by mods
+cvar_t	coop = {"coop", "1"}; // dont delete this variable - it used by mods - Tei default to coop 
 
 cvar_t	sv_paused = {"sv_paused", "0", CVAR_ROM};
 
-cvar_t	hostname = {"hostname", "unnamed", CVAR_SERVERINFO};
+cvar_t	hostname = {"hostname", "tk_server", CVAR_SERVERINFO};
 
 cvar_t sv_forcenick = {"sv_forcenick", "0"}; //0 - don't force; 1 - as login;
 cvar_t sv_registrationinfo = {"sv_registrationinfo", ""}; // text shown before "enter login"
@@ -187,6 +187,7 @@ cvar_t sv_serveme_fix = { "sv_serveme_fix", "1", CVAR_ROM };
 #ifdef FTE_PEXT_FLOATCOORDS
 cvar_t sv_bigcoords = {"sv_bigcoords", "", CVAR_SERVERINFO};
 #endif
+
 #ifdef MVD_PEXT1_SERVERSIDEWEAPON
 // Only enabled on KTX mod (see sv_init)
 cvar_t sv_pext_mvdsv_serversideweapon = { "sv_pext_mvdsv_serversideweapon", "1" };

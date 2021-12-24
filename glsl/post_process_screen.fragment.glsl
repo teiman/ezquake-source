@@ -1,6 +1,6 @@
 #version 430
 
-#ezquake-definitions
+#tkquake-definitions
 
 in vec2 TextureCoord;
 out vec4 frag_colour;

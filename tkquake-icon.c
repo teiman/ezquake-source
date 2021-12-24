@@ -1,11 +1,11 @@
-/* GIMP RGBA C-Source image dump (ezquake-icon.c) */
+/* GIMP RGBA C-Source image dump (tkquake-icon.c) */
 
 static const struct {
   unsigned int 	 width;
   unsigned int 	 height;
   unsigned int 	 bytes_per_pixel; /* 2:RGB16, 3:RGB, 4:RGBA */ 
   unsigned char	 pixel_data[48 * 48 * 4 + 1];
-} ezquake_icon = {
+} tkquake_icon = {
   48, 48, 4,
   "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
   "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"

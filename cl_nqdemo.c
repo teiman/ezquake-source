@@ -78,12 +78,14 @@ void CL_ParseStaticSound (void);
 #define	SU_VELOCITY2	(1<<6)
 #define	SU_VELOCITY3	(1<<7)
 //define	SU_AIMENT		(1<<8)  AVAILABLE BIT
+//#define	SU_WEAPONSKIN		(1<<8)  //Tei 
 #define	SU_ITEMS		(1<<9)
 #define	SU_ONGROUND		(1<<10)		// no data follows, the bit is it
 #define	SU_INWATER		(1<<11)		// no data follows, the bit is it
 #define	SU_WEAPONFRAME	(1<<12)
 #define	SU_ARMOR		(1<<13)
 #define	SU_WEAPON		(1<<14)
+//#define	SU_WEAPONSKIN	(1<<15)
 
 // a sound with no channel is a local only sound
 #define	NQ_SND_VOLUME		(1<<0)		// a byte
@@ -247,6 +249,12 @@ static void NQD_ParseClientdata (int bits)
 		view_message.weaponframe = MSG_ReadByte ();
 	else
 		view_message.weaponframe = 0;
+
+
+	//if (bits & SU_WEAPONSKIN) //Tei
+	//	view_message.weaponskin = MSG_ReadByte();
+	//else
+	//	view_message.weaponskin = 0;
 
 	if (bits & SU_ARMOR)
 		i = MSG_ReadByte ();
@@ -919,8 +927,8 @@ void NQD_LinkEntities (void)
 
 	memset (&ent, 0, sizeof(ent));
 
-	for (num = 1; num < nq_num_entities; num++)
-	{
+	for (num = 1; num < nq_num_entities; num++){
+
 		cent = &cl_entities[num];
 		state = &cent->current;
 
@@ -955,6 +963,7 @@ void NQD_LinkEntities (void)
 				CL_NewDlight(state->number, cur_origin, 400 + flicker, 0.1, lt_default, 0);
 			}
 		}
+
 		if (state->effects & EF_DIMLIGHT) {
 			if (state->modelindex != cl_modelindices[mi_player] || r_powerupglow.integer) {
 				CL_NewDlight(state->number, cur_origin, 200 + flicker, 0.1, lt_default, 0);
@@ -972,13 +981,7 @@ void NQD_LinkEntities (void)
 		if (!model) {
 			Host_Error("CL_LinkPacketEntities: bad modelindex");
 		}
-
-		if (cl_rocket2grenade.value && cl_modelindices[mi_grenade] != -1) {
-			if (state->modelindex == cl_modelindices[mi_rocket]) {
-				ent.model = cl.model_precache[cl_modelindices[mi_grenade]];
-			}
-		}
-
+				
 		modelflags = R_ModelFlags (model);
 
 		// rotate binary objects locally
@@ -986,10 +989,11 @@ void NQD_LinkEntities (void)
 			ent.angles[0] = 0;
 			ent.angles[1] = autorotate;
 			ent.angles[2] = 0;
-		}
-		else {
+		} else {
 			AngleInterpolate(cent->old_angles, f, cent->current.angles, ent.angles);
 		}
+
+		//Con_Printf("nq netcode\n");
 
 		// calculate origin
 		for (i = 0; i < 3; i++) {
@@ -1162,8 +1166,7 @@ static void NQD_ParseServerMessage (void)
 			break;
 
 		case svc_disconnect:
-			Com_Printf ("\n======== End of demo ========\n\n");
-//##			CL_NextDemo ();
+			Com_Printf ("\n======== End of demo ========\n\n");			
 			Host_EndGame ();
 			Host_Abort ();
 			break;
@@ -1204,8 +1207,12 @@ static void NQD_ParseServerMessage (void)
 
 		case svc_lightstyle:
 			i = MSG_ReadByte ();
-			if (i >= MAX_LIGHTSTYLES)
-				Sys_Error ("svc_lightstyle > MAX_LIGHTSTYLES");
+			if (i >= MAX_LIGHTSTYLES) {
+				Con_Printf("ERROR: svc_lightstyle > MAX_LIGHTSTYLES");
+				MSG_ReadString();//Tei we read the string, but we don't want it.
+				break;
+			}
+
 			strlcpy (cl_lightstyle[i].map,  MSG_ReadString(), sizeof(cl_lightstyle[0].map));
 			cl_lightstyle[i].length = strlen(cl_lightstyle[i].map);
 			break;

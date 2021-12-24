@@ -270,16 +270,19 @@ void V_ParseDamage (void)
 	float side, count, fraction;
 
 	armor = MSG_ReadByte ();
-	blood = MSG_ReadByte ();
+	blood = MSG_ReadByte ();	
 	for (i = 0; i < 3; i++)
 		from[i] = MSG_ReadCoord ();
-
+	
 	if (cls.mvdplayback && cls.lastto >= 0 && cls.lastto < MAX_CLIENTS) {
 		cl.players[cls.lastto].max_health_last_set = cls.demotime;
 	}
 
 	if (CL_Demo_SkipMessage(true))
 		return;
+
+	//SCR_CenterPrint("Ouch!");	
+	//R_TeleportSplash(from);
 
 	count = blood * 0.5 + armor * 0.5;
 	if (count < 10)
@@ -522,6 +525,7 @@ void V_CalcPowerupCshift(void)
 		cl.cshifts[CSHIFT_POWERUP].percent = 30 * fraction;
 	} else {
 		cl.cshifts[CSHIFT_POWERUP].percent = 0;
+
 	}
 }
 
@@ -536,8 +540,7 @@ void V_CalcBlend (void)
 	if (cls.state != ca_active) {
 		cl.cshifts[CSHIFT_CONTENTS] = cshift_empty;
 		cl.cshifts[CSHIFT_POWERUP].percent = 0;
-	}
-	else {
+	} else {
 		V_CalcPowerupCshift ();
 	}
 
@@ -599,8 +602,7 @@ void V_AddLightBlend(float r, float g, float b, float a2, qbool suppress_polyble
 		r = 1.0f;
 		g = 0.5f;
 		b = 0.0f;
-	}
-	else {
+	} else {
 		// some kind of scaling, the normal colors aren't full red/blue etc
 		float max = max(r, max(g, b));
 
@@ -827,36 +829,32 @@ static int V_CurrentWeaponModel(void)
 			cl.lastfired = realw;
 			cl.lastviewplayernum = cl.viewplayernum;
 			return realw;
-		}
-		else if (cl.lastfired) {
+		} else if (cl.lastfired) {
 			if (cl.lastviewplayernum == cl.viewplayernum) {
 				return cl.lastfired;
-			}
-			else {
+			}	else {
 				cl.lastfired = realw;
 				cl.lastviewplayernum = cl.viewplayernum;
 				return realw;
 			}
-		}
-		else {
+		} else {
 			return realw;
 		}
-	}
-	else {
-		if (ShowPreselectedWeap() && r_viewpreselgun.integer && !view_message.weaponframe) {
-			bestgun = IN_BestWeaponReal(true);
-			if (bestgun == 1) {
-				return cl_modelindices[mi_vaxe];
-			}
-			if (bestgun > 1 && bestgun <= 8) {
-				return cl_modelindices[mi_weapon1 - 1 + bestgun];
-			}
-		}
+	} else {
 		return cl.stats[STAT_WEAPON];
 	}
 }
 
 extern void TP_ParseWeaponModel(model_t *model);
+
+float blood_0_visible = 0;
+float blood_0_finished = 0;
+float blood_1_visible = 0;
+float blood_1_finished = 0;
+float blood_2_visible = 0;
+float blood_2_finished = 0;
+float blood_3_visible = 0;
+float blood_3_finished = 0;
 
 static void V_AddViewWeapon(float bob)
 {
@@ -873,6 +871,82 @@ static void V_AddViewWeapon(float bob)
 		|| cl.stats[STAT_ITEMS] & IT_INVISIBILITY || cl.stats[STAT_HEALTH] <= 0 || !Cam_DrawViewModel()) {
 		cent->current.modelindex = 0;	//no model
 		return;
+	}
+
+	//Tei, draw blood
+	mpic_t* blood = Draw_CachePic(CACHEPIC_BLOOD1);	
+	float time_show_blood = 3;
+
+	// blood 0
+	if (cl.stats[STAT_HEALTH] < 80) {
+		if (!blood_0_visible) {
+			blood_0_visible = 1;
+			blood_0_finished = cl.time + time_show_blood;
+		}
+	} else {
+		blood_0_visible = 0;
+		blood_0_finished = 0;
+	}
+
+	if (blood_0_visible) {
+		if (blood_0_finished > cl.time) {
+			float delta = blood_0_finished - cl.time;
+			Draw_SAlphaPic(0, delta *2, blood, 0.4 * (delta / time_show_blood), 0.2);
+		}
+	}
+
+	// blood 1
+	if (cl.stats[STAT_HEALTH] < 70) {
+		if (!blood_1_visible) {
+			blood_1_visible = 1;
+			blood_1_finished = cl.time + time_show_blood;
+		}
+	} else {
+		blood_1_visible = 0;
+		blood_1_finished = 0;
+	}
+
+	if (blood_1_visible) {
+		if (blood_1_finished > cl.time) {
+			float delta = blood_1_finished - cl.time;
+			Draw_SAlphaPic(90, 200, blood, 0.6 * (delta / time_show_blood), 0.5);
+		}
+	}
+
+	// blood 2
+	if (cl.stats[STAT_HEALTH] < 40) {
+		if (!blood_2_visible) {
+			blood_2_visible = 1;
+			blood_2_finished = cl.time + time_show_blood;
+		}
+	} else {
+		blood_2_visible = 0;
+		blood_2_finished = 0;
+	}
+
+	if (blood_2_visible) {
+		if (blood_2_finished > cl.time) {
+			float delta = blood_2_finished - cl.time;
+			Draw_SAlphaPic(200, 10, blood, 0.8 * (delta / time_show_blood), 0.4);
+		}
+	}
+
+	// blood 3
+	if (cl.stats[STAT_HEALTH] < 20) {
+		if (!blood_3_visible) {
+			blood_3_visible = 1;
+			blood_3_finished = cl.time + time_show_blood;
+		}
+	}else {
+		blood_3_visible = 0;
+		blood_3_finished = 0;
+	}
+
+	if (blood_3_visible) {
+		if (blood_3_finished > cl.time) {
+			float delta = blood_3_finished - cl.time;
+			Draw_SAlphaPic(200, 320, blood, 0.7 * (delta / time_show_blood), 0.4);
+		}
 	}
 
 	//angles
@@ -910,8 +984,7 @@ static void V_AddViewWeapon(float bob)
 
 	if (cent->current.modelindex != gunmodel) {
 		cent->frametime = -1;
-	}
-	else {
+	} else {
 		if (cent->current.frame != view_message.weaponframe) {
 			cent->frametime = cl.time;
 			cent->oldframe = cent->current.frame;
@@ -920,6 +993,7 @@ static void V_AddViewWeapon(float bob)
 
 	cent->current.modelindex = gunmodel;
 	cent->current.frame = view_message.weaponframe;
+	//cent->current.skinnum = view_message.weaponskin; //Tei
 }
 
 static void V_CalcIntermissionRefdef(void)

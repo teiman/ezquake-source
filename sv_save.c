@@ -99,7 +99,7 @@ void SV_SaveGame_f(void)
 		Con_Printf ("Can't save in intermission.\n");
 		return;
 #endif
-	} else if (deathmatch.value != 0 || coop.value != 0 || maxclients.value != 1) {
+	} else if ( coop.value != 0 || maxclients.value != 1) {
 		Con_Printf ("Can't save multiplayer games.\n");
 		return;
 	}

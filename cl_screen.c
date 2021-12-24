@@ -104,7 +104,7 @@ cvar_t	scr_conspeed			= {"scr_conspeed", "9999"};
 cvar_t	scr_showturtle			= {"showturtle", "0"};
 cvar_t	scr_showpause			= {"showpause", "1"};
 
-cvar_t	scr_newHud              = {"scr_newhud", "0"};
+cvar_t	scr_newHud              = {"scr_newhud", "1"};
 
 cvar_t	show_velocity_3d		= {"show_velocity_3d", "0"};
 cvar_t	show_velocity_3d_offset_forward	= {"show_velocity_3d_offset_forward", "2.5"};
@@ -711,7 +711,10 @@ void SCR_DrawMultiviewIndividualElements(void)
 	// Crosshair
 	if ((key_dest != key_menu) && (scr_showcrosshair.integer || (!sb_showscores && !sb_showteamscores))) {
 		if (!CL_MultiviewInsetView() || cl_mvinsetcrosshair.integer) {
-			Draw_Crosshair();
+			//Tei: only show if health is okay. Death people don't aim good.
+			if(HUD_Stats(STAT_HEALTH) > 0){
+				Draw_Crosshair();
+			}
 		}
 	}
 
@@ -735,14 +738,11 @@ static void SCR_DrawElements(void)
 	extern qbool  sb_showscores,  sb_showteamscores;
 	extern cvar_t	scr_menudrawhud;
 
-	if (scr_drawloading) 
-	{
+	if (scr_drawloading)  {
 		SCR_DrawLoading ();
-		Sbar_Draw ();
-		HUD_Draw ();		// HUD -> hexum
-	}
-	else 
-	{
+		//Sbar_Draw ();//Tei dont know what is doing, but probably we don't need it
+		//HUD_Draw ();		// HUD -> hexum
+	} else 	{
 		SCR_UpdateCursor();
 
 		if( !(!scr_menudrawhud.integer && (m_state != m_none)) || (!scr_menudrawhud.integer && (m_state == m_proxy)) )
@@ -769,34 +769,27 @@ static void SCR_DrawElements(void)
 				SCR_DrawAccel();
 #endif
 
-				if (!sb_showscores && !sb_showteamscores) 
-				{ 
+				SCR_DrawAutoID();
+
+				if (!sb_showscores && !sb_showteamscores) { 
 					// Do not show if +showscores
-					SCR_DrawPause();
-
-					SCR_DrawAutoID();
-
+					SCR_DrawPause();					
 					SCR_DrawAntilagIndicators();
-
 					SCR_DrawDamageIndicators();
-
 					SCR_VoiceMeter();
 				}
 
-				if (!cl.intermission) 
-				{
-					if ((key_dest != key_menu) && (scr_showcrosshair.integer || (!sb_showscores && !sb_showteamscores)))
-					{
-						Draw_Crosshair ();
+				if (!cl.intermission) {
+					if ((key_dest != key_menu) && (scr_showcrosshair.integer || (!sb_showscores && !sb_showteamscores))){
+						if(HUD_Stats(STAT_HEALTH) > 0){
+							Draw_Crosshair();
+						}
 					}
 
 					// Do not show if +showscores
-					if (!sb_showscores && !sb_showteamscores)
-					{ 
+					if (!sb_showscores && !sb_showteamscores){ 
 						SCR_Draw_TeamInfo();
-
 						SCR_Draw_ShowNick();
-
 						SCR_CenterString_Draw();
 						SCR_DrawSpeed();
 						SCR_DrawClocks();
@@ -828,7 +821,6 @@ static void SCR_DrawElements(void)
 
 		if (!SCR_TakingAutoScreenshot()) {
 			SCR_DrawConsole();
-
 			M_Draw();
 		}
 
@@ -962,8 +954,7 @@ static void SCR_DrawNewHudElements(void)
 	if (hud_weaponstats == NULL)
 		hud_weaponstats = HUD_Find("weaponstats");
 
-	if (r_netgraph.value)
-	{
+	if (r_netgraph.value){
 		float temp = hud_netgraph->show->value;
 
 		Cvar_SetValue(hud_netgraph->show, 1);
@@ -971,8 +962,7 @@ static void SCR_DrawNewHudElements(void)
 		Cvar_SetValue(hud_netgraph->show, temp);
 	}
 
-	if (r_netstats.value)
-	{
+	if (r_netstats.value){
 		float temp = hud_netstats->show->value;
 
 		Cvar_SetValue(hud_netstats->show, 1);

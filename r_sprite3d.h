@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_R_SPRITE3D_HEADER
-#define EZQUAKE_R_SPRITE3D_HEADER
+#ifndef TKQUAKE_R_SPRITE3D_HEADER
+#define TKQUAKE_R_SPRITE3D_HEADER
 
 #include "r_state.h"
 
@@ -105,4 +105,4 @@ void R_Sprite3DCreateIndexBuffer(void);
 void R_Sprite3DCreateVBO(void);
 void R_Sprite3DClearBatches(void);
 
-#endif // EZQUAKE_R_SPRITE3D_HEADER
+#endif // TKQUAKE_R_SPRITE3D_HEADER

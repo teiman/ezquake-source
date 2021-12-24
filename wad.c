@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 	$Id: wad.c,v 1.20 2007-10-04 14:56:54 dkure Exp $
 */
-// wad.c
+// wad.c - management for wad files (pack of textures)
 
 #include "quakedef.h"
 #include "gl_model.h"
@@ -146,12 +146,11 @@ lumpinfo_t *W_GetLumpinfo(const char *name)
 		}
 	}
 
-	Sys_Error("W_GetLumpinfo: %s not found", name);
+	Con_Printf("W_GetLumpinfo: %s not found", name);//Tei, it was fatal
 	return NULL;
 }
 
-void* W_GetLumpName(const char *name)
-{
+void* W_GetLumpName(const char *name) {
 	lumpinfo_t* lump = W_GetLumpinfo(name);
 
 	// Make sure we have a lump. 

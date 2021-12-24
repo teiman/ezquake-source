@@ -236,7 +236,9 @@ size_t strlcpy(char *dst, const char *src, size_t siz)
 	/* Copy as many bytes as will fit */
 	if (n != 0 && --n != 0) {
 		do {
-			if ((*d++ = *s++) == 0)
+			if ((*d++ = *s++) == 0) 
+				// r00k made a cool map with lotsa ogres and it crashed here
+				// ... meaning this part of the code is the one first to break when things go wrong
 				break;
 		} while (--n != 0);
 	}
@@ -882,16 +884,16 @@ void SZ_Print(sizebuf_t *buf, char *data)
 #ifdef DEBUG_MEMORY_ALLOCATIONS
 static unsigned int allocation_number = 0;
 
-typedef struct ezquake_memory_block_s {
+typedef struct tkquake_memory_block_s {
 	char filename[MAX_OSPATH];
 	char label[64];
 	int line_number;
 	size_t size;
 	unsigned int allocation_number;
-} ezquake_memory_block_t;
+} tkquake_memory_block_t;
 
-#define MEMORY_BLOCK_FOR_PTR(ptr) ((ezquake_memory_block_t*) (((intptr_t)ptr) - sizeof(ezquake_memory_block_t)));
-#define PTR_FOR_MEMORY_BLOCK(block) (void*)(((intptr_t)block) + sizeof(ezquake_memory_block_t))
+#define MEMORY_BLOCK_FOR_PTR(ptr) ((tkquake_memory_block_t*) (((intptr_t)ptr) - sizeof(tkquake_memory_block_t)));
+#define PTR_FOR_MEMORY_BLOCK(block) (void*)(((intptr_t)block) + sizeof(tkquake_memory_block_t))
 
 static void Q_malloc_register(const char* file, int line)
 {
@@ -923,7 +925,7 @@ void* Q_malloc(size_t size)
 {
 #ifdef DEBUG_MEMORY_ALLOCATIONS
 	void *p;
-	ezquake_memory_block_t* block = malloc(sizeof(ezquake_memory_block_t) + size);
+	tkquake_memory_block_t* block = malloc(sizeof(tkquake_memory_block_t) + size);
 
 	Sys_Printf("\nmemory,alloc,%u,%s,%d,%u,%s\n", allocation_number, file, line, size, label ? label : "");
 
@@ -978,20 +980,20 @@ void *Q_calloc(size_t n, size_t size)
 }
 
 #ifdef DEBUG_MEMORY_ALLOCATIONS
-#define EZQUAKE_SAFE_REALLOC
+#define TKQUAKE_SAFE_REALLOC
 void* Q_realloc_debug(void* p, size_t newsize, const char* file, int line, const char* label)
 {
-	ezquake_memory_block_t* block = NULL;
+	tkquake_memory_block_t* block = NULL;
 	size_t old_size = 0;
 
-#ifdef EZQUAKE_SAFE_REALLOC
+#ifdef TKQUAKE_SAFE_REALLOC
 	if (p && old_size)
 	{
 		void* new_buffer;
 
 		// To be sure we're not assuming the memory block is extended, allocate and re-allocate (can catch some bugs)
 		block = MEMORY_BLOCK_FOR_PTR(p);
-		new_buffer = Q_malloc_debug(newsize + sizeof(ezquake_memory_block_t), file, line, label);
+		new_buffer = Q_malloc_debug(newsize + sizeof(tkquake_memory_block_t), file, line, label);
 		if (!new_buffer) {
 			return NULL;
 		}
@@ -1007,7 +1009,7 @@ void* Q_realloc_debug(void* p, size_t newsize, const char* file, int line, const
 	}
 	Sys_Printf("\nmemory,alloc(realloc),%u,%s,%d,%u,%s\n", allocation_number, file, line, newsize, label ? label : "");
 
-	block = p = realloc(block, newsize + sizeof(ezquake_memory_block_t));
+	block = p = realloc(block, newsize + sizeof(tkquake_memory_block_t));
 
 	strlcpy(block->filename, file, sizeof(block->filename));
 	block->line_number = line;
@@ -1018,7 +1020,7 @@ void* Q_realloc_debug(void* p, size_t newsize, const char* file, int line, const
 	}
 	Q_malloc_register(file, line);
 
-	return (void*)(((intptr_t)p) + sizeof(ezquake_memory_block_t));
+	return (void*)(((intptr_t)p) + sizeof(tkquake_memory_block_t));
 }
 #else
 void *Q_realloc(void *p, size_t newsize)
@@ -1035,7 +1037,7 @@ void *Q_realloc(void *p, size_t newsize)
 void Q_free_debug(void* ptr, const char* file, int line)
 {
 	if (ptr) {
-		ezquake_memory_block_t* block = MEMORY_BLOCK_FOR_PTR(ptr);
+		tkquake_memory_block_t* block = MEMORY_BLOCK_FOR_PTR(ptr);
 
 		Sys_Printf("\nmemory,free,%u,%s,%d,%u,%s,%d\n", block->allocation_number, block->filename, block->line_number, block->size, file, line);
 

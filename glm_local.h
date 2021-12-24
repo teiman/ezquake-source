@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_GLM_LOCAL_HEADER
-#define EZQUAKE_GLM_LOCAL_HEADER
+#ifndef TKQUAKE_GLM_LOCAL_HEADER
+#define TKQUAKE_GLM_LOCAL_HEADER
 
 void GLM_BuildCommonTextureArrays(qbool vid_restart);
 void GLM_Shutdown(r_shutdown_mode_t mode);
@@ -119,4 +119,4 @@ typedef enum {
 void GLM_DrawWorldModelBatch(glm_brushmodel_drawcall_type type);
 void GLM_DrawWorld(void);
 
-#endif // EZQUAKE_GLM_LOCAL_HEADER
+#endif // TKQUAKE_GLM_LOCAL_HEADER

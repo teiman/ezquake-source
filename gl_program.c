@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018 ezQuake team
+Copyright (C) 2018 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -386,7 +386,7 @@ GL_StaticProcedureDeclaration(glDispatchCompute, "num_groups_x=%u, num_groups_y=
 GL_StaticProcedureDeclaration(glMemoryBarrier, "barriers=%u", GLbitfield barriers)
 
 #define MAX_SHADER_COMPONENTS 6
-#define EZQUAKE_DEFINITIONS_STRING "#ezquake-definitions"
+#define TKQUAKE_DEFINITIONS_STRING "#tkquake-definitions"
 
 static char core_definitions[512];
 
@@ -563,18 +563,18 @@ static int GL_InsertDefinitions(
 	}
 #endif
 
-	break_point = safe_strstr(strings[0], lengths[0], EZQUAKE_DEFINITIONS_STRING);
+	break_point = safe_strstr(strings[0], lengths[0], TKQUAKE_DEFINITIONS_STRING);
 	
 	if (break_point) {
 		int position = break_point - strings[0];
 
-		lengths[5] = lengths[0] - position - strlen(EZQUAKE_DEFINITIONS_STRING);
+		lengths[5] = lengths[0] - position - strlen(TKQUAKE_DEFINITIONS_STRING);
 		lengths[4] = definitions ? strlen(definitions) : 0;
 		lengths[3] = strlen(core_definitions);
 		lengths[2] = glsl_common_glsl_len;
 		lengths[1] = glsl_constants_glsl_len;
 		lengths[0] = position;
-		strings[5] = break_point + strlen(EZQUAKE_DEFINITIONS_STRING);
+		strings[5] = break_point + strlen(TKQUAKE_DEFINITIONS_STRING);
 		strings[4] = definitions ? definitions : "";
 		strings[3] = core_definitions;
 		strings[2] = (const char*)glsl_common_glsl;

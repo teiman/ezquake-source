@@ -1,7 +1,7 @@
 /*
 Module for common graphics (soft and GL)
 
-Copyright (C) 2011 ezQuake team and kazik
+Copyright (C) 2011 tkQuake team and kazik
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

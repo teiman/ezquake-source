@@ -18,8 +18,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_R_TEXTURE_H
-#define EZQUAKE_R_TEXTURE_H
+#ifndef TKQUAKE_R_TEXTURE_H
+#define TKQUAKE_R_TEXTURE_H
 
 #define TEX_COMPLAIN        (1<<0)  // shout if texture missing while loading
 #define TEX_MIPMAP          (1<<1)  // use mipmaps generation while loading texture
@@ -144,4 +144,4 @@ void R_TextureSetFlag(texture_ref ref, int mode);
 
 void R_SetTextureArraySize(texture_ref tex, int width, int height, int depth, int bpp);
 
-#endif	// EZQUAKE_R_TEXTURE_H
+#endif	// TKQUAKE_R_TEXTURE_H

@@ -242,13 +242,13 @@ int strlen_color_by_terminator(const char *str, char terminator)
 	return len;
 }
 
-// don't count ezquake color sequence
+// don't count tkquake color sequence
 int strlen_color(const char *str)
 {
 	return strlen_color_by_terminator(str, 0);
 }
 
-// skip ezquake color sequence
+// skip tkquake color sequence
 void Util_SkipEZColors(char *dst, const char *src, size_t size)
 {
 	if (!dst || !src) {

@@ -2,7 +2,7 @@
 #ifndef __EZ_LISTVIEWITEM_H__
 #define __EZ_LISTVIEWITEM_H__
 /*
-Copyright (C) 2008 ezQuake team
+Copyright (C) 2008 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

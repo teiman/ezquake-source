@@ -1,6 +1,6 @@
 #version 430
 
-#ezquake-definitions
+#tkquake-definitions
 
 layout(location = 0) in vec3 position;
 layout(location = 6) in int _instanceId;

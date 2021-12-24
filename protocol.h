@@ -30,8 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifdef PROTOCOL_VERSION_FTE 
 
-// qqshka: FTE_PEXT_ACCURATETIMINGS - not actually used in ezquake.
-//			I added it to ezquake in hope what someone made some rockets(enitities) smoothing code...
+// qqshka: FTE_PEXT_ACCURATETIMINGS - not actually used in tkquake.
+//			I added it to tkquake in hope what someone made some rockets(enitities) smoothing code...
 //			But it not happens, so better turn it off.
 #define	FTE_PEXT_TRANS				0x00000008	// .alpha support
 //#define FTE_PEXT_ACCURATETIMINGS	0x00000040
@@ -282,6 +282,8 @@ void MSG_DecodeMVDSVWeaponFlags(int flags, int* weaponmode, int* weaponhide, qbo
 #define	PF_WEAPONFRAME	(1 << 8)		// only sent for view player
 #define	PF_DEAD			(1 << 9)		// don't block movement any more
 #define	PF_GIB			(1 << 10)		// offset the view height differently
+//#define PF_WEAPONSKIN   (1 << 11)	//Tei
+
 // bits 11..13 are player move type bits (ZQuake extension)
 #define PF_PMC_SHIFT	11
 #define	PF_PMC_MASK		7
@@ -324,6 +326,8 @@ void MSG_DecodeMVDSVWeaponFlags(int flags, int* weaponmode, int* weaponhide, qbo
 #define DF_GIB			(1 << 9)
 #define DF_WEAPONFRAME	(1 << 10)
 #define DF_MODEL		(1 << 11)
+//#define DF_WEAPONSKIN	(1 << 12)	//Tei weapon frame 
+
 
 
 //==============================================

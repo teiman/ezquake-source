@@ -1,6 +1,6 @@
 #version 120
 
-#ezquake-definitions
+#tkquake-definitions
 
 #ifdef TEXTURING_ENABLED
 uniform sampler2D texSampler;

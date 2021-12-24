@@ -1381,7 +1381,7 @@ msversion.bat</Command>
     </ClCompile>
     <ClCompile Include="EX_FileList.c" />
     <ClCompile Include="EX_qtvlist.c" />
-    <ClCompile Include="ezquake-icon.c" />
+    <ClCompile Include="tkquake-icon.c" />
     <ClCompile Include="ez_button.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='dbg-modern|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='dbg-all|Win32'">false</ExcludedFromBuild>

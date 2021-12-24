@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_GLC_LOCAL_HEADER
-#define EZQUAKE_GLC_LOCAL_HEADER
+#ifndef TKQUAKE_GLC_LOCAL_HEADER
+#define TKQUAKE_GLC_LOCAL_HEADER
 
 void GLC_FreeAliasPoseBuffer(void);
 void GLC_Shutdown(r_shutdown_mode_t mode);

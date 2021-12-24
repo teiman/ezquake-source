@@ -324,7 +324,7 @@ static void Cmd_New_f (void)
 			"  to connect to this server.\n"
 			"Set /cl_pext_floatcoords 1, or upgrade.\n"
 			"Please upgrade to one of the following:\n"
-			"> ezQuake 2.2 (https://ezquake.github.io)\n"
+			"> tkQuake 2.2 (https://tkquake.github.io)\n"
 			"> fodquake 0.4 (http://fodquake.net)\n"
 			"> FTEQW (http://fte.triptohell.info/)\n");
 		if (!sv_client->spectator) {
@@ -344,7 +344,7 @@ static void Cmd_New_f (void)
 			"  entity limits, some enemies/projectiles\n"
 			"  may be invisible to you.\n"
 			"Please upgrade to one of the following:\n"
-			"> ezQuake 2.2 (https://ezquake.github.io)\n"
+			"> tkQuake 2.2 (https://tkquake.github.io)\n"
 			"> fodquake 0.4 (http://fodquake.net)\n"
 			"> FTEQW (http://fte.triptohell.info/)\n");
 	}

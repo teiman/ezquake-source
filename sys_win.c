@@ -660,7 +660,7 @@ void WinCheckOSInfo(void)
 	}
 
 	if (vinfo.dwPlatformId != VER_PLATFORM_WIN32_NT || vinfo.dwMajorVersion < 5 || (vinfo.dwMajorVersion == 5 && vinfo.dwMinorVersion < 1)) {
-		Sys_Error("ezQuake requires at least Windows XP.");
+		Sys_Error("tkQuake requires at least Windows XP.");
 		return;
 	}
 
@@ -681,12 +681,13 @@ void WinCheckOSInfo(void)
 
 void Sys_Init_ (void) 
 {
+
+	//Tei - we want multiple clients at once because we can do cool things with it and we are not scared
+	//  of the problem of people opening more than one client 
+	#if 0
 	// Allocate a named semaphore on the client so the front end can tell if it is alive.
 	// Enabled for development purposes, but disabled for official builds.
-
-#ifdef _DEBUG
 	if (!COM_CheckParm(cmdline_param_client_allowmultipleclients))
-#endif
 	{
 		// Mutex will fail if semaphore already exists.
 		qwclsemaphore = CreateMutex(
@@ -726,6 +727,8 @@ void Sys_Init_ (void)
 			1,			// Maximum count
 			"qwcl");	// Semaphore name
 	}
+	#endif
+
 
 	Sys_InitDoubleTime ();
 }
@@ -817,12 +820,12 @@ static qbool Sys_CheckIfQWProtocolHandler(void)
 
 		#if 0
 		// This checks if the current exe is associated with, otherwise it will prompt the user
-		// a bit more "in the face" if the user has more than one ezquake version.
+		// a bit more "in the face" if the user has more than one tkquake version.
 		{
 			char exe_path[MAX_PATH];
 		
 			// Get the long path of the current process.
-			// C:\Program Files\Quake\ezquake-gl.exe
+			// C:\Program Files\Quake\tkquake-gl.exe
 			Sys_GetFullExePath(exe_path, sizeof(exe_path), true);
 
 			if (strstri(reg_path, exe_path) || strstri(expanded_reg_path, exe_path))
@@ -833,7 +836,7 @@ static qbool Sys_CheckIfQWProtocolHandler(void)
 			}
 
 			// Get the short path and check if that matches instead.
-			// C:\Program~1\Quake\ezquake-gl.exe
+			// C:\Program~1\Quake\tkquake-gl.exe
 			Sys_GetFullExePath(exe_path, sizeof(exe_path), false);
 
 			if (strstri(reg_path, exe_path) || strstri(expanded_reg_path, exe_path))
@@ -843,11 +846,11 @@ static qbool Sys_CheckIfQWProtocolHandler(void)
 			}
 		}
 		#else
-		// Only check if ezquake is in the string that associates with the qw:// protocol
-		// so if you have several ezquake exes it won't bug you if you just switch between those
+		// Only check if tkquake is in the string that associates with the qw:// protocol
+		// so if you have several tkquake exes it won't bug you if you just switch between those
 		// (Only one will be registered as the protocol handler though ofcourse).
 
-		if (strstri(reg_path, "ezquake"))
+		if (strstri(reg_path, "tkquake"))
 		{
 			CloseHandle(hk);
 			return true;
@@ -862,7 +865,7 @@ static qbool Sys_CheckIfQWProtocolHandler(void)
 
 void Sys_CheckQWProtocolHandler(void)
 {
-	// Verify that ezQuake is associated with the QW:// protocl handler.
+	// Verify that tkQuake is associated with the QW:// protocl handler.
 	//
 	#define INITIAL_CON_WIDTH 35
 	extern cvar_t cl_verify_qwprotocol;
@@ -870,11 +873,15 @@ void Sys_CheckQWProtocolHandler(void)
 	if (cl_verify_qwprotocol.integer >= 2) {
 		// Always register the qw:// protocol.
 		Cbuf_AddText("register_qwurl_protocol quiet\n");
-	} else if (cl_verify_qwprotocol.integer == 1 && !Sys_CheckIfQWProtocolHandler()) {
+	} 
+	
+	/*
+	*  Tei: tkQuake don't want that protocol for himself
+	else if (cl_verify_qwprotocol.integer == 1 && !Sys_CheckIfQWProtocolHandler()) {
 		// Check if the running exe is the one associated with the qw:// protocol.
 		Com_PrintVerticalBar(INITIAL_CON_WIDTH);
 		Com_Printf("\n");
-		Com_Printf("ezQuake is not associated with the ");
+		Com_Printf("tkQuake is not associated with the ");
 		Com_Printf("\x02QW:// protocol. ");
 		Com_Printf("Register it using"); 
 		Com_Printf("\x02/register_qwurl_protocol\n");
@@ -883,7 +890,7 @@ void Sys_CheckQWProtocolHandler(void)
 		Com_Printf("to hide this warning)\n");
 		Com_PrintVerticalBar(INITIAL_CON_WIDTH);
 		Com_Printf("\n\n");
-	}
+	}*/
 }
 
 void Sys_RegisterQWURLProtocol_f(void)
@@ -1120,29 +1127,29 @@ typedef enum qwurl_regkey_e
 //
 void WinSetCheckQWURLRegKey(qwurl_regkey_t val)
 {
-	#define EZQUAKE_REG_SUBKEY			"Software\\ezQuake"
-	#define EZQUAKE_REG_QWPROTOCOLKEY	"AskForQWProtocol"
+	#define TKQUAKE_REG_SUBKEY			"Software\\tkQuake"
+	#define TKQUAKE_REG_QWPROTOCOLKEY	"AskForQWProtocol"
 
 	HKEY keyhandle;
 
 	//
-	// HKCU\Software\ezQuake
+	// HKCU\Software\tkQuake
 	//
 	{
 		DWORD dval = (DWORD)val;
 
 		// Open / Create the key.
-		if (RegCreateKeyEx(HKEY_CURRENT_USER, EZQUAKE_REG_SUBKEY, 
+		if (RegCreateKeyEx(HKEY_CURRENT_USER, TKQUAKE_REG_SUBKEY, 
 			0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &keyhandle, NULL))
 		{
-			Com_Printf_State(PRINT_WARNING, "Could not create HKCU\\"EZQUAKE_REG_SUBKEY"\n");
+			Com_Printf_State(PRINT_WARNING, "Could not create HKCU\"TKQUAKE_REG_SUBKEY\"\n");
 			return;
 		}
 
 		// Set the key value.
-		if (RegSetValueEx(keyhandle, EZQUAKE_REG_QWPROTOCOLKEY, 0, REG_DWORD, (BYTE *)&dval, sizeof(DWORD)))
+		if (RegSetValueEx(keyhandle, TKQUAKE_REG_QWPROTOCOLKEY, 0, REG_DWORD, (BYTE *)&dval, sizeof(DWORD)))
 		{
-			Com_Printf_State(PRINT_WARNING, "Could not set HKCU\\"EZQUAKE_REG_SUBKEY"\\"EZQUAKE_REG_QWPROTOCOLKEY"\n");
+			Com_Printf_State(PRINT_WARNING, "Could not set HKCU\"TKQUAKE_REG_SUBKEY\"\\\"TKQUAKE_REG_QWPROTOCOLKEY\"\n");
 			RegCloseKey(keyhandle);
 			return;
 		}
@@ -1152,7 +1159,7 @@ void WinSetCheckQWURLRegKey(qwurl_regkey_t val)
 }
 
 //
-// Gets the registry value for the "HKCU\Software\ezQuake\AskForQWProtocol key"
+// Gets the registry value for the "HKCU\Software\tkQuake\AskForQWProtocol key"
 //
 qwurl_regkey_t WinGetCheckQWURLRegKey(void)
 {
@@ -1160,7 +1167,7 @@ qwurl_regkey_t WinGetCheckQWURLRegKey(void)
 	DWORD returnval = QWURL_ASK;
 
 	//
-	// HKCU\Software\ezQuake
+	// HKCU\Software\tkQuake
 	//
 	do
 	{		
@@ -1170,17 +1177,17 @@ qwurl_regkey_t WinGetCheckQWURLRegKey(void)
 		LONG returnstatus;
 
 		// Open the key.
-		if ((returnstatus = RegOpenKeyEx(HKEY_CURRENT_USER, EZQUAKE_REG_SUBKEY, 0, KEY_ALL_ACCESS, &keyhandle)) != ERROR_SUCCESS)
+		if ((returnstatus = RegOpenKeyEx(HKEY_CURRENT_USER, TKQUAKE_REG_SUBKEY, 0, KEY_ALL_ACCESS, &keyhandle)) != ERROR_SUCCESS)
 		{
-			Com_Printf_State(PRINT_WARNING, "Could not open HKCU\\"EZQUAKE_REG_SUBKEY", %l\n", returnstatus);
+			Com_Printf_State(PRINT_WARNING, "Could not open HKCU\\\"TKQUAKE_REG_SUBKEY\", %l\n", returnstatus);
 			break;
 		}
 
 
 		// Set the key value.
-		if (RegQueryValueEx(keyhandle, EZQUAKE_REG_QWPROTOCOLKEY, 0, &type, (BYTE *)&val, &size))
+		if (RegQueryValueEx(keyhandle, TKQUAKE_REG_QWPROTOCOLKEY, 0, &type, (BYTE *)&val, &size))
 		{
-			Com_Printf_State(PRINT_WARNING, "Could not set HKCU\\"EZQUAKE_REG_SUBKEY"\\"EZQUAKE_REG_QWPROTOCOLKEY"\n");
+			Com_Printf_State(PRINT_WARNING, "Could not set HKCU\\\"TKQUAKE_REG_SUBKEY\"\\\"TKQUAKE_REG_QWPROTOCOLKEY\"\n");
 			break;
 		}
 
@@ -1230,9 +1237,9 @@ qbool WinCheckQWURL(void)
 	// Instead of creating a completly custom messagebox (which is a major pain)
 	// just show a normal one, but replace the text on the buttons using event hooking.
 	retval = MsgBoxEx(NULL, 
-					"The current ezQuake client is not associated with the qw:// protocol,\n"
-					"which lets you launch ezQuake by opening qw:// URLs (.qtv files).\n\n"
-					"Do you want to associate ezQuake with the qw:// protocol?",
+					"The current tkQuake client is not associated with the qw:// protocol,\n"
+					"which lets you launch tkQuake by opening qw:// URLs (.qtv files).\n\n"
+					"Do you want to associate tkQuake with the qw:// protocol?",
 					"QW URL Protocol", QWURLProtocolButtonsHookProc, MB_YESNOCANCEL | MB_ICONWARNING);
 
 	switch (retval)
@@ -1417,15 +1424,15 @@ void Sys_GetFullExePath(char *path, unsigned int path_length, int long_name)
 	}
 }
 
-#define EZQUAKE_MAILSLOT	"\\\\.\\mailslot\\ezquake"
+#define TKQUAKE_MAILSLOT	"\\\\.\\mailslot\\tkquake"
 #define MAILSLOT_BUFFERSIZE 1024
 
-HANDLE ezquake_server_mailslot;
+HANDLE tkquake_server_mailslot;
 
 void Sys_InitIPC(void)
 {	
-	ezquake_server_mailslot = CreateMailslot( 
-							  EZQUAKE_MAILSLOT,					// Mailslot name
+	tkquake_server_mailslot = CreateMailslot( 
+							  TKQUAKE_MAILSLOT,					// Mailslot name
 							  MAILSLOT_BUFFERSIZE,              // Input buffer size 
 							  0,								// Timeout
 							  NULL);							// Default security attribute 
@@ -1433,7 +1440,7 @@ void Sys_InitIPC(void)
 
 void Sys_CloseIPC(void)
 {
-	CloseHandle(ezquake_server_mailslot);
+	CloseHandle(tkquake_server_mailslot);
 }
 
 void Sys_ReadIPC(void)
@@ -1441,13 +1448,13 @@ void Sys_ReadIPC(void)
 	char buf[MAILSLOT_BUFFERSIZE] = {0};
 	DWORD num_bytes_read = 0;
 
-	if (INVALID_HANDLE_VALUE == ezquake_server_mailslot)
+	if (INVALID_HANDLE_VALUE == tkquake_server_mailslot)
 	{
 		return;
 	}
 
 	// Read client message
-	ReadFile( ezquake_server_mailslot,	// Handle to mailslot 
+	ReadFile( tkquake_server_mailslot,	// Handle to mailslot 
 				buf,						// Buffer to receive data 
 				sizeof(buf),				// Size of buffer 
 				&num_bytes_read,			// Number of bytes read 
@@ -1463,7 +1470,7 @@ unsigned int Sys_SendIPC(const char *buf)
 	qbool result = false;
 
 	// Connect to the server mailslot using CreateFile()
-	hMailslot = CreateFile( EZQUAKE_MAILSLOT,		// Mailslot name 
+	hMailslot = CreateFile( TKQUAKE_MAILSLOT,		// Mailslot name 
 							GENERIC_WRITE,			// Mailslot write only 
 							FILE_SHARE_READ,		// Required for mailslots
 							NULL,					// Default security attributes
@@ -1630,7 +1637,7 @@ void *Sys_GetAddressForName(dllhandle_t *module, const char *exportname)
 // ===========================================================================
 
 // Fakes a backspace character to take Windows out of deadkey mode
-// See: https://github.com/ezQuake/ezquake-source/issues/101
+// See: https://github.com/tkQuake/tkquake-source/issues/101
 // Bug is due to SDL not handling deadkeys correctly - this can probably
 //     be removed in future, once library updated
 // See: https://github.com/flibitijibibo/FNA-MGHistory/issues/277

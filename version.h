@@ -86,7 +86,7 @@ char *VersionStringColour(void);
 char *VersionStringFull(void);
 
 #ifndef SERVERONLY
-#define SERVER_NAME         "EZQUAKE"
+#define SERVER_NAME         "TKQUAKE"
 #else
 #define SERVER_NAME         "MVDSV"
 #endif
@@ -101,15 +101,15 @@ char *VersionStringFull(void);
 #define BUILD_DATE          __DATE__ ", " __TIME__
 #define GIT_COMMIT          ""
 
-// ezQuake URLs etc
-#define EZ_VERSION_WEBSITE "http://www.ezquake.com/"
+// tkQuake URLs etc
+#define EZ_VERSION_WEBSITE "http://www.tkquake.com/"
 #define EZ_MVD_SIGNOFF \
 	"\x1d\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1f\n" \
-	"Recorded by ezQuake (http://www.ezquake.com/)\n" \
+	"Recorded by tkQuake (http://www.tkquake.com/)\n" \
 	"Discord: http://discord.quake.world/\n" \
 	"Forums: http://quakeworld.nu/\n" \
 	"\x1d\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1f\n"
 #define EZ_QWD_SIGNOFF EZ_MVD_SIGNOFF
-	// "\x1d\x1e\x1e\x1e\x1e\x1e\x1e Recorded by ezQuake \x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1f"
+	// "\x1d\x1e\x1e\x1e\x1e\x1e\x1e Recorded by tkQuake \x1e\x1e\x1e\x1e\x1e\x1e\x1e\x1f"
 
 #endif /* !__VERSION_H__ */

@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_CMDLINE_PARAMS_H
-#define EZQUAKE_CMDLINE_PARAMS_H
+#ifndef TKQUAKE_CMDLINE_PARAMS_H
+#define TKQUAKE_CMDLINE_PARAMS_H
 
 #define CMDLINE_DEF(x, str) cmdline_param_ ## x
 
@@ -11,5 +11,5 @@ typedef enum {
 
 #undef CMDLINE_DEF
 
-#endif // EZQUAKE_CMDLINE_PARAMS_H
+#endif // TKQUAKE_CMDLINE_PARAMS_H
 

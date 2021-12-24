@@ -494,7 +494,7 @@ void Skin_AllSkins_f(void)
 	Skin_Skins_f();
 }
 
-//Just show skins which ezquake assign to each player, that depends on alot of variables and different conditions,
+//Just show skins which tkquake assign to each player, that depends on alot of variables and different conditions,
 //so may be useful for checking settings
 void Skin_ShowSkins_f(void)
 {

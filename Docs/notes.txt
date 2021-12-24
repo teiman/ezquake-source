@@ -17,10 +17,50 @@ Drawing stuff
 Defining a new cvar
 	cvar_t cl_chasecam = {"cl_chasecam", "1"};		// "through the eyes" view
 
+We can pull the resolution here:
+	GL_PrintInfoLine("Resolution:", 12, "%dx%d@%dhz [%s]", current.w, current.h, current.refresh_rate, r_fullscreen.integer ? "fullscreen" : "windowed");
+
+Reading the resolution	
+	SDL_DisplayMode current;
+
+	if (SDL_GetCurrentDisplayMode(VID_DisplayNumber(r_fullscreen.value), &current) != 0) {
+		current.refresh_rate = 0; // print 0Hz if we run into problem fetching data
+	}
+
+Registering a new command                                                                                                                                                                                            
+	Cmd_AddCommand("vid_gfxinfo", VID_GfxInfo_f);
+
+Parsing commandline
+	static void VID_ParseCmdLine(void)
+
+
+Restarting the vid (to toggle fullscreen)
+		Key_ClearStates(); // Zzzz
+		con_suppress = true;
+		Cvar_SetValue( &r_fullscreen, !r_fullscreen.integer );
+		Cbuf_AddText( "vid_restart\n" );
+		Cbuf_Execute();
+		con_suppress = false;
+		return;
+
+
+Idea: 
+painframe,  if you get hurt, part of the screen if hidden by fragment of a image, like a cut of a angry face
+make suffering damage more dramatic, is more feedback that it happened (harder to miss)
 
 
 
+Doing things to the sdl window size:
+	static void VID_SetWindowResolution(void){ 
+	...
+	SDL_SetWindowMinimumSize(sdl_window, 320, 240);
+
+Position of the window on the screen
+	vid_xpos
 
 
+Checking if a cmdline command exists
 
-
+	if (COM_CheckParm(cmdline_param_client_video_nodesktopres)) {
+		Cvar_LatchedSetValue(&vid_usedesktopres, 0);
+	}

@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018 ezQuake team
+Copyright (C) 2018 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_GLC_MATRIX_HEADER
-#define EZQUAKE_GLC_MATRIX_HEADER
+#ifndef TKQUAKE_GLC_MATRIX_HEADER
+#define TKQUAKE_GLC_MATRIX_HEADER
 
 #include "r_matrix.h"
 
@@ -42,4 +42,4 @@ void GLC_EndCausticsTextureMatrix(void);
 void GLC_PauseMatrixUpdate(void);
 void GLC_ResumeMatrixUpdate(void);
 
-#endif // EZQUAKE_GLC_MATRIX_HEADER
+#endif // TKQUAKE_GLC_MATRIX_HEADER

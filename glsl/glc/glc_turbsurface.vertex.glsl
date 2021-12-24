@@ -1,6 +1,6 @@
 #version 120
 
-#ezquake-definitions
+#tkquake-definitions
 
 #ifndef FLAT_COLOR
 varying vec2 TextureCoord;

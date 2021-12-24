@@ -28,8 +28,8 @@ $Id: client.h,v 1.74 2007-10-12 00:08:42 cokeman1982 Exp $
 */
 // client.h
 
-#ifndef EZQUAKE_CLIENT_HEADER
-#define EZQUAKE_CLIENT_HEADER
+#ifndef TKQUAKE_CLIENT_HEADER
+#define TKQUAKE_CLIENT_HEADER
 
 #if defined(_MSC_VER) && !defined(__attribute__)
 #define __attribute__(A) /**/
@@ -97,6 +97,7 @@ typedef struct
 	vec3_t		viewangles;		// Only for demos, not from server.
 	vec3_t		velocity;
 	int			weaponframe;
+	//int			weaponskin; //Tei 
 
 	int			modelindex;
 	int			frame;
@@ -508,7 +509,7 @@ typedef struct
 
 	int			mvdplayback;		///< 0 = Not playing MVD; 1 = Playing MVD; 2 = Playing QTV
 	float		qtv_svversion;		///< version of qtvsv/proxy, note it float
-	int			qtv_ezquake_ext;	///< qtv ezquake extensions supported by qtvsv/proxy
+	int			qtv_tkquake_ext;	///< qtv tkquake extensions supported by qtvsv/proxy
 	qbool		qtv_donotbuffer;	///< do not try buffering even if not enough data
 	char        qtv_source[128];    ///< last qtv source sent (so we can re-send with challenge response)
 
@@ -802,7 +803,7 @@ typedef struct visentlist_s {
 
 extern visentlist_t cl_visents;
 
-// ezQuake cvars
+// tkQuake cvars
 extern cvar_t cl_floodprot;
 extern cvar_t cl_fp_messages;
 extern cvar_t cl_fp_persecond;
@@ -1276,4 +1277,4 @@ int IN_BestWeaponReal(qbool rendering_only);
 // hud_common.c
 void CL_RemovePrefixFromName(int player);
 
-#endif // EZQUAKE_CLIENT_HEADER
+#endif // TKQUAKE_CLIENT_HEADER

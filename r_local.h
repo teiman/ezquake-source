@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_R_LOCAL_HEADER
-#define EZQUAKE_R_LOCAL_HEADER
+#ifndef TKQUAKE_R_LOCAL_HEADER
+#define TKQUAKE_R_LOCAL_HEADER
 
 #include "r_buffers.h"
 
@@ -125,4 +125,4 @@ float R_WaterAlpha(void);
 float R_FarPlaneZ(void);
 float R_NearPlaneZ(void);
 
-#endif // EZQUAKE_R_LOCAL_HEADER
+#endif // TKQUAKE_R_LOCAL_HEADER

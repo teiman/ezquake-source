@@ -435,7 +435,7 @@ void CL_UserinfoChanged (char *key, char *string)
 		{
 			if (cls.mvdplayback == QTV_PLAYBACK)
 			{
-				QTV_Cmd_Printf(QTV_EZQUAKE_EXT_SETINFO, "setinfo \"%s\" \"%s\"", key, s);
+				QTV_Cmd_Printf(QTV_TKQUAKE_EXT_SETINFO, "setinfo \"%s\" \"%s\"", key, s);
 			}
 			else
 			{
@@ -704,7 +704,7 @@ void CL_BeginServerConnect(void)
 
 //
 // Parses a QW-URL of the following format 
-// (this can be associated with ezquake in windows by setting some reg info):
+// (this can be associated with tkquake in windows by setting some reg info):
 // qw://server:port/command
 //
 // Supported commands:
@@ -1120,6 +1120,7 @@ void CL_ClearState (void)
 	extern cshift_t	cshift_empty;
 	extern void CL_ProcessServerInfo (void);
 
+	//Tei candidate to removal?
 	S_StopAllSounds();
 
 	Com_DPrintf ("Clearing memory\n");
@@ -1134,6 +1135,7 @@ void CL_ClearState (void)
 	CL_ClearPredict();
 
 	if (cls.state == ca_active) {
+		//Some values will survive 
 		int ideal_track = cl.ideal_track;
 		int autocam = cl.autocam;
 
@@ -1507,7 +1509,7 @@ void CL_ConnectionlessPacket (void)
 					Com_Printf ("===========================\n");
 					Com_Printf ("Invalid localid on command packet received from local host. "
 						"\n|%s| != |%s|\n"
-						"You may need to reload your server browser and ezQuake.\n",
+						"You may need to reload your server browser and tkQuake.\n",
 						s, localid.string);
 					Com_Printf ("===========================\n");
 					Cvar_Set(&localid, "");
@@ -1894,7 +1896,7 @@ static void CL_InitLocal(void)
 	// debugging weapons
 	Cvar_Register(&cl_debug_weapon_view);
 
-	snprintf(st, sizeof(st), "ezQuake %i", REVISION);
+	snprintf(st, sizeof(st), "tkQuake %i", REVISION);
 
 	if (COM_CheckParm (cmdline_param_client_norjscripts) || COM_CheckParm (cmdline_param_client_noscripts))
 		Cvar_SetValue (&allow_scripts, 0);
@@ -2001,8 +2003,8 @@ void EX_FileList_Init(void);
 
 void CL_Init (void) 
 {
-	// When ezquake was launched via a webpage (qtv) the working directory wasn't properly
-	// set. Changing the directory makes sure it starts out in the directory where ezquake 
+	// When tkquake was launched via a webpage (qtv) the working directory wasn't properly
+	// set. Changing the directory makes sure it starts out in the directory where tkquake 
 	// is located.
 	Sys_chdir(com_basedir);
 
@@ -2021,7 +2023,7 @@ void CL_Init (void)
 	ReloadPaletteAndColormap();
 
 	Sys_mkdir(va("%s/qw", com_basedir));
-	Sys_mkdir(va("%s/ezquake", com_basedir));
+	Sys_mkdir(va("%s/tkquake", com_basedir));
 
 	History_Init();
 	V_Init ();
@@ -2717,17 +2719,17 @@ void CL_UpdateCaption(qbool force)
 
 	if (!cl_window_caption.value) {
 		if (!cls.demoplayback && (cls.state == ca_active)) {
-			snprintf(str, sizeof(str), "ezQuake: %s", cls.servername);
+			snprintf(str, sizeof(str), "tkQuake: %s", cls.servername);
 		}
 		else {
-			snprintf(str, sizeof(str), "ezQuake");
+			snprintf(str, sizeof(str), "tkQuake");
 		}
 	}
 	else if (cl_window_caption.integer == 1) {
 		snprintf(str, sizeof(str), "%s - %s", CL_Macro_Serverstatus(), MT_ShortStatus());
 	}
 	else if (cl_window_caption.integer == 2) {
-		snprintf(str, sizeof(str), "ezQuake");
+		snprintf(str, sizeof(str), "tkQuake");
 	}
 
 	if (force || strcmp(str, caption)) {

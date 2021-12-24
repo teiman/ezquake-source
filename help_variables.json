@@ -444,7 +444,7 @@
           "name": "false"
         },
         {
-          "description": "Your client will respond to f_cmdline checks with your current command line used to run current ezQuake instance.",
+          "description": "Your client will respond to f_cmdline checks with your current command line used to run current tkQuake instance.",
           "name": "true"
         }
       ]
@@ -496,7 +496,7 @@
       "type": "boolean",
       "values": [
         {
-          "description": "If you don't want your client to validate other ezQuake clients.",
+          "description": "If you don't want your client to validate other tkQuake clients.",
           "name": "false"
         },
         {
@@ -864,7 +864,7 @@
       "type": "enum",
       "values": [
         {
-          "description": "Do not execute config.tk.cfg and frontend.cfg in gamedir ever.",
+          "description": "Do not execute config_tk.cfg and frontend.cfg in gamedir ever.",
           "name": "0"
         },
         {
@@ -960,7 +960,7 @@
       "default": "0",
       "desc": "When enabled, your main configuration (config.cfg) will be saved when you exit the application.",
       "group-id": "4",
-      "remarks": "Configuration will be saved in the main user configuration file, that is config.cfg which can either be placed in the quake/ezquake/configs in your quakedir, or in your home dir in /ezquake, depending on cfg_use_home setting.",
+      "remarks": "Configuration will be saved in the main user configuration file, that is config.cfg which can either be placed in the quake/tkquake/configs in your quakedir, or in your home dir in /tkquake, depending on cfg_use_home setting.",
       "type": "boolean",
       "values": [
         {
@@ -1028,7 +1028,7 @@
       "type": "boolean",
       "values": [
         {
-          "description": "Save the configuration into <quake>/ezquake/configs",
+          "description": "Save the configuration into <quake>/tkquake/configs",
           "name": "false"
         },
         {
@@ -1223,7 +1223,7 @@
       "default": "0",
       "desc": "Changes the format of the clock which is displayed if cl_clock is non-zero.",
       "group-id": "40",
-      "remarks": "This was changed to an enumerated type in ezQuake 3.5, to match hud_clock_format.",
+      "remarks": "This was changed to an enumerated type in tkQuake 3.5, to match hud_clock_format.",
       "type": "enum",
       "values": [
         {
@@ -2477,7 +2477,7 @@
       "type": "boolean",
       "values": [
         {
-          "description": "Full prediction of players' movement (ezQuake default)",
+          "description": "Full prediction of players' movement (tkQuake default)",
           "name": "false"
         },
         {
@@ -2562,7 +2562,7 @@
     },
     "cl_savehistory": {
       "default": "1",
-      "desc": "Save console commands history to .ezquake_history. Loads history from this file while starting ezquake.",
+      "desc": "Save console commands history to .tkquake_history. Loads history from this file while starting tkquake.",
       "group-id": "5",
       "type": "boolean",
       "values": [
@@ -2601,7 +2601,7 @@
       "default": "0",
       "desc": "When used with cl_sayfilter_coloredtext, sends two versions of the teamplay colored messages: colored one with \"#c\" at the end and uncolored version of the message with \"#u\" at the end of the message.",
       "group-id": "49",
-      "remarks": "FuhQuake users then can use \"filter #u\" to see only uncolored messages, ezQuake users can set \"filter #c\" to see only colored messages.",
+      "remarks": "FuhQuake users then can use \"filter #u\" to see only uncolored messages, tkQuake users can set \"filter #c\" to see only colored messages.",
       "type": "boolean",
       "values": [
         {
@@ -2741,7 +2741,7 @@
       "type": "enum",
       "values": [
         {
-          "description": "Use KOI8-R encoding (ezQuake 2.2 compatible)",
+          "description": "Use KOI8-R encoding (tkQuake 2.2 compatible)",
           "name": "0"
         },
         {
@@ -2786,7 +2786,7 @@
     },
     "cl_useproxy": {
       "default": "0",
-      "desc": "This toggles whether Qizmo should be used (if detected) to a server. When enabled the server browser will use an existing connection to a Qizmo when connecting another server by using the ezQuake Server Browser.",
+      "desc": "This toggles whether Qizmo should be used (if detected) to a server. When enabled the server browser will use an existing connection to a Qizmo when connecting another server by using the tkQuake Server Browser.",
       "group-id": "21",
       "type": "boolean",
       "values": [
@@ -3047,7 +3047,7 @@
       "type": "enum",
       "values": [
         {
-          "description": "Format: ezQuake: address",
+          "description": "Format: tkQuake: address",
           "name": "0"
         },
         {
@@ -3055,7 +3055,7 @@
           "name": "1"
         },
         {
-          "description": "Fixed: ezQuake",
+          "description": "Fixed: tkQuake",
           "name": "2"
         }
       ]
@@ -3564,7 +3564,7 @@
       "default": "",
       "desc": "The filename of the crosshair image.",
       "group-id": "6",
-      "remarks": "Crosshair images should be placed in ./ezquake/crosshairs or ./qw/crosshairs directory.",
+      "remarks": "Crosshair images should be placed in ./tkquake/crosshairs or ./qw/crosshairs directory.",
       "type": "string"
     },
     "crosshairscale": {
@@ -4619,7 +4619,7 @@
           "name": "false"
         },
         {
-          "description": "Search for default and -cyr only (as per ezQuake 2.2)",
+          "description": "Search for default and -cyr only (as per tkQuake 2.2)",
           "name": "true"
         }
       ]
@@ -13504,7 +13504,7 @@
       ]
     },
     "in_mouse": {
-      "desc": "Different types of mouse input\n[OBSOLETE in ezQuake 3.0]",
+      "desc": "Different types of mouse input\n[OBSOLETE in tkQuake 3.0]",
       "group-id": "28",
       "remarks": "Linux: You have to set in_evdevice to proper value (/dev/input/eventX). Use command in_evdevlist to get the lost of proper values. Also in_mmt makes your mouse more smooth.",
       "type": "enum",
@@ -13529,17 +13529,17 @@
     },
     "in_raw": {
       "default": "1",
-      "desc": "Whether or not ezQuake will use raw input to sample mouse events.",
+      "desc": "Whether or not tkQuake will use raw input to sample mouse events.",
       "group-id": "11",
       "remarks": "It is recommended to leave this set.",
       "type": "boolean",
       "values": [
         {
-          "description": "Disabled, correlates to /in_mouse 1 in ezQuake 2.2",
+          "description": "Disabled, correlates to /in_mouse 1 in tkQuake 2.2",
           "name": "false"
         },
         {
-          "description": "Enabled, correlates to /in_mouse 3 in ezQuake 2.2",
+          "description": "Enabled, correlates to /in_mouse 3 in tkQuake 2.2",
           "name": "true"
         }
       ]
@@ -14185,7 +14185,7 @@
     },
     "menu_botmatch_gamedir": {
       "default": "fbca",
-      "desc": "The gamedir that ezQuake will switch to when starting a botmatch through the multiplayer menu.",
+      "desc": "The gamedir that tkQuake will switch to when starting a botmatch through the multiplayer menu.",
       "group-id": "17",
       "type": "string"
     },
@@ -15229,7 +15229,7 @@
       "system-generated": true
     },
     "qws_name": {
-      "default": "EZQUAKE",
+      "default": "TKQUAKE",
       "group-id": "0",
       "system-generated": true
     },
@@ -17050,7 +17050,7 @@
     },
     "s_desiredsamples": {
       "default": "0",
-      "desc": "Indicates how large the audio buffer should be, in samples.\nIf 0, ezQuake will choose a sensible default, based on value of s_khz.",
+      "desc": "Indicates how large the audio buffer should be, in samples.\nIf 0, tkQuake will choose a sensible default, based on value of s_khz.",
       "group-id": "45",
       "remarks": "This is a suggestion only, the driver is free to choose a different value.\nSmaller buffer sizes generally result in lower latency, but higher CPU usage.",
       "type": "integer"
@@ -17081,7 +17081,7 @@
           "name": "oss"
         },
         {
-          "description": "Will use experimental Pulseaudio drivers (note: have to be set in all loading configs before starting ezQuake to work!)",
+          "description": "Will use experimental Pulseaudio drivers (note: have to be set in all loading configs before starting tkQuake to work!)",
           "name": "pulse"
         }
       ]
@@ -17418,7 +17418,7 @@
     },
     "sb_hidedead": {
       "default": "1",
-      "desc": "This toggles whether ezQuake should hide dead servers.",
+      "desc": "This toggles whether tkQuake should hide dead servers.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -17434,7 +17434,7 @@
     },
     "sb_hideempty": {
       "default": "1",
-      "desc": "This toggles whether ezQuake should hide empty servers.",
+      "desc": "This toggles whether tkQuake should hide empty servers.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -17450,7 +17450,7 @@
     },
     "sb_hidefull": {
       "default": "0",
-      "desc": "This toggles whether ezQuake should hide full servers.",
+      "desc": "This toggles whether tkQuake should hide full servers.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -17482,7 +17482,7 @@
     },
     "sb_hidenotempty": {
       "default": "0",
-      "desc": "This toggles whether ezQuake should hide empty servers.",
+      "desc": "This toggles whether tkQuake should hide empty servers.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -17503,19 +17503,19 @@
     },
     "sb_inforetries": {
       "default": "3",
-      "desc": "This determines how often ezQuake should try to retrieve information from a server until it is considered to be not responding.",
+      "desc": "This determines how often tkQuake should try to retrieve information from a server until it is considered to be not responding.",
       "group-id": "42",
       "type": "float"
     },
     "sb_infospersec": {
       "default": "100",
-      "desc": "This determines how many serverinfos per second ezQuake should retrieve when scanning servers.\nWhen setting this value too high you will flood your line, causing you to not receive information from servers or lagging your connection to the server you are currently connected to.",
+      "desc": "This determines how many serverinfos per second tkQuake should retrieve when scanning servers.\nWhen setting this value too high you will flood your line, causing you to not receive information from servers or lagging your connection to the server you are currently connected to.",
       "group-id": "42",
       "type": "float"
     },
     "sb_infotimeout": {
       "default": "1000",
-      "desc": "This determines how long ezQuake will wait for a reply when trying to retrieve information from a server until the attempt times out.",
+      "desc": "This determines how long tkQuake will wait for a reply when trying to retrieve information from a server until the attempt times out.",
       "group-id": "42",
       "type": "float"
     },
@@ -17544,13 +17544,13 @@
     },
     "sb_liveupdate": {
       "default": "2",
-      "desc": "This will determine how often ezQuake should refresh the serverinfo window, the specified value sets the delay in seconds.\nSetting it to \"0\" will disable automatic refreshing.",
+      "desc": "This will determine how often tkQuake should refresh the serverinfo window, the specified value sets the delay in seconds.\nSetting it to \"0\" will disable automatic refreshing.",
       "group-id": "42",
       "type": "float"
     },
     "sb_mastercache": {
       "default": "1",
-      "desc": "This toggles whether ezQuake should cache the results of queries to master server (in directory qw/sb/cache).\nIf you restart ezQuake and don't update sources or if a master server is down, ezQuake will use the cache.",
+      "desc": "This toggles whether tkQuake should cache the results of queries to master server (in directory qw/sb/cache).\nIf you restart tkQuake and don't update sources or if a master server is down, tkQuake will use the cache.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -17566,13 +17566,13 @@
     },
     "sb_masterretries": {
       "default": "3",
-      "desc": "This determines how often ezQuake should try to retrieve information from a master server until it is considered to be not responding.",
+      "desc": "This determines how often tkQuake should try to retrieve information from a master server until it is considered to be not responding.",
       "group-id": "42",
       "type": "float"
     },
     "sb_mastertimeout": {
       "default": "1000",
-      "desc": "This determines how long ezQuake will wait for a reply when trying to retrieve information from a master server until the attempt times out.",
+      "desc": "This determines how long tkQuake will wait for a reply when trying to retrieve information from a master server until the attempt times out.",
       "group-id": "42",
       "type": "float"
     },
@@ -17600,19 +17600,19 @@
     },
     "sb_pings": {
       "default": "3",
-      "desc": "This determines how many pings ezQuake will send to a server when trying to determine your ping to it.\nA higher value will cause scanning servers to take longer, but the result may be more exact.\nA lower value obviously makes scanning faster, but pings may be inaccurate.",
+      "desc": "This determines how many pings tkQuake will send to a server when trying to determine your ping to it.\nA higher value will cause scanning servers to take longer, but the result may be more exact.\nA lower value obviously makes scanning faster, but pings may be inaccurate.",
       "group-id": "42",
       "type": "float"
     },
     "sb_pingspersec": {
       "default": "150",
-      "desc": "This determines how many pings per second ezQuake should sent out when scanning servers.\nIf you set this value too high the result will be that the pings will not be accurate because you overloaded your line.\nIf you set it too low scanning servers will take very long especially when you have a large server list.",
+      "desc": "This determines how many pings per second tkQuake should sent out when scanning servers.\nIf you set this value too high the result will be that the pings will not be accurate because you overloaded your line.\nIf you set it too low scanning servers will take very long especially when you have a large server list.",
       "group-id": "42",
       "type": "float"
     },
     "sb_pingtimeout": {
       "default": "1000",
-      "desc": "This determines how long ezQuake will wait for a reply when trying to ping a server until the attempt times out.",
+      "desc": "This determines how long tkQuake will wait for a reply when trying to ping a server until the attempt times out.",
       "group-id": "42",
       "type": "float"
     },
@@ -17636,7 +17636,7 @@
     },
     "sb_showaddress": {
       "default": "0",
-      "desc": "This toggles whether ezQuake should display the server IP column in the server list.",
+      "desc": "This toggles whether tkQuake should display the server IP column in the server list.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -17651,7 +17651,7 @@
       ]
     },
     "sb_showcounters": {
-      "desc": "This toggles whether ezQuake should display the number of servers or players in the status line.",
+      "desc": "This toggles whether tkQuake should display the number of servers or players in the status line.",
       "group-id": "31",
       "type": "boolean",
       "values": [
@@ -17667,7 +17667,7 @@
     },
     "sb_showfraglimit": {
       "default": "0",
-      "desc": "This toggles whether ezQuake should display the fraglimit column in the server list.",
+      "desc": "This toggles whether tkQuake should display the fraglimit column in the server list.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -17683,7 +17683,7 @@
     },
     "sb_showgamedir": {
       "default": "0",
-      "desc": "This toggles whether ezQuake should display the gamedir column in the server list, for example to see which mod is being played.",
+      "desc": "This toggles whether tkQuake should display the gamedir column in the server list, for example to see which mod is being played.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -17699,7 +17699,7 @@
     },
     "sb_showmap": {
       "default": "1",
-      "desc": "This toggles whether ezQuake should display the map column in the server list.",
+      "desc": "This toggles whether tkQuake should display the map column in the server list.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -17715,7 +17715,7 @@
     },
     "sb_showping": {
       "default": "1",
-      "desc": "This toggles whether ezQuake should display the ping column in the server list.",
+      "desc": "This toggles whether tkQuake should display the ping column in the server list.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -17731,7 +17731,7 @@
     },
     "sb_showplayers": {
       "default": "1",
-      "desc": "This toggles whether ezQuake should display the players column in the server list that shows how many players are on the server as well as how many players are allowed.",
+      "desc": "This toggles whether tkQuake should display the players column in the server list that shows how many players are on the server as well as how many players are allowed.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -17767,7 +17767,7 @@
     },
     "sb_showtimelimit": {
       "default": "0",
-      "desc": "This toggles whether ezQuake should display the timelimit column in the server list.",
+      "desc": "This toggles whether tkQuake should display the timelimit column in the server list.",
       "group-id": "42",
       "type": "boolean",
       "values": [
@@ -18202,7 +18202,7 @@
       "default": "conback",
       "desc": "Console background image filename.",
       "group-id": "5",
-      "remarks": "Put console images into id1/gfx or qw/gfx or ezquake/gfx.",
+      "remarks": "Put console images into id1/gfx or qw/gfx or tkquake/gfx.",
       "type": "string"
     },
     "scr_consize": {
@@ -19196,7 +19196,7 @@
       "type": "string"
     },
     "scr_weaponstats_order": {
-      "desc": "Accept next tokens %1 %2 %3 ... %8 which expands in to weapons accuracy, %1 - axe, %2 - sg ... %8 - lg.\n\nBut, for axe accuracy is useless, so better use direct hits instead, for that you must use it like #1.\n\nUnrecognized tokens printed as-is, so for axe order will looks like \"axe: #1\" - that means print string \"axe: \" and axe hits.\n\nAlso variable supports ezquake color sequences.",
+      "desc": "Accept next tokens %1 %2 %3 ... %8 which expands in to weapons accuracy, %1 - axe, %2 - sg ... %8 - lg.\n\nBut, for axe accuracy is useless, so better use direct hits instead, for that you must use it like #1.\n\nUnrecognized tokens printed as-is, so for axe order will looks like \"axe: #1\" - that means print string \"axe: \" and axe hits.\n\nAlso variable supports tkquake color sequences.",
       "group-id": "40",
       "type": "string"
     },
@@ -19905,7 +19905,7 @@
     },
     "sv_minpitch": {
       "desc": "server-side variable for setting minimum of view angles.",
-      "group-id": "43",
+      "group-id": "90",// Tei, better is better
       "remarks": "EZQuake and ZQuake (may be some other) clients understand this physics change.\nOld clients will be clamped at [-70~80] (quakeworld default) view angles.",
       "type": "integer",
       "values": [
@@ -20148,7 +20148,7 @@
           "name": "false"
         },
         {
-          "description": "alt-enter ignored by ezquake.",
+          "description": "alt-enter ignored by tkquake.",
           "name": "true"
         }
       ]
@@ -20567,7 +20567,7 @@
     },
     "tp_loadlocs": {
       "default": "1",
-      "desc": "Controls whether to load locs for teamplay reporting.\nNote: The locs should be in your \"/id1/locs/\",\n\"/ezquake/locs\" or \"/qw/locs\" folder.",
+      "desc": "Controls whether to load locs for teamplay reporting.\nNote: The locs should be in your \"/id1/locs/\",\n\"/tkquake/locs\" or \"/qw/locs\" folder.",
       "group-id": "49",
       "type": "boolean",
       "values": [
@@ -21332,7 +21332,7 @@
     },
     "vid_flashonactivity": {
       "default": "1",
-      "desc": "When there is activity in the server, ezQuake's taskbar window will flash.\nActivity includes chat, high priority messages, disconnection from server.",
+      "desc": "When there is activity in the server, tkQuake's taskbar window will flash.\nActivity includes chat, high priority messages, disconnection from server.",
       "group-id": "52",
       "type": "float"
     },
@@ -21354,7 +21354,7 @@
     },
     "vid_framebuffer": {
       "default": "0",
-      "desc": "Enables rendering to custom Framebuffer Objects. ezQuake uses these FBOs for improved color, \"render scale\" control, and other post-processing effects.",
+      "desc": "Enables rendering to custom Framebuffer Objects. tkQuake uses these FBOs for improved color, \"render scale\" control, and other post-processing effects.",
       "group-id": "52",
       "type": "enum",
       "values": [
@@ -21605,7 +21605,7 @@
     },
     "vid_minimize_on_focus_loss": {
       "default": "1",
-      "desc": "If set, ezQuake will minimise when running in fullscreen mode and it loses focus (e.g. alt-tab).",
+      "desc": "If set, tkQuake will minimise when running in fullscreen mode and it loses focus (e.g. alt-tab).",
       "group-id": "52",
       "type": "boolean"
     },
@@ -21638,7 +21638,7 @@
     },
     "vid_resetonswitch": {
       "group-id": "23",
-      "remarks": "This is a workaround for the bug in some NVidia drivers, when you alt-tab out of ezQuake and the screen gets garbaged.\nWhen enabled, the client will reset your Windows video mode every time you press alt-tab. Note that some NVidia drivers lock up your system completely when you alt-tab: vid_resetonswitch will not help in this case (try starting ezQuake with -dibonly).",
+      "remarks": "This is a workaround for the bug in some NVidia drivers, when you alt-tab out of tkQuake and the screen gets garbaged.\nWhen enabled, the client will reset your Windows video mode every time you press alt-tab. Note that some NVidia drivers lock up your system completely when you alt-tab: vid_resetonswitch will not help in this case (try starting tkQuake with -dibonly).",
       "type": "boolean",
       "values": [
         {

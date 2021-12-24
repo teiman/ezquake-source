@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018 ezQuake team.
+Copyright (C) 2018 tkQuake team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_GLM_PARTICLES_HEADER
-#define EZQUAKE_GLM_PARTICLES_HEADER
+#ifndef TKQUAKE_GLM_PARTICLES_HEADER
+#define TKQUAKE_GLM_PARTICLES_HEADER
 
 #include "glm_texture_arrays.h"
 #include "r_texture.h"
@@ -30,4 +30,4 @@ void GLM_LoadParticleTextures(void);
 void Part_ImportTexturesForArrayReferences(texture_flag_t* texture_flags);
 void Part_FlagTexturesForArray(texture_flag_t* texture_flags);
 
-#endif // EZQUAKE_GLM_PARTICLES_HEADER
+#endif // TKQUAKE_GLM_PARTICLES_HEADER

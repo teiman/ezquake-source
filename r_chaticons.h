@@ -18,11 +18,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef EZQUAKE_R_CHATICONS_HEADER
-#define EZQUAKE_R_CHATICONS_HEADER
+#ifndef TKQUAKE_R_CHATICONS_HEADER
+#define TKQUAKE_R_CHATICONS_HEADER
 
 void R_InitChatIcons(void);
 void R_SetupChatIcons(void);
 void R_DrawChatIcons(void);
 
-#endif // EZQUAKE_R_CHATICONS_HEADER
+#endif // TKQUAKE_R_CHATICONS_HEADER

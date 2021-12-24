@@ -90,6 +90,9 @@ void M_Main_Key (int key);
 
 void M_Menu_Help_f (void);
 
+
+static void StartNewGameCoop(void);
+
 m_state_t m_state;
 
 qbool    m_entersound;          // play after drawing a frame, so caching
@@ -424,11 +427,14 @@ void M_Main_Draw (void) {
 	mpic_t *p;
 	int itemheight;
 
-	M_DrawTransPic (16, BIGMENU_TOP, Draw_CachePic (CACHEPIC_QPLAQUE) );
+	//Tei: we don't need the "quake" plaque
+	//M_DrawTransPic (16, BIGMENU_TOP, Draw_CachePic (CACHEPIC_QPLAQUE) );
 
+
+	//Tei: we don't need the "[main]" plaque
 	// the Main Manu heading
-	p = Draw_CachePic (CACHEPIC_TTL_MAIN);
-	M_DrawPic ( (320-p->width)/2, 4, p);
+	//p = Draw_CachePic (CACHEPIC_TTL_MAIN);
+	//M_DrawPic ( (320-p->width)/2, 4, p);
 
 	// Main Menu items
 	if (Draw_BigFontAvailable()) {
@@ -438,8 +444,7 @@ void M_Main_Draw (void) {
 		M_BigMenu_DrawItems(mainmenu_items, BIGMENU_ITEMS_COUNT(mainmenu_items), m_main_window.x, m_main_window.y,
 						 &m_main_window.w, &m_main_window.h);
 		itemheight = m_main_window.h / BIGMENU_ITEMS_COUNT(mainmenu_items);
-	}
-	else {
+	} else {
 		newmainmenu = false;
 		p = Draw_CachePic (CACHEPIC_MAINMENU);
 		m_main_window.w = p->width;
@@ -727,9 +732,9 @@ void M_SinglePlayer_Draw (void) {
 		return;
 	}
 
-	M_DrawTransPic (16, BIGMENU_TOP, Draw_CachePic (CACHEPIC_QPLAQUE) );
-	p = Draw_CachePic (CACHEPIC_TTL_SGL);
-	M_DrawPic ( (320-p->width)/2, 4, p);
+	//M_DrawTransPic (16, BIGMENU_TOP, Draw_CachePic (CACHEPIC_QPLAQUE) );
+	//p = Draw_CachePic (CACHEPIC_TTL_SGL);
+	//M_DrawPic ( (320-p->width)/2, 4, p);
 
 	if (Draw_BigFontAvailable()) {
 		m_singleplayer_big = true;
@@ -773,9 +778,9 @@ static void StartNewGame(void)
 	key_dest = key_game;
 	m_state = m_none;
 	Cvar_Set(&maxclients, "1");
-	Cvar_Set(&teamplay, "0");
+	Cvar_Set(&teamplay, "1");
 	Cvar_Set(&deathmatch, "0");
-	Cvar_Set(&coop, "0");
+	Cvar_Set(&coop, "1");
 
 	Cvar_Set(&sv_progsname, "spprogs"); // force progsname
 #ifdef USE_PR2
@@ -788,6 +793,28 @@ static void StartNewGame(void)
 
 	Cbuf_AddText("map start\n");
 }
+
+static void StartNewGameCoop(void)
+{
+	extern cvar_t sv_progtype;
+
+	key_dest = key_game;
+	m_state = m_none;
+	Cvar_Set(&maxclients, "32");
+	Cvar_Set(&teamplay, "0");
+	Cvar_Set(&deathmatch, "0");
+	Cvar_Set(&coop, "1");
+
+	Cvar_Set(&sv_progsname, "spprogs"); // force progsname
+
+	if (com_serveractive) {
+		Cbuf_AddText("disconnect\n");
+	}
+
+	Cbuf_AddText("echo Starting new coop game...\n");
+	Cbuf_AddText("map e1m1\n");
+}
+
 
 void M_SinglePlayer_Key (int key) {
 #ifndef WITH_NQPROGS
@@ -808,7 +835,7 @@ void M_SinglePlayer_Key (int key) {
 			m_singleplayer_confirm = false;
 			m_entersound = true;
 		} else if (key == 'y' || key == K_ENTER || key == K_MOUSE1) {
-			StartNewGame ();
+			StartNewGameCoop ();
 		}
 		return;
 	}
@@ -869,7 +896,7 @@ void M_SinglePlayer_Key (int key) {
 						m_singleplayer_confirm = true;
 						m_entersound = true;
 					} else {
-						StartNewGame ();
+						StartNewGameCoop ();
 					}
 					break;
 
@@ -1281,10 +1308,11 @@ void M_Init (void) {
 	Cvar_Register(&menu_marked_fade);
 	Cvar_Register(&menu_botmatch_gamedir);
 	Cvar_Register(&menu_botmatch_mod_old);
-
 	Cvar_Register(&menu_marked_bgcolor);
+
 	Browser_Init();
 	Cvar_ResetCurrentGroup();
+
 	Menu_Help_Init();	// help_files module
 	Menu_Demo_Init();	// menu_demo module
 	Menu_Options_Init(); // menu_options module

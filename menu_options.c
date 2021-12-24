@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2011 ezQuake team
+Copyright (C) 2011 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -236,7 +236,7 @@ const char* s_desired_samples_enum[] = {
 };
 
 const char* cl_nolerp_enum[] = {"on", "off"};
-const char* ruleset_enum[] = { "ezQuake default", "default", "Smackdown", "smackdown", "Thunderdome", "thunderdome", "Moscow TF League", "mtfl", "QuakeCon", "qcon" };
+const char* ruleset_enum[] = { "tkQuake default", "default", "Smackdown", "smackdown", "Thunderdome", "thunderdome", "Moscow TF League", "mtfl", "QuakeCon", "qcon" };
 const char *mediaroot_enum[] = { "relative to exe", "relative to home", "full path" };
 const char *teamforceskins_enum[] = { "off", "use player's name", "use player's userid", "set t1, t2, t3, ..." };
 const char *enemyforceskins_enum[] = { "off", "use player's name", "use player's userid", "set e1, e2, e3, ..." };
@@ -620,7 +620,7 @@ void MOpt_ImportConfig(void) {
 	if (cfg_use_home.integer)
 		FL_SetCurrentDir(&configs_filelist, (cfg_use_gamedir.integer) ? va("%s/%s", com_homedir, (strcmp(com_gamedirfile, "qw") == 0) ? "" : com_gamedirfile) : com_homedir);
     else
-		FL_SetCurrentDir(&configs_filelist, (cfg_use_gamedir.integer) ? va("%s/%s/configs", com_basedir, (strcmp(com_gamedirfile, "qw") == 0) ? "ezquake" : com_gamedirfile) : va("%s/ezquake/configs", com_basedir));
+		FL_SetCurrentDir(&configs_filelist, (cfg_use_gamedir.integer) ? va("%s/%s/configs", com_basedir, (strcmp(com_gamedirfile, "qw") == 0) ? "tkquake" : com_gamedirfile) : va("%s/tkquake/configs", com_basedir));
 }
 void MOpt_ExportConfig(void) {
 	MOpt_configpage_mode = MOCPM_ENTERFILENAME;
@@ -630,7 +630,7 @@ void MOpt_ExportConfig(void) {
 
 void MOpt_LoadScript(void) {
 	MOpt_configpage_mode = MOCPM_CHOOSESCRIPT;
-	FL_SetCurrentDir(&configs_filelist, "./ezquake/cfg");
+	FL_SetCurrentDir(&configs_filelist, "./tkquake/cfg");
 }
 
 void MOpt_CfgSaveAllOn(void) {
@@ -646,7 +646,7 @@ void MOpt_CfgSaveAllOn(void) {
 	Cvar_SetValue(&cfg_save_userinfo, 2);
 }
 
-const char* MOpt_legacywrite_enum[] = { "off", "non-qw dir frontend.cfg", "also config.tk.cfg", "non-qw config.tk.cfg" };
+const char* MOpt_legacywrite_enum[] = { "off", "non-qw dir frontend.cfg", "also config_tk.cfg", "non-qw config_tk.cfg" };
 const char* MOpt_userinfo_enum[] = { "off", "all but player", "all" };
 
 void MOpt_LoadCfg(void) {
@@ -1358,7 +1358,7 @@ void Menu_Options_Init(void) {
 	Cvar_Register(&menu_advanced);
 	Cvar_ResetCurrentGroup();
 
-	FL_Init(&configs_filelist, "./ezquake/configs");
+	FL_Init(&configs_filelist, "./tkquake/configs");
 	FL_SetDirUpOption(&configs_filelist, false);
 	FL_SetDirsOption(&configs_filelist, false);
 	FL_AddFileType(&configs_filelist, 0, ".cfg");

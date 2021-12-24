@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2011 azazello and ezQuake team
+Copyright (C) 2011 azazello and tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -41,6 +41,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "mvd_utils.h"
 #include "mvd_utils_common.h"
 #include "fonts.h"
+
+#define hudrandom(MIN,MAX) ((rand() & 32767) * (((MAX)-(MIN)) * (1.0f / 32767.0f)) + (MIN))
+
 
 void TeamHold_DrawPercentageBar(
 	int x, int y, int width, int height,
@@ -225,14 +228,50 @@ void SCR_HUD_DrawNotify(hud_t* hud)
 //
 //
 
+
+
+
+float HUD_CalcBobX(void) {
+	static double bobtime;
+	static float bob;
+	float cycle;
+
+	float cl_bobcycle_value = 0-6;
+	float cl_bobup_value = 0.5;
+	float cl_bob_value = 0.02;
+
+	if (cl.spectator)
+		return 0;
+
+	bobtime += cls.frametime;
+	cycle = bobtime - (int)(bobtime / cl_bobcycle_value) * cl_bobcycle_value;
+	cycle /= cl_bobcycle_value;
+	if (cycle < cl_bobup_value)
+		cycle = M_PI * cycle / cl_bobup_value;
+	else
+		cycle = M_PI + M_PI * (cycle - cl_bobup_value) / (1.0 - cl_bobup_value);
+
+	// bob is proportional to simulated velocity in the xy plane
+	// (don't count Z, or jumping messes it up)
+	bob = sqrt(cl.simvel[0] * cl.simvel[0] + cl.simvel[1] * cl.simvel[1] ) * cl_bob_value;
+	bob = bob * 0.3 + bob * 0.7 * sin(cycle);
+	bob = bound(-7, bob, 4);
+	return bob;
+}
+
+float HUD_CalcBobY(void) {
+	if (cl.spectator)
+		return 0;
+
+	return sin(cl.time * 3) * 1;
+}
+
 // status numbers
 void SCR_HUD_DrawNum2(
-	hud_t *hud, int num, qbool low,
+	hud_t *hud, int num, textcolor tcolor,
 	float scale, int style, int digits, char *s_align, qbool proportional, qbool draw_content
-)
-{
+) {
 	extern mpic_t *sb_nums[2][11];
-
 	int  i;
 	char buf[sizeof(int) * 3]; // each byte need <= 3 chars
 	int  len;
@@ -241,12 +280,13 @@ void SCR_HUD_DrawNum2(
 	int size;
 	int align;
 
+	//Con_Printf("Typecolor[2]: %d\n", tcolor);
+
 	clamp(num, -99999, 999999);
 	scale = max(scale, 0.01);
 	if (digits > 0) {
 		clamp(digits, 1, 6);
-	}
-	else {
+	} else {
 		digits = 0; // auto-resize
 	}
 
@@ -296,13 +336,11 @@ void SCR_HUD_DrawNum2(
 				len = strlen(buf);
 				break;
 		}
-	}
-	else {
+	} else {
 		len = strlen(buf);
 	}
 
-	switch (style)
-	{
+	switch (style){
 		case 1:
 		case 3:
 			size = 8;
@@ -321,8 +359,7 @@ void SCR_HUD_DrawNum2(
 		else {
 			width = digits * size * scale;
 		}
-	}
-	else {
+	} else {
 		if (size == 8) {
 			width = FontFixedWidth(len, scale, true, proportional);
 		}
@@ -333,24 +370,28 @@ void SCR_HUD_DrawNum2(
 
 	height = size * scale;
 
-	switch (style)
-	{
+	switch (style){
 		case 1:
 		case 3:
 			if (!HUD_PrepareDraw(hud, width, height, &x, &y) || !draw_content) {
 				return;
 			}
-			switch (align)
-			{
+			switch (align){
 				case 0: break;
 				case 1: x += width / 2 - Draw_StringLength(buf, -1, scale, proportional) / 2; break;
 				case 2: x += width - Draw_StringLength(buf, -1, scale, proportional); break;
-			}
+			}			
 
-			if (low) {
+			x = x + (float)HUD_CalcBobX();
+			y = y + (float)HUD_CalcBobY();
+
+
+			if (tcolor==text_red) {
 				Draw_SAlt_String(x, y, buf, scale, proportional);
 			}
-			else {
+			else if (tcolor==text_blue) {
+				Draw_SAlt_String(x, y + hudrandom(-3, 3), buf, scale, proportional);
+			} else {
 				Draw_SString(x, y, buf, scale, proportional);
 			}
 			break;
@@ -368,13 +409,17 @@ void SCR_HUD_DrawNum2(
 				case 2: x += (width - size * len * scale); break;
 			}
 
+			x = x + HUD_CalcBobX();
+			y = y + HUD_CalcBobY();
+
 			for (i = 0; i < len; i++) {
-				if(buf[i] == '-' && style == 2) {
-					Draw_STransPic (x, y, sb_nums[low ? 1 : 0][STAT_MINUS], scale);
+				//Tei: TODO create sb_nums set for blue numbers to use here to blue the armor
+
+				if(buf[i] == '-' && style == 2) {					
+					Draw_STransPic (x, y, sb_nums[tcolor][STAT_MINUS], scale);
 					x += 24 * scale;
-				}
-				else {
-					Draw_STransPic (x, y, sb_nums[low ? 1 : 0][buf[i] - '0'], scale);
+				} else {
+					Draw_STransPic (x, y, sb_nums[tcolor][buf[i] - '0'], scale);
 					x += 24 * scale;
 				}
 			}
@@ -383,11 +428,11 @@ void SCR_HUD_DrawNum2(
 }
 
 void SCR_HUD_DrawNum(
-	hud_t* hud, int num, qbool low,
+	hud_t* hud, int num, textcolor tcolor,
 	float scale, int style, int digits, char* s_align, qbool proportional
 )
 {
-	SCR_HUD_DrawNum2(hud, num, low, scale, style, digits, s_align, proportional, true);
+	SCR_HUD_DrawNum2(hud, num, tcolor, scale, style, digits, s_align, proportional, true);
 }
 
 #define TEMPHUD_NAME "_temphud"
@@ -466,7 +511,7 @@ void HUD_AutoLoad_MVD(int autoload) {
 		// either user decided to turn mvd autohud off or mvd playback is over
 		// -> Turn autohud OFF here
 		FILE *tempfile;
-		char *fullname = va("%s/ezquake/"TEMPHUD_FULLPATH, com_basedir);
+		char *fullname = va("%s/tkquake/"TEMPHUD_FULLPATH, com_basedir);
 
 		Com_DPrintf("Unloading MVD Hud\n");
 		// load stored settings

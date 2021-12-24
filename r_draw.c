@@ -337,17 +337,60 @@ void Draw_DisableScissor(void)
 // Support Routines
 wadpic_t wad_pictures[WADPIC_PIC_COUNT];
 
+
+
+mpic_t* Draw_CacheWadPicShadow(char* name, char * shadow , int code)
+{
+	qpic_t* p;
+	mpic_t* pic, * pic_24bit;
+	wadpic_t* wadpic = NULL;
+	mpic_t *fresh;
+	
+	fresh = &wad_pictures[code];
+	
+	p = W_GetLumpName(shadow);
+	pic = (mpic_t*)p;
+
+	if ((pic_24bit = R_LoadPicImage(va("textures/wad/%s", name), name, 0, 0, TEX_ALPHA)) ||
+		(pic_24bit = R_LoadPicImage(va("gfx/%s", name), name, 0, 0, TEX_ALPHA)))
+	{
+		fresh->sh = pic_24bit->sh;
+		fresh->sl = pic_24bit->sl;
+		fresh->texnum = pic_24bit->texnum;
+		fresh->th = pic_24bit->th;
+		fresh->tl = pic_24bit->tl;
+		fresh->height = p->height;
+		fresh->width = p->width;
+
+		return fresh;
+	}
+
+
+	Sys_Error(va("Texture textures/wad/%s not found", name));
+	return NULL;
+}
+
+
+
 mpic_t *Draw_CacheWadPic(char *name, int code)
 {
 	qpic_t *p;
 	mpic_t *pic, *pic_24bit;
 	wadpic_t* wadpic = NULL;
+	mpic_t* base;
 
 	if (code >= 0 && code < WADPIC_PIC_COUNT) {
 		wadpic = &wad_pictures[code];
 	}
 
 	p = W_GetLumpName (name);
+
+	if (p == NULL) {
+		p = &base;
+		p->width = 10;
+		p->height = 10;
+	}
+
 	pic = (mpic_t *)p;
 	if (wadpic) {
 		strlcpy(wadpic->name, name, sizeof(wadpic->name));
@@ -357,12 +400,24 @@ mpic_t *Draw_CacheWadPic(char *name, int code)
 	if ((pic_24bit = R_LoadPicImage(va("textures/wad/%s", name), name, 0, 0, TEX_ALPHA)) ||
 		(pic_24bit = R_LoadPicImage(va("gfx/%s", name), name, 0, 0, TEX_ALPHA)))
 	{
+		//Con_Printf("[Draw_CacheWadPicShadow] Loading external texture gfx/%s\n", name);
+
 		// Only keep the size info from the lump. The other stuff is copied from the 24 bit image.
 		pic->sh		= pic_24bit->sh;
 		pic->sl		= pic_24bit->sl;
 		pic->texnum = pic_24bit->texnum;
 		pic->th		= pic_24bit->th;
 		pic->tl		= pic_24bit->tl;
+		
+		//Tei hack only for faces
+		if(	(name[0] && name[0]=='f') &&
+			(name[1] && name[1] == 'a')&&
+			(name[2] && name[2] == 'c')&&
+			(name[3] && name[3] == 'e')			
+			){
+			pic->width = pic_24bit->width >> 1;//Tei: hack to make the face smaller
+			pic->height = pic_24bit->height >> 1;//Tei: hack to make the face smaller
+		}
 
 		if (code == WADPIC_SB_IBAR) {
 			CachePics_LoadAmmoPics(pic);
@@ -406,60 +461,40 @@ mpic_t *Draw_CachePicSafe(const char *path, qbool crash, qbool only24bit)
 	COM_StripExtension(path, stripped_path, sizeof(stripped_path));
 	snprintf(lmp_path, MAX_PATH, "%s.lmp", stripped_path);
 
-	// Try loading the pic from disk.
+	// Try loading the 24-bit picture.	
+	if ((pic_24bit = R_LoadPicImage(path, NULL, 0, 0, TEX_ALPHA))) {	
 
-	// Only load the 24-bit version of the picture.
-	if (only24bit) {
-		if (!(pic_24bit = R_LoadPicImage(path, NULL, 0, 0, TEX_ALPHA))) {
-			if(crash) {
-				Sys_Error ("Draw_CachePicSafe: failed to load %s", path);
-			}
-			return NULL;
-		}
-
-		/* This will make a copy of the pic struct */
 		return CachePic_Add(path, pic_24bit);
 	}
 
+	// If that fails load the data for the lmp instead.
 	// Load the ".lmp" file.
 	if ((v = FS_OpenVFS(lmp_path, "rb", FS_ANY))) {
 		VFS_CLOSE(v);
 
-		if (!(dat = (qpic_t *)FS_LoadTempFile(lmp_path, NULL))) {
-			if(crash) {
-				Sys_Error ("Draw_CachePicSafe: failed to load %s", lmp_path);
+		if (!(dat = (qpic_t*)FS_LoadTempFile(lmp_path, NULL))) {
+			if (crash) {
+				Sys_Error("Draw_CachePicSafe: failed to load %s", lmp_path);
 			}
 			return NULL;
 		}
 		lmp_found = true;
 
 		// Make sure the width and height are correct.
-		SwapPic (dat);
-	}
+		SwapPic(dat);
 
-	// Try loading the 24-bit picture.
-	// If that fails load the data for the lmp instead.
-	if ((pic_24bit = R_LoadPicImage(path, NULL, 0, 0, TEX_ALPHA))) {
-		// Only use the lmp-data if there was one.
-		if (lmp_found) {
-			pic_24bit->width = dat->width;
-			pic_24bit->height = dat->height;
-		}
-		return CachePic_Add(path, pic_24bit);
-	}
-	else if (dat) {
-		mpic_t tmp = {0};
+		// Cache it 
+		mpic_t tmp = { 0 };
 		tmp.width = dat->width;
 		tmp.height = dat->height;
 		R_LoadPicTexture(path, &tmp, dat->data);
 		return CachePic_Add(path, &tmp);
 	}
-	else {
-		if(crash) {
-			Sys_Error ("Draw_CachePicSafe: failed to load %s", path);
-		}
-		return NULL;
+
+	if(crash) {
+		Sys_Error ("Draw_CachePicSafe: failed to load %s", path);
 	}
+	return NULL;	
 }
 
 static const char* cache_pic_paths[] = {
@@ -492,7 +527,8 @@ static const char* cache_pic_paths[] = {
 	"gfx/ranking.lmp",
 	"gfx/complete.lmp",
 	"gfx/inter.lmp",
-	"gfx/finale.lmp"
+	"gfx/finale.lmp",
+	"gfx/blood1.lmp"
 };
 
 qbool Draw_KeepOffAtlas(const char* path)

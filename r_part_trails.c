@@ -102,8 +102,7 @@ void CL_AddParticleTrail(entity_t* ent, centity_t* cent, customlight_t* cst_lt, 
 
 	if (model->modhint == MOD_LAVABALL) {
 		R_EntityParticleTrail(cent, LAVA_TRAIL);
-	}
-	else {
+	} else {
 		if (model->flags & EF_ROCKET) {
 			R_MissileTrail(cent, r_rockettrail.integer);
 
@@ -133,30 +132,23 @@ void CL_AddParticleTrail(entity_t* ent, centity_t* cent, customlight_t* cst_lt, 
 					CL_NewDlight(state->number, ent->origin, rocketlightsize, 0.1, lt_green, bubble);
 				}
 			}
-		}
-		else if (model->flags & EF_GRENADE) {
+		} else if (model->flags & EF_GRENADE) {
 			if (model->modhint == MOD_BUILDINGGIBS) {
 				R_EntityParticleTrail(cent, GRENADE_TRAIL);
-			}
-			else if (r_grenadetrail.integer && model->modhint != MOD_RAIL) {
+			} else if (r_grenadetrail.integer && model->modhint != MOD_RAIL) {
 				R_MissileTrail(cent, fix_trail_num_for_grens(r_grenadetrail.integer));
-			}
-			else if (r_railtrail.integer && model->modhint == MOD_RAIL) {
+			} else if (r_railtrail.integer && model->modhint == MOD_RAIL) {
 				R_MissileTrail(cent, fix_trail_num_for_grens(r_railtrail.integer));
-			}
-			else {
+			} else {
 				R_MissileTrail(cent, 0);
 			}
-		}
-		else if (model->flags & EF_GIB) {
+		}else if (model->flags & EF_GIB) {
 			if (amf_part_gibtrails.integer) {
 				R_EntityParticleTrail(cent, BLEEDING_TRAIL);
-			}
-			else {
+			} else {
 				R_EntityParticleTrail(cent, BLOOD_TRAIL);
 			}
-		}
-		else if (model->flags & EF_ZOMGIB) {
+		} else if (model->flags & EF_ZOMGIB) {
 			if (model->modhint == MOD_RAIL2) {
 				R_EntityParticleTrail(cent, RAIL_TRAIL2);
 			}
@@ -166,8 +158,7 @@ void CL_AddParticleTrail(entity_t* ent, centity_t* cent, customlight_t* cst_lt, 
 			else {
 				R_EntityParticleTrail(cent, BIG_BLOOD_TRAIL);
 			}
-		}
-		else if (model->flags & EF_TRACER) {
+		} else if (model->flags & EF_TRACER) {
 			// VULT TRACER GLOW
 			rocketlightsize = 35 * (1 + bound(0, r_rocketlight.value, 1));
 			CL_NewDlight(state->number, ent->origin, rocketlightsize, 0.01, lt_green, true);
@@ -176,8 +167,7 @@ void CL_AddParticleTrail(entity_t* ent, centity_t* cent, customlight_t* cst_lt, 
 			}
 
 			R_EntityParticleTrail(cent, TRACER1_TRAIL);
-		}
-		else if (model->flags & EF_TRACER2) {
+		} else if (model->flags & EF_TRACER2) {
 			// VULT TRACER GLOW
 			rocketlightsize = 35 * (1 + bound(0, r_rocketlight.value, 1));
 			CL_NewDlight(state->number, ent->origin, rocketlightsize, 0.01, lt_default, true);
@@ -214,18 +204,27 @@ void CL_AddParticleTrail(entity_t* ent, centity_t* cent, customlight_t* cst_lt, 
 		}
 		else if (model->modhint == MOD_LASER && amf_extratrails.integer) {
 			rocketlightsize = 35 * (1 + bound(0, r_rocketlight.value, 1));
-			CL_NewDlight(state->number, ent->origin, rocketlightsize, 0.01, lt_default, true);
-			if (!ISPAUSED && amf_coronas.integer) {
-				R_CoronasEntityNew(C_KNIGHTLIGHT, cent);
-			}
-			if (cent->trails[1].lasttime + 0.01 < particle_time) {
+
+
+
+			if (cent->trails[1].lasttime + 0.01 < particle_time ) {//Tei, hack, experimental change to trails
+				//Tei: do we really need a trail for this?
 				VX_LightningTrail(cent->trails[1].stop, ent->origin);
+
 				VectorCopy(ent->origin, cent->trails[1].stop);
 				cent->trails[1].lasttime = particle_time;
+			} else {
+				VX_LightningTrail(cent->trails[1].stop, ent->origin);
+
+				CL_NewDlight(state->number, ent->origin, rocketlightsize, 0.01, lt_default, true);
+				if (!ISPAUSED && amf_coronas.integer) {
+					//Too distracting 
+					R_CoronasEntityNew(C_KNIGHTLIGHT, cent);
+				}
 			}
+
 			R_EntityParticleTrail(cent, TRACER2_TRAIL);
-		}
-		else if (model->modhint == MOD_DETPACK) {
+		}	else if (model->modhint == MOD_DETPACK) {
 			// VULT CORONAS
 			if (qmb_initialized && amf_detpacklights.integer) {
 				vec3_t liteorg, forward, right, up;

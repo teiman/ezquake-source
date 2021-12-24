@@ -89,6 +89,7 @@ void CL_PredictUsercmd (player_state_t *from, player_state_t *to, usercmd_t *u) 
 	to->onground = pmove.onground;
 
 	to->weaponframe = from->weaponframe;
+	//to->weaponskin = from->weaponskin;//Tei
 }
 
 //Used when cl_nopred is 1 to determine whether we are on ground, otherwise stepup smoothing code produces ugly jump physics

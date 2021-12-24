@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 // snd_voip.c -- voice over ip (mm3)
-// Original code taken from ezquake 2.2, which used speex
+// Original code taken from tkquake 2.2, which used speex
 // Now using SDL audio capture (requires SDL 2.0.5 or above)
 
 #include <SDL.h>

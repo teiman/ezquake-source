@@ -21,8 +21,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // the status bar is only redrawn if something has changed, but if anything
 // does, the entire thing will be redrawn for the next vid.numpages frames.
 
-#ifndef EZQUAKE_SBAR_HEADER
-#define EZQUAKE_SBAR_HEADER
+#ifndef TKQUAKE_SBAR_HEADER
+#define TKQUAKE_SBAR_HEADER
 
 #define	SBAR_HEIGHT		24
 
@@ -58,4 +58,4 @@ qbool Sbar_IsStandardBar(void);
 void Sbar_DrawTrackingString(void);
 void Sbar_DrawSpectatorMessage(void);
 
-#endif // #ifdef EZQUAKE_SBAR_HEADER
+#endif // #ifdef TKQUAKE_SBAR_HEADER

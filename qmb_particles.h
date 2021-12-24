@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_QMB_PARTICLES_HEADER
-#define EZQUAKE_QMB_PARTICLES_HEADER
+#ifndef TKQUAKE_QMB_PARTICLES_HEADER
+#define TKQUAKE_QMB_PARTICLES_HEADER
 
 //====================================================
 void QMB_InitParticles(void);

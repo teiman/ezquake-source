@@ -1,6 +1,6 @@
 #version 430
 
-#ezquake-definitions
+#tkquake-definitions
 
 uniform int mode;
 

@@ -535,6 +535,23 @@ void Cmd_Echo_f (void)
 	Com_Printf ("%s\n", buf);
 }
 
+
+void SCR_CenterPrintMapname();
+
+void Cmd_Showmapname_f(void) {
+	if (cl.levelname && strlen(cl.levelname) > 1) {
+		SCR_CenterPrintMapname();
+	}	else {
+		Con_Printf("No level name!\n");
+	}
+}
+
+void Cmd_ShowDeathMessage_f(void) {
+	SCR_CenterprintObituary( Cmd_Argv(1) );
+}
+
+
+
 /*
 =============================================================================
 								ALIASES
@@ -2354,6 +2371,9 @@ void Cmd_Init (void)
 	Cmd_AddCommand ("serverexec", Cmd_Exec_f);
 #endif
 	Cmd_AddCommand ("echo", Cmd_Echo_f);
+	Cmd_AddCommand ("showmapname", Cmd_Showmapname_f);//Tei
+	Cmd_AddCommand ("showdeath", Cmd_ShowDeathMessage_f);//Tei
+
 	Cmd_AddCommand ("aliaslist", Cmd_AliasList_f);
 	Cmd_AddCommand ("aliasedit", Cmd_EditAlias_f);
 	Cmd_AddCommand ("alias", Cmd_Alias_f);
@@ -2422,3 +2442,4 @@ void Cmd_Shutdown(void)
 		Q_free(legacycmd);
 	}
 }
+

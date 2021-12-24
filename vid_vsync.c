@@ -20,6 +20,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
 
+// vid_vsync.c 
+
 #include "quakedef.h"
 #include "tr_types.h"
 

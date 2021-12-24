@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_GL_SPRITE3D_HEADER
-#define EZQUAKE_GL_SPRITE3D_HEADER
+#ifndef TKQUAKE_GL_SPRITE3D_HEADER
+#define TKQUAKE_GL_SPRITE3D_HEADER
 
 #include "r_sprite3d.h"
 #include "r_sprite3d_internal.h"
@@ -14,4 +14,4 @@ extern int indexes_start_quads;
 extern int indexes_start_flashblend;
 extern int indexes_start_sparks;
 
-#endif // #ifndef EZQUAKE_GL_SPRITE3D_HEADER
+#endif // #ifndef TKQUAKE_GL_SPRITE3D_HEADER

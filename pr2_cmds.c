@@ -57,7 +57,7 @@ void PR2_RunError(char *error, ...)
 
 	Con_Printf("%s\n", string);
 
-	SV_Error("Program error: %s", string);
+	SV_Error("[1] Program error: runerror=%s", string);
 }
 
 void PR2_CheckEmptyString(char *s)
@@ -1672,8 +1672,7 @@ void PF2_changelevel(byte* base, uintptr_t mask, pr2val_t* stack, pr2val_t*retva
 	// this is work around for bellow check about two changelevels,
 	// which lock server in one map if we trying switch to map which does't exist
 	snprintf(expanded, MAX_QPATH, "maps/%s.bsp", s);
-	if (!FS_FLocateFile(expanded, FSLFRT_IFFOUND, NULL))
-	{
+	if (!FS_FLocateFile(expanded, FSLFRT_IFFOUND, NULL)) {
 		Sys_Printf ("Can't find %s\n", expanded);
 		return;
 	}
@@ -1682,15 +1681,41 @@ void PF2_changelevel(byte* base, uintptr_t mask, pr2val_t* stack, pr2val_t*retva
 	// this check is evil and cause lock on one map, if /map command fail for some reason
 	if (svs.spawncount == last_spawncount)
 		return;
+
 	last_spawncount = svs.spawncount;
 
 	if (entfile && *entfile) {
 		Cbuf_AddTextEx(&cbuf_server, va("map %s %s\n", s, entfile));
-	}
-	else {
+	} else {
 		Cbuf_AddTextEx(&cbuf_server, va("map %s\n", s));
 	}
 }
+
+
+/**
+ * 
+ * TODO: copy r00k randommap change. Is hella cool!
+	https://github.com/sputnikutah/Qrack/blob/3bc2862b1aeb6002210324db195ab34ef41630be/host_cmd.c
+	void Host_LoadRandomLevel(void){
+		searchpath_t* search;
+		extern	void EraseDirEntries(void);
+		int n;
+
+		EraseDirEntries();//reset the filelist in case we change gamedir
+		pak_files = 0;
+
+		for(search = com_searchpaths; search; search = search->next){
+			if(!search->pack){
+				RDFlags |= (RD_STRIPEXT | RD_NOERASE);
+				ReadDir(va("%s/maps", search->filename), "*.bsp");
+			}
+		}
+
+		FindFilesInPak("maps/*.bsp");
+
+		n = lhrandom(1, num_files);//only supports up to 32767 maps! ;)
+	}
+*/
 
 /*
 ==============

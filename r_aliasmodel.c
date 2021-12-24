@@ -677,6 +677,8 @@ void R_DrawViewModel(void)
 	gun.effects |= (cl.stats[STAT_ITEMS] & IT_INVULNERABILITY) ? EF_RED : 0;
 	gun.effects |= (cl.stats[STAT_ITEMS] & IT_SUIT) ? EF_GREEN : 0;
 
+	
+
 	gun.frame = cent->current.frame;
 	if (cent->frametime >= 0 && cent->frametime <= r_refdef2.time) {
 		gun.oldframe = cent->oldframe;

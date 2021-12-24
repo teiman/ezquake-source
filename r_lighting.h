@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_R_LIGHTING_HEADER
-#define EZQUAKE_R_LIGHTING_HEADER
+#ifndef TKQUAKE_R_LIGHTING_HEADER
+#define TKQUAKE_R_LIGHTING_HEADER
 
 extern cvar_t       gl_lightmode;
 extern cvar_t       gl_modulate;
@@ -40,4 +40,4 @@ extern cvar_t r_dynamic;
 #define R_HardwareLighting() (r_dynamic.integer == 2 && R_UseModernOpenGL())
 #define R_SoftwareLighting() (r_dynamic.integer && !R_HardwareLighting())
 
-#endif // EZQUAKE_R_LOCAL_HEADER
+#endif // TKQUAKE_R_LOCAL_HEADER

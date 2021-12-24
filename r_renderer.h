@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_R_RENDERER_HEADER
-#define EZQUAKE_R_RENDERER_HEADER
+#ifndef TKQUAKE_R_RENDERER_HEADER
+#define TKQUAKE_R_RENDERER_HEADER
 
 #include "gl_model.h"
 #include "r_state.h"
@@ -34,4 +34,4 @@ extern renderer_api_t renderer;
 
 #undef RENDERER_METHOD
 
-#endif // EZQUAKE_R_RENDERER_HEADER
+#endif // TKQUAKE_R_RENDERER_HEADER

@@ -1,5 +1,5 @@
 
-// This file included in all .glsl files (inserted at #ezquake-definitions point)
+// This file included in all .glsl files (inserted at #tkquake-definitions point)
 //   and also .c source files.  For compile-time constants only
 
 #ifndef MAX_LIGHTSTYLES

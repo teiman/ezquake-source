@@ -24,7 +24,11 @@ CMDLINE_DEF(client_gamma, "-gamma"),
 CMDLINE_DEF(client_nohardwaregamma, "-nohwgamma"),
 CMDLINE_DEF(client_oldgammabehaviour, "-oldgamma"),
 CMDLINE_DEF(client_windowedmode, "-window"),
-CMDLINE_DEF(client_startwindowed, "-startwindowed"),
+CMDLINE_DEF(client_fullscreen, "-fullscreen"),// Tei: we want to default to borderless window
+CMDLINE_DEF(client_startwindowed, "-normal"),//Tei: normal window
+CMDLINE_DEF(client_splitplayers, "-split"),//Tei: support for splitplayer. This enable the mode
+CMDLINE_DEF(client_splitplayer1d2, "-player1"),//Tei: support for splitplayer. Identify player 1 of 2.
+CMDLINE_DEF(client_splitplayer2d2, "-player2"),//Tei: support for splitplayer. Identify player 2 of 2.
 CMDLINE_DEF(client_video_frequency, "-freq"),
 CMDLINE_DEF(client_video_bpp, "-bpp"),
 CMDLINE_DEF(client_video_width, "-width"),

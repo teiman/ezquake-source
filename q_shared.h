@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #undef true
 #undef false
 typedef enum {false, true} qbool;
+typedef enum {text_normal, text_red, text_blue} textcolor;
 
 #include "mathlib.h"
 #include "sys.h"
@@ -335,7 +336,7 @@ char *Q_wcs2str_malloc(const wchar *ws); // you must freed returned string after
 #define MIN_MTU             1350        // since user can specifie MTU it is a good idea to limit it at some "sane" value.
 
 // qqshka: Its all messy.
-// For example ezquake (and FTE?) expect maximum message is MSG_BUF_SIZE == 8192 with mvd header which have not fixed size,
+// For example tkquake (and FTE?) expect maximum message is MSG_BUF_SIZE == 8192 with mvd header which have not fixed size,
 // however fuhquake uses less msg size as I recall.
 // mvd header max size is 10 bytes.
 // 

@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018 ezQuake team
+Copyright (C) 2018 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_R_TRACE_HEADER
-#define EZQUAKE_R_TRACE_HEADER
+#ifndef TKQUAKE_R_TRACE_HEADER
+#define TKQUAKE_R_TRACE_HEADER
 
 #ifdef WITH_RENDERING_TRACE
 #define R_TraceEnterFunctionRegion R_TraceEnterRegion(__FUNCTION__, true)
@@ -53,4 +53,4 @@ void R_TraceTextureLabelGet(unsigned int name, int bufSize, int* length, char* l
 #define R_TraceTextureLabelGet(...)
 #endif
 
-#endif // EZQUAKE_R_TRACE_HEADER
+#endif // TKQUAKE_R_TRACE_HEADER

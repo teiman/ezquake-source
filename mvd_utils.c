@@ -1610,6 +1610,10 @@ static void MVD_Stats_Gather_AlivePlayer(int player_index)
 
 	if (mvd_new_info[i].p_state->weaponframe > 0)
 		mvd_new_info[i].mvdinfo.lfw = mvd_new_info[i].p_info->stats[STAT_ACTIVEWEAPON];
+
+	//if (mvd_new_info[i].p_state->weaponskin > 0)
+	//	mvd_new_info[i].mvdinfo.lfw = mvd_new_info[i].p_info->stats[STAT_WEAPONSKIN]; //Tei 
+
 	if (mvd_cg_info.deathmatch != 4) {
 		MVD_Status_WP(i, &taken);
 		for (z = SSG_INFO; z <= RA_INFO; z++) {

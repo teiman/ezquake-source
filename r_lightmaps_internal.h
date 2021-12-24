@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_R_LIGHTMAPS_INTERNAL_HEADER
-#define EZQUAKE_R_LIGHTMAPS_INTERNAL_HEADER
+#ifndef TKQUAKE_R_LIGHTMAPS_INTERNAL_HEADER
+#define TKQUAKE_R_LIGHTMAPS_INTERNAL_HEADER
 
 // Lightmap size
 #define	LIGHTMAP_WIDTH  128
@@ -34,4 +34,4 @@ void GLM_LightmapFrameInit(void);
 void GLM_RenderDynamicLightmaps(msurface_t* surface, qbool world);
 void GLM_ComputeLightmaps(void);
 
-#endif // EZQUAKE_R_LIGHTMAPS_INTERNAL_HEADER
+#endif // TKQUAKE_R_LIGHTMAPS_INTERNAL_HEADER

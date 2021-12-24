@@ -31,6 +31,6 @@ void Cfg_GetConfigPath(char* path, size_t max_length, const char* name);
 extern cvar_t	cfg_save_unchanged, cfg_legacy_exec;
 
 //For some reason this is not used everywhere
-#define MAIN_CONFIG_FILENAME "config.tk.cfg"
+#define MAIN_CONFIG_FILENAME "config_tk.cfg"
 
 #endif

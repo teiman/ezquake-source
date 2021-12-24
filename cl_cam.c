@@ -95,8 +95,7 @@ void Cam_SetViewPlayer (void)
 
 	if (cl.spectator && cl.autocam && cl.spec_locked && cl_chasecam.value) {
 		new_track = cl.spec_track;
-	}
-	else {
+	} else {
 		new_track = cl.playernum;
 	}
 
@@ -113,6 +112,7 @@ qbool Cam_DrawViewModel(void) {
 
 	if (cl.autocam && cl.spec_locked && cl_chasecam.value)
 		return true;
+
 	return false;
 }
 
@@ -143,7 +143,7 @@ void Cam_Unlock(void)
 	if (cls.mvdplayback == QTV_PLAYBACK)
 	{
 		// its not setinfo extension, but adding new extension just for this is stupid IMO
-		QTV_Cmd_Printf(QTV_EZQUAKE_EXT_SETINFO, "ptrack");
+		QTV_Cmd_Printf(QTV_TKQUAKE_EXT_SETINFO, "ptrack");
 	}
 	else
 	{
@@ -177,7 +177,7 @@ void Cam_Lock(int playernum)
 	snprintf(st, sizeof (st), "ptrack %i", playernum);
 	if (cls.mvdplayback == QTV_PLAYBACK) {
 		// its not setinfo extension, but adding new extension just for this is stupid IMO
-		QTV_Cmd_Printf(QTV_EZQUAKE_EXT_SETINFO, st);
+		QTV_Cmd_Printf(QTV_TKQUAKE_EXT_SETINFO, st);
 	}
 	else {
 		MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
@@ -438,9 +438,7 @@ void Cam_Track(usercmd_t *cmd)
 				InitFlyby(self, player, false);
 			cam_lastviewtime = cls.realtime;
 		}
-	} 
-	else 
-	{
+	} else {
 		cam_lastviewtime = cls.realtime;
 	}
 	
@@ -467,15 +465,12 @@ void Cam_Track(usercmd_t *cmd)
 			// move there locally immediately
 			VectorCopy(desired_position, self->origin);
 		}
-	} 
-	else 
-	{
+	} else  {
 		// Ok, move to our desired position and set our angles to view
 		// the player
 		VectorSubtract(desired_position, self->origin, vec);
 		cmd->forwardmove = cmd->sidemove = cmd->upmove = 0;
-		if (VectorLength(vec) > 16) 
-		{ 
+		if (VectorLength(vec) > 16) { 
 			// close enough?
 			MSG_WriteByte (&cls.netchan.message, clc_tmove);
 			MSG_WriteCoord (&cls.netchan.message, desired_position[0]);
@@ -993,7 +988,7 @@ void CL_Autotrack_f(void)
 				Cbuf_AddText(va("%s\n", at->value)); // note KTX this is cmd 154, but we want to be compatible with other mods/versions
 
 				/* Bugfix: When setting autotrack ON, make sure to set cl_hightrack 0.
-				If player hits autotrack bind before KTX had a chance to stuff the impulse, then ezQuake would set cl_hightrack to 1.
+				If player hits autotrack bind before KTX had a chance to stuff the impulse, then tkQuake would set cl_hightrack to 1.
 				Then, if player hits autotrack again after KTX has finished stuffing, both autotrack and cl_hightrack would be on, creating chaos.
 				
 				HOWEVER, this creates a different, albeit less frustrating bug: if you have autotrack on first, then set cl_hightrack 1, then turn off autotrack, cl_hightrack gets set to 0.

@@ -261,7 +261,7 @@ void DumpVariablesDefaults_f(void)
     FILE *f;
 	qbool anyUngrouped = false;
 
-    snprintf(filepath, sizeof(filepath), "%s/ezquake/configs/cvar_defaults.cfg", com_basedir);
+    snprintf(filepath, sizeof(filepath), "%s/tkquake/configs/cvar_defaults.cfg", com_basedir);
 
     f = fopen(filepath, "w");
     if (!f)
@@ -735,13 +735,13 @@ static void Config_PrintPreamble(FILE *f)
 	Config_PrintBorder(f);
 	Config_PrintLine(f, "", 3);
 	Config_PrintLine(f, "", 3);
-	Config_PrintLine(f, "E Z Q U A K E   C O N F I G U R A T I O N", 3);
+	Config_PrintLine(f, "T K Q U A K E   C O N F I G U R A T I O N", 3);
 	Config_PrintLine(f, "", 3);
 	Config_PrintLine(f, "", 3);
 	Config_PrintBorder(f);
 	Config_PrintBorder(f);
 	fprintf(f,"\n// %s's config\n\n", name.string);
-	fprintf(f,"// ezQuake %s " __DATE__ ", " __TIME__"\n", VersionString());
+	fprintf(f,"// tkQuake %s " __DATE__ ", " __TIME__"\n", VersionString());
 
 	if (cfg_save_cmdline.value) {
 		DumpCmdLine(f);
@@ -798,7 +798,7 @@ static void ResetConfigs(qbool explicit_reset, qbool read_legacy_configs)
 
 void Cfg_GetConfigPath(char* path, size_t max_length, const char* name)
 {
-	const char* default_gamedir = (cfg_use_home.integer ? "" : "ezquake");
+	const char* default_gamedir = (cfg_use_home.integer ? "" : "tkquake");
 	const char* base_directory = (cfg_use_home.integer ? com_homedir : com_basedir);
 
 	strlcpy(path, base_directory, max_length);
@@ -890,7 +890,7 @@ void DumpHUD(const char *name)
 	cvar_t *var;
 	cvar_t *sorted[MAX_DUMPED_CVARS];
 
-	outfile = va("%s/ezquake/configs/%s", com_basedir, name);
+	outfile = va("%s/tkquake/configs/%s", com_basedir, name);
 	if (!(f	= fopen	(outfile, "w"))) {
 		FS_CreatePath(outfile);
 		if (!(f	= fopen	(outfile, "w"))) {
@@ -999,7 +999,7 @@ void ResetConfigs_f(void)
 	ResetConfigs(true, read_legacy_configs);
 }
 
-// well exec /home/qqshka/ezquake/config.cfg does't work, security or something, so adding this
+// well exec /home/qqshka/tkquake/config.cfg does't work, security or something, so adding this
 // so this is some replacement for exec
 qbool LoadCfg(FILE *f)
 {
@@ -1031,12 +1031,12 @@ qbool LoadCfg(FILE *f)
 /*
 	example how it works
 	
-	=== ./ezquake -game testmod -config testcfg
+	=== ./tkquake -game testmod -config testcfg
 	homedir/testmod/testcfg.cfg (fullname)
 	homedir/testcfg.cfg (fullname_moddefault)
 	quakedir/testmod/configs/testcfg.cfg
-	quakedir/ezquake/configs/testcfg.cfg
-	built-in ezquake config
+	quakedir/tkquake/configs/testcfg.cfg
+	built-in tkquake config
 */
 void LoadConfig_f(void)
 {
@@ -1071,8 +1071,8 @@ void LoadConfig_f(void)
 	}
 
 	// basedir
-	snprintf(fullname, sizeof(fullname), "%s/%s/configs/%s", com_basedir, (strcmp(com_gamedirfile, "qw") == 0) ? "ezquake" : com_gamedirfile, filename);
-	snprintf(fullname_moddefault, sizeof(fullname_moddefault), "%s/ezquake/configs/%s", com_basedir, filename);
+	snprintf(fullname, sizeof(fullname), "%s/%s/configs/%s", com_basedir, (strcmp(com_gamedirfile, "qw") == 0) ? "tkquake" : com_gamedirfile, filename);
+	snprintf(fullname_moddefault, sizeof(fullname_moddefault), "%s/tkquake/configs/%s", com_basedir, filename);
 
 	if(!use_home) {
 		if (cfg_use_gamedir.integer) {
@@ -1095,7 +1095,7 @@ void LoadConfig_f(void)
 	if(use_home)
 		Com_Printf("Loading %s%s (Using Home Directory) ...\n", (strcmp(com_gamedirfile, "qw") == 0) ? "" : va("%s/",com_gamedirfile), filename);
 	else
-		Com_Printf("Loading %s/configs/%s ...\n", (strcmp(com_gamedirfile, "qw") == 0) ? "ezquake" : com_gamedirfile, filename);
+		Com_Printf("Loading %s/configs/%s ...\n", (strcmp(com_gamedirfile, "qw") == 0) ? "tkquake" : com_gamedirfile, filename);
 	
 	Cbuf_AddText ("cl_warncmd 0\n");
 

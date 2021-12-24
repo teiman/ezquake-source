@@ -678,8 +678,15 @@ void VX_Implosion(vec3_t org)
 //This just adds a little lightning trail to the laser beams
 void VX_LightningTrail(vec3_t start, vec3_t end)
 {
-	col_t color = { 255,77,0,255 };
-	AddParticle(p_lightningbeam, start, 1, 50, 0.75, color, end);
+	if (1) {
+		col_t color = { 255,77,0,255 };
+		//col_t color = { 1,1,0,1 };
+		AddParticle(p_lightningbeam, start, 1, 50, 0.75, color, end);
+	}   else {
+		col_t color = { 100,50,0,100 };
+		AddParticle(p_lightningbeam, start, 1, 50, 0.75, color, end);
+	}
+
 }
 
 void QMB_ParticleExplosion(vec3_t org)
@@ -1096,6 +1103,7 @@ void VXGunshot(vec3_t org, float count)
 				AngleVectors(dir, NULL, NULL, neworg);
 				VectorMA(org, 40, neworg, neworg);
 				AddParticle(p_sparkray, org, 1, 3, 1.5, color, neworg);
+				//AddParticle(p_fire, org, 20, 80, 1, color, neworg);
 				dir[2] += 360 / 5;
 			}
 			dir[0] += 180 / 5;

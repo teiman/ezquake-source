@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2011 azazello and ezQuake team
+Copyright (C) 2011 azazello and tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -33,8 +33,8 @@ void HUD_NewRadarMap(void);
 void SCR_HUD_DrawRadar(hud_t *hud);
 
 void HudCommon_Init(void);
-void SCR_HUD_DrawNum(hud_t *hud, int num, qbool low, float scale, int style, int digits, char *s_align, qbool proportional);
-void SCR_HUD_DrawNum2(hud_t* hud, int num, qbool low, float scale, int style, int digits, char* s_align, qbool proportional, qbool draw_content);
+void SCR_HUD_DrawNum(hud_t *hud, int num, textcolor tcolor, float scale, int style, int digits, char *s_align, qbool proportional);
+void SCR_HUD_DrawNum2(hud_t* hud, int num, textcolor tcolor, float scale, int style, int digits, char* s_align, qbool proportional, qbool draw_content);
 
 extern qbool autohud_loaded;
 extern cvar_t mvd_autohud;

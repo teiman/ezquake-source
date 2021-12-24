@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2011 ezQuake team
+Copyright (C) 2011 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -79,7 +79,7 @@ filelist_t help_tutorials_fl;
 
 static void Help_Index_Init(void)
 {
-    FL_Init(&help_index_fl,	"./ezquake/help/manual");
+    FL_Init(&help_index_fl,	"./tkquake/help/manual");
     FL_AddFileType(&help_index_fl, 0, ".xml");
 	FL_SetDirUpOption(&help_index_fl, false);
 	FL_SetDirsOption(&help_index_fl, false);
@@ -87,7 +87,7 @@ static void Help_Index_Init(void)
 
 static void Help_Tutorials_Init(void)
 {
-    FL_Init(&help_tutorials_fl,	"./ezquake/help/manual/demos");
+    FL_Init(&help_tutorials_fl,	"./tkquake/help/manual/demos");
     FL_AddFileType(&help_tutorials_fl, 0, ".mvd");
 	FL_SetDirUpOption(&help_tutorials_fl, false);
 	FL_SetDirsOption(&help_tutorials_fl, false);

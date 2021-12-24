@@ -122,7 +122,7 @@ void GL_ConsumeErrors(void)
 	GL_ProcessAllErrors("Consuming prior errors...");
 }
 
-static void GL_PrintInfoLine(const char* label, int labelsize, const char* fmt, ...)
+void GL_PrintInfoLine(const char* label, int labelsize, const char* fmt, ...)
 {
 	va_list argptr;
 	char msg[128];
@@ -137,6 +137,8 @@ static void GL_PrintInfoLine(const char* label, int labelsize, const char* fmt, 
 	con_margin = 0;
 	Com_Printf_State(PRINT_ALL, "\n");
 }
+
+void VID_FitToScreen_f();
 
 void GL_PrintGfxInfo(void)
 {
@@ -223,8 +225,18 @@ void GL_PrintGfxInfo(void)
 	}
 	if (r_conwidth.integer || r_conheight.integer) {
 		GL_PrintInfoLine("Console Res:", 12,"%d x %d", r_conwidth.integer, r_conheight.integer);
+	}	
+
+	// Tei: borderless mode
+	if (!r_fullscreen.integer) {
+		VID_FitToScreen_f();
 	}
+	// -/Tei: borderless mode
 }
+
+
+
+
 
 void GL_Viewport(int x, int y, int width, int height)
 {

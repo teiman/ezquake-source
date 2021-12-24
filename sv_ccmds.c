@@ -1831,7 +1831,7 @@ void SV_InitOperatorCommands (void)
 	Cmd_AddCommand ("snapall", SV_SnapAll_f);
 	Cmd_AddCommand ("kick", SV_Kick_f);
 
-	// Add sv_status as client allows 'status' alias to over-ride (ezQuake #532)
+	// Add sv_status as client allows 'status' alias to over-ride (tkQuake #532)
 	Cmd_AddCommand ("status", SV_Status_f);
 	Cmd_AddCommand ("sv_status", SV_Status_f);
 
@@ -1889,7 +1889,7 @@ void SV_InitOperatorCommands (void)
 	Cmd_AddCommand ("gamedir", SV_Gamedir_f);
 	Cmd_AddCommand ("sv_gamedir", SV_Gamedir);
 
-// I wonder why it registered in host.c in ezquake...
+// I wonder why it registered in host.c in tkquake...
 #ifdef SERVERONLY
 	Cmd_AddCommand ("floodprot", SV_Floodprot_f);
 	Cmd_AddCommand ("floodprotmsg", SV_Floodprotmsg_f);

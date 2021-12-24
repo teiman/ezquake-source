@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_R_DRAW_HEADER
-#define EZQUAKE_R_DRAW_HEADER
+#ifndef TKQUAKE_R_DRAW_HEADER
+#define TKQUAKE_R_DRAW_HEADER
 
 void R_Draw_SAlphaSubPic2(float x, float y, mpic_t *pic, int src_width, int src_height, float newsl, float newtl, float newsh, float newth, float scale_x, float scale_y, float alpha);
 void R_Draw_AlphaPieSliceRGB(float x, float y, float radius, float startangle, float endangle, float thickness, qbool fill, color_t color);
@@ -16,4 +16,4 @@ void R_Cache2DMatrix(void);
 void R_UndoLastCharacter(void);
 void R_Draw_Polygon(float x, float y, vec3_t *vertices, int num_vertices, color_t color);
 
-#endif // EZQUAKE_R_DRAW_HEADER
+#endif // TKQUAKE_R_DRAW_HEADER

@@ -1141,7 +1141,7 @@ void MT_Init(void)
 {
 	char tmp_path[MAX_OSPATH] = {0};
 
-	snprintf(&tmp_path[0], sizeof(tmp_path), "%s/ezquake/temp", com_basedir);
+	snprintf(&tmp_path[0], sizeof(tmp_path), "%s/tkquake/temp", com_basedir);
 	Sys_mkdir(tmp_path);
 
 	MT_ClearClientState();

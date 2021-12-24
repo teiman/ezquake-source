@@ -438,11 +438,27 @@ void Draw_SStringAligned(int x, int y, const char *text, float scale, float alph
 
 	if (align == text_align_center) {
 		Draw_AdjustImages(initial_position, final_position, (max_x - x - width) / 2);
-	}
-	else if (align == text_align_right) {
+	} else if (align == text_align_right) {
 		Draw_AdjustImages(initial_position, final_position, max_x - x - width);
 	}
 }
+
+void Draw_SStringAlignedColor(int x, int y, const char* text, float scale, float alpha, qbool proportional, text_alignment_t align, float max_x, clrinfo_t *color)
+{
+	int initial_position, final_position;
+	float width;
+
+	initial_position = Draw_ImagePosition();
+	width = Draw_StringBase(x, y, text, color, 0, false, scale, alpha, false, 0, proportional, max_x);
+	final_position = Draw_ImagePosition();
+
+	if (align == text_align_center) {
+		Draw_AdjustImages(initial_position, final_position, (max_x - x - width) / 2);
+	}	else if (align == text_align_right) {
+		Draw_AdjustImages(initial_position, final_position, max_x - x - width);
+	}
+}
+
 
 float Draw_SString(float x, float y, const char *text, float scale, qbool proportional)
 {
@@ -799,7 +815,7 @@ static float Draw_TextCacheAddCharacter(float x, float y, wchar ch, float scale,
 // gl_statechange		= Change the gl state before drawing?
 float R_Draw_CharacterBase(float x, float y, wchar num, float scale, qbool apply_overall_alpha, qbool bigchar, qbool gl_statechange, qbool proportional)
 {
-	int char_size = (bigchar ? 64 : 8);
+	int char_size = (bigchar ? 64 : 8);	
 
 	if (bigchar) {
 		mpic_t *p = Draw_CachePicSafe(MCHARSET_PATH, false, true);

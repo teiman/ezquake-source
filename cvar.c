@@ -382,7 +382,7 @@ void Cvar_Register(cvar_t *var)
 
 		// warn if CVAR_SILENT is not set
 		if (!(old->flags & CVAR_SILENT)) {
-			Com_Printf("Can't register variable %s, already defined\n", var->name);
+			Com_DPrintf("Can't register variable %s, already defined\n", var->name);
 		}
 
 		return;

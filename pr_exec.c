@@ -278,7 +278,7 @@ void PR_RunError (char *error, ...)
 
 	pr_depth = 0; // dump the stack so SV_Error can shutdown functions
 
-	SV_Error ("Program error");
+	//SV_Error("[2] Program error: runerror = %s", string);	
 }
 
 /*

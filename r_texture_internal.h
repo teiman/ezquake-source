@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_R_TEXTURE_INTERNAL_HEADER
-#define EZQUAKE_R_TEXTURE_INTERNAL_HEADER
+#ifndef TKQUAKE_R_TEXTURE_INTERNAL_HEADER
+#define TKQUAKE_R_TEXTURE_INTERNAL_HEADER
 
 #include "r_texture.h"
 
@@ -51,4 +51,4 @@ void R_TextureRegisterCvars(void);
 void R_TextureModeChanged(texture_ref tex, qbool mipmap, qbool viewmodel);
 void R_TextureModeForEach(void(*func)(texture_ref tex, qbool mipmap, qbool viewmodel));
 
-#endif // EZQUAKE_R_TEXTURE_HEADER
+#endif // TKQUAKE_R_TEXTURE_HEADER

@@ -18,8 +18,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // vid.h -- video driver defs
 
-#ifndef EZQUAKE_VID_HEADER
-#define EZQUAKE_VID_HEADER
+#ifndef TKQUAKE_VID_HEADER
+#define TKQUAKE_VID_HEADER
 
 #include <SDL.h>
 
@@ -101,4 +101,4 @@ int VID_GetModeIndexCount(void);
 
 void VID_ReloadCheck(void);
 
-#endif // EZQUAKE_VID_HEADER
+#endif // TKQUAKE_VID_HEADER

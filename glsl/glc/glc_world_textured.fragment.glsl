@@ -1,6 +1,6 @@
 #version 120
 
-#ezquake-definitions
+#tkquake-definitions
 
 #ifdef EZ_USE_TEXTURE_ARRAYS
 #extension GL_EXT_texture_array : enable

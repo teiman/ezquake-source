@@ -126,15 +126,12 @@ edict_t *ED_Alloc (void)
 		}
 	}
 
-	if (i == sv.max_edicts)
-	{
+	if (i == sv.max_edicts){
 		Con_Printf ("WARNING: ED_Alloc: no free edicts [%d]\n", sv.max_edicts);
 		i--;	// step on whatever is the last edict
 		e = EDICT_NUM(i);
 		SV_UnlinkEdict(e);
-	}
-	else
-	{
+	} else	{
 		sv.num_edicts++;
 		e = EDICT_NUM(i);
 	}
@@ -986,21 +983,17 @@ void ED_LoadFromFile (const char *data)
 			ent = EDICT_NUM(0);
 		else
 			ent = ED_Alloc ();
+
 		data = ED_ParseEdict (data, ent);
 
-		// remove things from different skill levels or deathmatch
-		if ((int)deathmatch.value)
-		{
-			if (((int)ent->v.spawnflags & SPAWNFLAG_NOT_DEATHMATCH))
-			{
-				ED_Free (ent);
-				inhibit++;
-				continue;
-			}
-		}
-		else if ((current_skill == 0 && ((int)ent->v.spawnflags & SPAWNFLAG_NOT_EASY))
-		         || (current_skill == 1 && ((int)ent->v.spawnflags & SPAWNFLAG_NOT_MEDIUM))
-		         || (current_skill >= 2 && ((int)ent->v.spawnflags & SPAWNFLAG_NOT_HARD)) )
+
+		// Tei: We want moar of everything!!!
+		// Everything spawns, except if is disabled for all dificulty levels 
+		if (  
+				((int)ent->v.spawnflags & SPAWNFLAG_NOT_EASY) &&
+		        ((int)ent->v.spawnflags & SPAWNFLAG_NOT_MEDIUM) &&
+		        ((int)ent->v.spawnflags & SPAWNFLAG_NOT_HARD) 
+			)
 		{
 			ED_Free (ent);
 			inhibit++;
@@ -1173,8 +1166,11 @@ void PR1_LoadProgs (void)
 
 	if (progs->version != PROG_VERSION)
 		SV_Error ("qwprogs.dat has wrong version number (%i should be %i)", progs->version, PROG_VERSION);
+
 	if (progs->crc != (pr_nqprogs ? NQ_PROGHEADER_CRC : PROGHEADER_CRC))
-		SV_Error ("You must have the qwprogs.dat from QuakeWorld installed");
+	//if (progs->crc !=  TKQUAKE_CRC)
+		SV_Error ("You must have the qwprogs.dat from TkQuake installed. CRC=%d", progs->crc );
+
 
 	pr_functions = (dfunction_t *)((byte *)progs + progs->ofs_functions);
 	pr_strings = (char *)progs + progs->ofs_strings;

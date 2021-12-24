@@ -1,6 +1,6 @@
 #version 430
 
-#ezquake-definitions
+#tkquake-definitions
 
 #ifdef MIXED_SAMPLING
 layout(binding=0) uniform sampler2D tex[2];
@@ -32,7 +32,7 @@ void main()
 	}
 
 #ifdef PREMULT_ALPHA_HACK
-	// Some people prefer the smoothing effect from ezQuake < 3.5,
+	// Some people prefer the smoothing effect from tkQuake < 3.5,
 	//   caused by the alpha being blended incorrectly & effectively applied twice
 	texColor.r *= texColor.a;
 	texColor.g *= texColor.a;

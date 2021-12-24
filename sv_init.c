@@ -277,7 +277,7 @@ void SV_SpawnServer(char *mapname, qbool devmap, char* entityfile, qbool loading
 	if (loading_savegame) {
 		Cvar_SetValue(&skill, skill_level);
 		Cvar_SetValue(&deathmatch, 0);
-		Cvar_SetValue(&coop, 0);
+		Cvar_SetValue(&coop, 1);
 		Cvar_SetValue(&teamplay, 0);
 		Cvar_SetValue(&maxclients, 1);
 		Cvar_Set(&sv_progsname, "spprogs"); // force progsname
@@ -298,9 +298,8 @@ void SV_SpawnServer(char *mapname, qbool devmap, char* entityfile, qbool loading
 		msg_anglesize = 1;
 	}
 #endif
-
-	if ((int)coop.value)
-		Cvar_Set (&deathmatch, "0");
+	
+	Cvar_Set (&deathmatch, "0");
 	current_skill = (int) (skill.value + 0.5);
 	if (current_skill < 0)
 		current_skill = 0;

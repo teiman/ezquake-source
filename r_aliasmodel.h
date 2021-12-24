@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_R_ALIASMODEL_HEADER
-#define EZQUAKE_R_ALIASMODEL_HEADER
+#ifndef TKQUAKE_R_ALIASMODEL_HEADER
+#define TKQUAKE_R_ALIASMODEL_HEADER
 
 #include "r_buffers.h"
 
@@ -70,4 +70,4 @@ void R_AliasModelDeterminePoses(const maliasframedesc_t* oldframe, const maliasf
 // FIXME: not really GL_, probably Vulkan too?
 void GL_PrepareAliasModel(model_t* m, aliashdr_t* hdr);
 
-#endif // EZQUAKE_R
+#endif // TKQUAKE_R

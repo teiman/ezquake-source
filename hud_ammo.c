@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2011 azazello and ezQuake team
+Copyright (C) 2011 azazello and tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -170,9 +170,8 @@ static void SCR_HUD_DrawAmmo(
 
 	if (style < 2) {
 		// simply draw number
-		SCR_HUD_DrawNum(hud, value, low, scale, style, digits, s_align, proportional);
-	}
-	else {
+		SCR_HUD_DrawNum(hud, value, (low?text_red:text_normal), scale, style, digits, s_align, proportional);
+	} else {
 		// else - draw classic ammo-count box with background
 		char buf[8];
 		int  x_, y;
@@ -313,15 +312,13 @@ void SCR_HUD_DrawAmmoIcon(hud_t *hud, int num, float scale, int style)
 				case 3: Draw_SAlt_String(x, y, "r", scale, false); break;
 				case 4: Draw_SAlt_String(x, y, "c", scale, false); break;
 			}
-		}
-		else {
+		}	else {
 			Draw_SPic(x, y, sb_ammo[num - 1], scale);
 		}
 	}
 }
 
-void SCR_HUD_DrawAmmoIconCurrent(hud_t *hud)
-{
+void SCR_HUD_DrawAmmoIconCurrent(hud_t *hud) {
 	int num;
 	static cvar_t *scale = NULL, *style;
 
@@ -334,8 +331,7 @@ void SCR_HUD_DrawAmmoIconCurrent(hud_t *hud)
 	if (ShowPreselectedWeap()) {
 		// using weapon pre-selection so show info for current best pre-selected weapon ammo
 		num = State_AmmoNumForWeapon(IN_BestWeapon(true));
-	}
-	else {
+	} else {
 		// not using weapon pre-selection or player is dead so show current selected ammo
 		if (HUD_Stats(STAT_ITEMS) & IT_SHELLS)
 			num = 1;

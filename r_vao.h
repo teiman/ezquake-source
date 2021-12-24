@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018 ezQuake team.
+Copyright (C) 2018 tkQuake team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_R_VAO_HEADER
-#define EZQUAKE_R_VAO_HEADER
+#ifndef TKQUAKE_R_VAO_HEADER
+#define TKQUAKE_R_VAO_HEADER
 
 #include "r_buffers.h"
 
@@ -55,4 +55,4 @@ typedef struct r_vaos_api_s {
 	void(*Bind)(r_vao_id vao);
 } r_vaos_api_t;
 
-#endif // EZQUAKE_R_VAO_HEADER
+#endif // TKQUAKE_R_VAO_HEADER

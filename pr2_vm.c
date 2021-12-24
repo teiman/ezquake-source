@@ -627,7 +627,7 @@ void QVM_RunError( qvm_t * qvm, char *error, ... )
 
 	Con_Printf( "%s\n", string );
 
-	SV_Error( "QVM Program error" );
+	SV_Error( "QVM Program error =%s", string );
 }
 
 int trap_Call( qvm_t * qvm, int apinum )

@@ -69,7 +69,7 @@ void PF_error (void)
 	ed = PROG_TO_EDICT(pr_global_struct->self);
 	ED_Print (ed);
 
-	SV_Error ("Program error");
+	SV_Error ("======SERVER ERROR in %s:\n%s\n", PR1_GetString(pr_xfunction->s_name), s);
 }
 
 /*
@@ -93,7 +93,7 @@ void PF_objerror (void)
 	ED_Print (ed);
 	ED_Free (ed);
 
-	SV_Error ("Program error");
+	//SV_Error ("======OBJECT ERROR in %s:\n%s\n", PR1_GetString(pr_xfunction->s_name), s);
 }
 
 
@@ -2406,8 +2406,7 @@ PF_multicast
 void(vector where, float set) multicast
 ==============
 */
-void PF_multicast (void)
-{
+void PF_multicast (void) {
 	float	*o;
 	int		to;
 
@@ -2416,6 +2415,30 @@ void PF_multicast (void)
 
 	SV_Multicast (o, to);
 }
+
+
+dfunction_t* ED_FindFunction(char* name);
+extern dfunction_t* pr_functions;
+
+void PF_find_function(void){
+	char* s1;
+	char* s2;
+	char* s3;
+	char* func_to_search;
+	int func;
+
+	s1 = G_STRING(OFS_PARM0);
+	s2 = G_STRING(OFS_PARM1);
+	s3 = G_STRING(OFS_PARM2);
+
+	func_to_search = va("%s%s%s", s1, s2, s3);
+
+	func = ED_FindFunctionOffset(func_to_search);
+
+	G_INT(OFS_RETURN) = func;
+}
+
+
 
 //DP_QC_SINCOSSQRTPOW
 //float sin(float x) = #60
@@ -2626,23 +2649,23 @@ float checkextension(string extension) = #99;
 static void PF_checkextension (void)
 {
 	static char *supported_extensions[] = {
-		"DP_CON_SET",               // http://wiki.quakesrc.org/index.php/DP_CON_SET
-		"DP_QC_CVAR_STRING",		// http://wiki.quakesrc.org/index.php/DP_QC_CVAR_STRING
-		"DP_QC_MINMAXBOUND",        // http://wiki.quakesrc.org/index.php/DP_QC_MINMAXBOUND
-		"DP_QC_RANDOMVEC",			// http://wiki.quakesrc.org/index.php/DP_QC_RANDOMVEC
-		"DP_QC_SINCOSSQRTPOW",      // http://wiki.quakesrc.org/index.php/DP_QC_SINCOSSQRTPOW
-		"DP_QC_TRACEBOX",			// http://wiki.quakesrc.org/index.php/DP_QC_TRACEBOX
-		"DP_REGISTERCVAR",			// http://wiki.quakesrc.org/index.php/DP_REGISTERCVAR
-		"FTE_CALLTIMEOFDAY",        // http://wiki.quakesrc.org/index.php/FTE_CALLTIMEOFDAY
-		"QSG_CVARSTRING",			// http://wiki.quakesrc.org/index.php/QSG_CVARSTRING
-		"ZQ_CLIENTCOMMAND",			// http://wiki.quakesrc.org/index.php/ZQ_CLIENTCOMMAND
-		"ZQ_ITEMS2",                // http://wiki.quakesrc.org/index.php/ZQ_ITEMS2
-		"ZQ_MOVETYPE_NOCLIP",       // http://wiki.quakesrc.org/index.php/ZQ_MOVETYPE_NOCLIP
-		"ZQ_MOVETYPE_FLY",          // http://wiki.quakesrc.org/index.php/ZQ_MOVETYPE_FLY
-		"ZQ_MOVETYPE_NONE",         // http://wiki.quakesrc.org/index.php/ZQ_MOVETYPE_NONE
-		"ZQ_PAUSE",					// http://wiki.quakesrc.org/index.php/ZQ_PAUSE
-		"ZQ_QC_STRINGS",			// http://wiki.quakesrc.org/index.php/ZQ_QC_STRINGS
-		"ZQ_QC_TOKENIZE",           // http://wiki.quakesrc.org/index.php/ZQ_QC_TOKENIZE
+		"DP_CON_SET",               // https://quakewiki.org/wiki/DP_CON_SET
+		"DP_QC_CVAR_STRING",		// https://quakewiki.org/wiki/DP_QC_CVAR_STRING
+		"DP_QC_MINMAXBOUND",        // https://quakewiki.org/wiki/DP_QC_MINMAXBOUND
+		"DP_QC_RANDOMVEC",			// https://quakewiki.org/wiki/DP_QC_RANDOMVEC
+		"DP_QC_SINCOSSQRTPOW",      // https://quakewiki.org/wiki/DP_QC_SINCOSSQRTPOW
+		"DP_QC_TRACEBOX",			// https://quakewiki.org/wiki/DP_QC_TRACEBOX
+		"DP_REGISTERCVAR",			// https://quakewiki.org/wiki/DP_REGISTERCVAR
+		"FTE_CALLTIMEOFDAY",        // https://quakewiki.org/wiki/FTE_CALLTIMEOFDAY
+		"QSG_CVARSTRING",			// https://quakewiki.org/wiki/QSG_CVARSTRING
+		"ZQ_CLIENTCOMMAND",			// https://quakewiki.org/wiki/ZQ_CLIENTCOMMAND
+		"ZQ_ITEMS2",                // https://quakewiki.org/wiki/ZQ_ITEMS2
+		"ZQ_MOVETYPE_NOCLIP",       // https://quakewiki.org/wiki/ZQ_MOVETYPE_NOCLIP
+		"ZQ_MOVETYPE_FLY",          // https://quakewiki.org/wiki/ZQ_MOVETYPE_FLY
+		"ZQ_MOVETYPE_NONE",         // https://quakewiki.org/wiki/ZQ_MOVETYPE_NONE
+		"ZQ_PAUSE",					// https://quakewiki.org/wiki/ZQ_PAUSE
+		"ZQ_QC_STRINGS",			// https://quakewiki.org/wiki/ZQ_QC_STRINGS
+		"ZQ_QC_TOKENIZE",           // https://quakewiki.org/wiki/ZQ_QC_TOKENIZE
 		"ZQ_VWEP",
 		NULL
 	};
@@ -2761,8 +2784,9 @@ PF_setspawnparms,
 PF_logfrag,
 
 PF_infokey,		//#80
-PF_stof,
-PF_multicast,
+PF_stof, //#81
+PF_multicast, //#82
+PF_find_function,//#83
 };
 
 #define num_std_builtins (sizeof(std_builtins)/sizeof(std_builtins[0]))

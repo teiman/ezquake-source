@@ -369,6 +369,11 @@ void R_RenderDynamicLightmaps(msurface_t *fa, qbool world)
 	}
 
 	lm = &lightmaps[fa->lightmaptexturenum];
+	if (lm == NULL || !lm) {
+		//ERROR!!... something really bad happened 
+		return;
+	}
+
 	lm->modified = true;
 	theRect = &lm->change_area;
 	if (fa->light_t < theRect->t) {
@@ -414,6 +419,11 @@ static void R_RenderAllDynamicLightmapsForChain(msurface_t* surface, qbool world
 	}
 
 	R_TraceEnterFunctionRegion;
+
+	if (lightmaps == NULL || !lightmaps) {
+		//ERROR!!!...
+		return;
+	}
 
 	polyType = world ? polyTypeWorldModel : polyTypeBrushModel;
 	for (s = surface; s; s = s->texturechain) {

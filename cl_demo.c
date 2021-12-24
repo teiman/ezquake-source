@@ -1,6 +1,6 @@
 /*
 Copyright (C) 1996-1997 Id Software, Inc.
-Copyright (C) 2007-2015 ezQuake team
+Copyright (C) 2007-2015 tkQuake team
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -1303,7 +1303,9 @@ void CL_WriteMVDStartupData(void)
 				| DF_EFFECTS | DF_SKINNUM 
 				| ((state->flags & PF_DEAD) ? DF_DEAD : 0)
 				| ((state->flags & PF_GIB)  ? DF_GIB  : 0)
-				| DF_WEAPONFRAME | DF_MODEL;
+				| DF_WEAPONFRAME | DF_MODEL 
+				//| DF_WEAPONSKIN
+				; 
 
 		VectorCopy(state->origin, origin);
 		VectorCopy(state->viewangles, angles);
@@ -1333,6 +1335,9 @@ void CL_WriteMVDStartupData(void)
 
 		if (flags & DF_WEAPONFRAME)
 			MSG_WriteByte (&buf, state->weaponframe);
+
+		//if (flags & DF_WEAPONSKIN)
+		//	MSG_WriteByte(&buf, state->weaponskin);//Tei
 
 		if (buf.cursize > MAX_MSGLEN/2)
 		{
@@ -2255,7 +2260,7 @@ static void OnChange_demo_format(cvar_t *var, char *string, qbool *cancel)
 }
 
 //
-// Writes a "pimp message" for ezQuake at the end of a demo.
+// Writes a "pimp message" for tkQuake at the end of a demo.
 //
 static void CL_WriteDemoPimpMessage(void)
 {
@@ -3322,7 +3327,7 @@ void CL_Demo_DumpBenchmarkResult(int frames, float timet)
 
 	fputs(va("\t<system>\n\t\t<os>%s</os>\n\t\t<hardware>%s</hardware>\n\t</system>\n", QW_PLATFORM, SYSINFO_GetString()), f);
 
-	fputs(va("\t<client>\n\t\t<name>ezQuake</name><version>%s</version>\n"
+	fputs(va("\t<client>\n\t\t<name>tkQuake</name><version>%s</version>\n"
 		"\t\t<configuration>%s</configuration><rendering>%s</rendering>\n\t</client>\n",
 		VersionString(), QW_CONFIGURATION, QW_RENDERER), f);
 //FIXME width/height doesnt get set, remove vid_mode/r_mode... Is this function used??
@@ -3364,7 +3369,7 @@ void CL_StopPlayback(void)
 	cl.paused &= ~PAUSED_DEMO;
 
 	cls.qtv_svversion = 0;
-	cls.qtv_ezquake_ext = 0;
+	cls.qtv_tkquake_ext = 0;
 	cls.qtv_donotbuffer = false;
 
 	// Stop Qizmo demo playback.
@@ -4088,7 +4093,7 @@ void CL_QTVPoll (void)
 	qbool streamavailable = false;
 	qbool saidheader = false;
 	float svversion = 0;
-	int qtv_ezquake_ext = 0;
+	int qtv_tkquake_ext = 0;
 
 	// We're not playing any QTV stream.
 	if (!qtvrequest)
@@ -4227,9 +4232,9 @@ void CL_QTVPoll (void)
 				{
 					streamavailable = true;
 				}
-				else if (!strcmp(start, QTV_EZQUAKE_EXT))
+				else if (!strcmp(start, QTV_TKQUAKE_EXT))
 				{
-					qtv_ezquake_ext = atoi(colon);
+					qtv_tkquake_ext = atoi(colon);
 				}
 			}
 			else
@@ -4274,7 +4279,7 @@ void CL_QTVPoll (void)
 		// Start playing the QTV stream.
 		CL_QTVPlay(qtvrequest, qtvrequestbuffer, qtvrequestsize);
 		cls.qtv_svversion = svversion;
-		cls.qtv_ezquake_ext = qtv_ezquake_ext;
+		cls.qtv_tkquake_ext = qtv_tkquake_ext;
 		qtvrequest = NULL;
 
 		return;
@@ -4287,7 +4292,7 @@ void CL_QTVPoll (void)
 
 		if (!strcmp(authmethod, "PLAIN"))
 		{
-			strlcpy(connrequest, QTV_CL_HEADER(QTV_VERSION, QTV_EZQUAKE_EXT_NUM), sizeof(connrequest));
+			strlcpy(connrequest, QTV_CL_HEADER(QTV_VERSION, QTV_TKQUAKE_EXT_NUM), sizeof(connrequest));
 			strlcat(connrequest, "AUTH: PLAIN\nPASSWORD: \"", sizeof(connrequest));
 			strlcat(connrequest, qtvpassword, sizeof(connrequest));
 			strlcat(connrequest, "\"\n", sizeof(connrequest));
@@ -4311,7 +4316,7 @@ void CL_QTVPoll (void)
 				byte_hash = sha3_Finalize(&c);
 				sha3_512_ByteToHex(hash, byte_hash);
 				snprintf(connrequest, sizeof(connrequest),
-					"%s" "AUTH: SHA3_512\nPASSWORD: \"%s\"\n\n", QTV_CL_HEADER(QTV_VERSION, QTV_EZQUAKE_EXT_NUM), hash);
+					"%s" "AUTH: SHA3_512\nPASSWORD: \"%s\"\n\n", QTV_CL_HEADER(QTV_VERSION, QTV_TKQUAKE_EXT_NUM), hash);
 
 				VFS_WRITE(qtvrequest, connrequest, strlen(connrequest));
 
@@ -4330,7 +4335,7 @@ void CL_QTVPoll (void)
 				crcvalue = CRC_Block((byte *)hash, strlen(hash));
 				snprintf(hash, sizeof(hash), "0x%X", (unsigned int)CRC_Value(crcvalue));
 				snprintf(connrequest, sizeof(connrequest), 
-					"%s" "AUTH: CCITT\nPASSWORD: \"%s\"\n\n", QTV_CL_HEADER(QTV_VERSION, QTV_EZQUAKE_EXT_NUM), hash);
+					"%s" "AUTH: CCITT\nPASSWORD: \"%s\"\n\n", QTV_CL_HEADER(QTV_VERSION, QTV_TKQUAKE_EXT_NUM), hash);
 
 				VFS_WRITE(qtvrequest, connrequest, strlen(connrequest));
 
@@ -4349,7 +4354,7 @@ void CL_QTVPoll (void)
 				Com_BlockFullChecksum (hash, strlen(hash), (unsigned char*)md4sum);
 				snprintf(hash, sizeof(hash), "%X%X%X%X", md4sum[0], md4sum[1], md4sum[2], md4sum[3]);
 				snprintf(connrequest, sizeof(connrequest), 
-					"%s" "AUTH: MD4\nPASSWORD: \"%s\"\n\n", QTV_CL_HEADER(QTV_VERSION, QTV_EZQUAKE_EXT_NUM), hash);
+					"%s" "AUTH: MD4\nPASSWORD: \"%s\"\n\n", QTV_CL_HEADER(QTV_VERSION, QTV_TKQUAKE_EXT_NUM), hash);
 
 				VFS_WRITE(qtvrequest, connrequest, strlen(connrequest));
 
@@ -4361,7 +4366,7 @@ void CL_QTVPoll (void)
 		else if (!strcmp(authmethod, "NONE"))
 		{
 			snprintf(connrequest, sizeof(connrequest),
-					"%s" "AUTH: NONE\nPASSWORD: \n\n", QTV_CL_HEADER(QTV_VERSION, QTV_EZQUAKE_EXT_NUM));
+					"%s" "AUTH: NONE\nPASSWORD: \n\n", QTV_CL_HEADER(QTV_VERSION, QTV_TKQUAKE_EXT_NUM));
 
 			VFS_WRITE(qtvrequest, connrequest, strlen(connrequest));
 
@@ -4401,7 +4406,7 @@ void CL_QTVList_f (void)
 	strlcpy(qtvpassword, Cmd_Argv(2), sizeof(qtvpassword));
 
 	// Send the version of QTV the client supports.
-	connrequest = QTV_CL_HEADER(QTV_VERSION, QTV_EZQUAKE_EXT_NUM);
+	connrequest = QTV_CL_HEADER(QTV_VERSION, QTV_TKQUAKE_EXT_NUM);
 	VFS_WRITE(newf, connrequest, strlen(connrequest));
 
 	// Get a source list from the server.
@@ -4717,7 +4722,7 @@ void CL_QTVPlay_f (void)
 	}
 
 	// Send a QTV request to the proxy.
-	connrequest = QTV_CL_HEADER(QTV_VERSION, QTV_EZQUAKE_EXT_NUM);
+	connrequest = QTV_CL_HEADER(QTV_VERSION, QTV_TKQUAKE_EXT_NUM);
 	VFS_WRITE(newf, connrequest, strlen(connrequest));
 
 	// If the user specified a specific stream such as "5@hostname:port"

@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_R_LIGHTMAPS_HEADER
-#define EZQUAKE_R_LIGHTMAPS_HEADER
+#ifndef TKQUAKE_R_LIGHTMAPS_HEADER
+#define TKQUAKE_R_LIGHTMAPS_HEADER
 
 void R_BuildLightmaps(void);
 qbool R_FullBrightAllowed(void);
@@ -31,4 +31,4 @@ struct msurface_s* R_DrawflatLightmapChain(int i);
 void R_ClearDrawflatLightmapChain(int i);
 void R_AddDrawflatChainSurface(struct msurface_s* surf, qbool floor);
 
-#endif // EZQUAKE_R_LIGHTMAPS_HEADER
+#endif // TKQUAKE_R_LIGHTMAPS_HEADER

@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_GL_TEXTURE_H
-#define EZQUAKE_GL_TEXTURE_H
+#ifndef TKQUAKE_GL_TEXTURE_H
+#define TKQUAKE_GL_TEXTURE_H
 
 #include "r_texture.h"
 #include "r_texture_internal.h"
@@ -43,4 +43,4 @@ void GL_SamplerSetLinear(unsigned int texture_unit_number);
 void GL_SamplerClear(unsigned int texture_unit_number);
 void GL_DeleteSamplers(void);
 
-#endif // EZQUAKE_GL_TEXTURE_H
+#endif // TKQUAKE_GL_TEXTURE_H

@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_GL_RPART_HEADER
-#define EZQUAKE_GL_RPART_HEADER
+#ifndef TKQUAKE_GL_RPART_HEADER
+#define TKQUAKE_GL_RPART_HEADER
 
 #include "r_sprite3d.h"
 #include "r_state.h"
@@ -160,4 +160,4 @@ void AddParticle(part_type_t type, vec3_t org, int count, float size, float time
 #define R_SIMPLETRAIL_MAXLENGTH    100
 #define R_SIMPLETRAIL_NEAR_ALPHA    75
 
-#endif // def(EZQUAKE_GL_RPART_HEADER)
+#endif // def(TKQUAKE_GL_RPART_HEADER)

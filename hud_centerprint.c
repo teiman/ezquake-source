@@ -38,8 +38,16 @@ static int   scr_center_lines;
 static int   scr_erase_lines;
 static int   scr_erase_center;
 
+static float show_mapname_time = 0;
+static void SCR_DrawCenterStringMapname(float x, float y, float scale, qbool proportional, float speed);
+
+
+
 void SCR_CenterPrint_Clear(void)
 {
+	//Reset showmapname before we do anything else
+	show_mapname_time = 0;
+
 	// Make sure no centerprint messages are left from previous level.
 	scr_centertime_off = 0;
 	memset(scr_centerstring_lines, 0, sizeof(scr_centerstring_lines));
@@ -125,6 +133,18 @@ static void SCR_DrawCenterString(float x, float y, float scale, qbool proportion
 	}
 }
 
+static void SCR_DrawCenterStringMapname(float x, float y, float scale, qbool proportional, float speed)
+{
+	float max_width = (sizeof(cl.levelname) - 1) * 8 * scale;
+
+	//not too small 
+	scale = max(scale, 0.1);
+
+	//Con_Printf("printing %s level\n", cl.levelname);
+	Draw_SStringAligned(x, y, cl.levelname, scale, 1.0f, proportional, text_align_center, x + max_width);
+}
+
+
 static qbool SCR_CheckDrawCenterString(void)
 {
 	scr_copytop = 1;
@@ -149,36 +169,116 @@ static qbool SCR_CheckDrawCenterString(void)
 	return true;
 }
 
+static char centeprint_obituary_message[2048];
+qbool centeprint_obituary_message_active = FALSE;
+
+
+
+void SCR_CenterprintObituary(char* c) {
+	int len = strlen(c);
+	if (len >= 2048)
+		return;
+
+	if (!len) { //fix possible error and let use the command to clear the message
+		centeprint_obituary_message_active = FALSE;
+		return;
+	}
+
+	centeprint_obituary_message_active = TRUE;
+
+	sprintf(centeprint_obituary_message, "%s", c);
+}
+
+
 void SCR_CenterString_Draw(void)
 {
 	float y;
 	float max_width;
 	float scale = 1.0f;
 	qbool proportional = false;
+	
 	extern cvar_t scr_newHud;
 	static cvar_t* hud_draw = NULL;
 
-	if (!SCR_CheckDrawCenterString()) {
-		return;
+	float efective_scale = 2;
+
+	if (SCR_CheckDrawCenterString()) {
+		if (hud_draw == NULL) {
+			hud_draw = Cvar_Find("hud_centerprint_show");
+		}
+
+		if (!(scr_newHud.integer > 0 && hud_draw && hud_draw->integer)) {
+			// shift all centerprint but not proxy menu - more user-friendly way
+			y = ((scr_center_lines <= 4) ? vid.height * 0.35 : 48);
+			if (m_state != m_proxy) {
+				y += scr_centershift.value * 8 * scale;
+			}
+			max_width = (sizeof(scr_centerstring_lines[0]) - 1) * 8 * scale;
+
+			SCR_DrawCenterString((vid.width - max_width) / 2, y, scale, proportional, max(scr_centerspeed.value, 1));
+		}
+	}else /* we don't show both at the same time because is ugly */ if (show_mapname_time && show_mapname_time > cl.time) {
+		y = ((scr_center_lines <= 4) ? vid.height * 0.35 : 48);
+		if (m_state != m_proxy) {
+			y += scr_centershift.value * 8 * efective_scale;
+		}
+		max_width = (sizeof(cl.levelname) - 1) * 8 * efective_scale;
+
+		SCR_DrawCenterStringMapname((vid.width - max_width) / 2, y, efective_scale, proportional, max(scr_centerspeed.value, 1));
+	}
+	else if(centeprint_obituary_message_active) {
+		
+		int local_centershift = 2;
+
+		efective_scale = 3;
+
+		y = ((scr_center_lines <= 4) ? vid.height * 0.35 : 48);	
+		y += local_centershift * 8 * efective_scale;
+		
+		max_width = (strlen(centeprint_obituary_message) - 1) * 8 * efective_scale;
+
+		float x = (vid.width - max_width) / 2;		
+
+
+		//float max_width = (sizeof(centeprint_obituary_message) - 1) * 8 * efective_scale;
+		
+		//Con_Printf("Showing obituary message\n");
+
+		Draw_SColoredStringBasic(x, y, centeprint_obituary_message, true, efective_scale, proportional);
+
+		
+		/*
+		Draw_SColoredStringBasic(x, y, "hola-normal", true, efective_scale, proportional);
+
+		Draw_SColoredStringBasic(0, y+5, "hola+5", true, efective_scale, proportional);
+		Draw_SColoredStringBasic(0, y+20, "hola+20", true, efective_scale, proportional);
+
+		Draw_SColoredStringBasic( ((int)cl.time) % 20, y + 30, "hola+30", true, efective_scale, proportional);
+		*/
+		
+
+		//clrinfo_t color;
+		//color.c = 0xFF0000FF;
+		//color.i = 1;
+		//Draw_SStringAlignedColor(x, y, centeprint_obituary_message, efective_scale, 1.0f, proportional, text_align_center, x + max_width, &color);
+		//Draw_SStringAligned(x, y, centeprint_obituary_message, efective_scale, 1.0f, proportional, text_align_center, x + max_width);
+		//Draw_SAlt_String(x, y, centeprint_obituary_message, efective_scale, false);
 	}
 
-	if (hud_draw == NULL) {
-		hud_draw = Cvar_Find("hud_centerprint_show");
-	}
+	
 
-	if (scr_newHud.integer > 0 && hud_draw && hud_draw->integer) {
-		return;
+	if (HUD_Stats(STAT_HEALTH) > 0) {
+		centeprint_obituary_message_active = FALSE;
 	}
-
-	// shift all centerprint but not proxy menu - more user-friendly way
-	y = ((scr_center_lines <= 4) ? vid.height * 0.35 : 48);
-	if (m_state != m_proxy) {
-		y += scr_centershift.value * 8 * scale;
-	}
-	max_width = (sizeof(scr_centerstring_lines[0]) - 1) * 8 * scale;
-
-	SCR_DrawCenterString((vid.width - max_width) / 2, y, scale, proportional, max(scr_centerspeed.value, 1));
 }
+
+
+void SCR_CenterPrintMapname() {
+	show_mapname_time = cl.time + 3;
+};
+
+
+
 
 void SCR_EraseCenterString(void)
 {
@@ -235,3 +335,4 @@ void CenterPrint_HudInit(void)
 		NULL
 	);
 }
+

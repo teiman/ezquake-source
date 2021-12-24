@@ -60,7 +60,7 @@ cvar_t		amf_inferno_trail = { "gl_inferno_trail", "2" };
 cvar_t		amf_inferno_speed = { "gl_inferno_speed", "1000" };
 
 cvar_t		cl_camera_tpp = { "cl_camera_tpp", "0" };
-cvar_t		amf_camera_chase_dist = { "cl_camera_tpp_distance", "-56" };
+cvar_t		amf_camera_chase_dist = { "cl_camera_tpp_distance", "-100" };
 cvar_t		amf_camera_chase_height = { "cl_camera_tpp_height", "24" };
 cvar_t		amf_camera_death = { "cl_camera_death", "0" }; // 1
 cvar_t		amf_nailtrail_water = { "gl_nailtrail_turb", "0" };

@@ -1,6 +1,6 @@
 #version 430
 
-#ezquake-definitions
+#tkquake-definitions
 
 layout(binding = 0) uniform sampler2D normal_texture;
 

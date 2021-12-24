@@ -1,6 +1,6 @@
 
-#ifndef EZQUAKE_R_BRUSHMODEL_SKY_HEADER
-#define EZQUAKE_R_BRUSHMODEL_SKY_HEADER
+#ifndef TKQUAKE_R_BRUSHMODEL_SKY_HEADER
+#define TKQUAKE_R_BRUSHMODEL_SKY_HEADER
 
 void GLC_SkyDrawChainedSurfaces(void);
 
@@ -16,4 +16,4 @@ void R_ClearSkyTextures(void);
 void R_LoadSky_f(void);
 extern qbool r_skyboxloaded;
 
-#endif // EZQUAKE_R_BRUSHMODEL_SKY_HEADER
+#endif // TKQUAKE_R_BRUSHMODEL_SKY_HEADER

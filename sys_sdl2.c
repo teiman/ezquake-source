@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2014-2016 ezQuake team 
+Copyright (C) 2014-2016 tkQuake team 
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL.h>
 
 cvar_t sys_yieldcpu = {"sys_yieldcpu", "0"};
-cvar_t sys_inactivesound = {"sys_inactivesound", "0", CVAR_ARCHIVE};
+cvar_t sys_inactivesound = {"sys_inactivesound", "1", CVAR_ARCHIVE};//Tei: defaulting to 1 since seems frienlier to streamer and windowborderless
 cvar_t sys_inactivesleep = {"sys_inactivesleep", "1"};
 cvar_t sys_disable_alt_enter = {"sys_disable_alt_enter", "0"};
 
@@ -55,7 +55,7 @@ static void Sys_BatteryInfo_f(void)
 
 void Sys_CvarInit(void)
 {
-	Cvar_SetCurrentGroup(CVAR_GROUP_SYSTEM_SETTINGS);
+	Cvar_SetCurrentGroup(CVAR_GROUP_SYSTEM_SETTINGS);                                                                                                         
 	Cvar_Register(&sys_yieldcpu);
 	Cvar_Register(&sys_inactivesound);
 	Cvar_Register(&sys_inactivesleep);

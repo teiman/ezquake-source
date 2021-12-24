@@ -249,6 +249,7 @@ void GLC_DrawSimpleItem(model_t* model, int skin, vec3_t org, float sprsize, vec
 void GLC_DrawSpriteModel(entity_t* e)
 {
 	vec3_t right, up;
+	vec3_t v_up;
 	mspriteframe_t *frame;
 	msprite2_t *psprite;
 	r_sprite3d_vert_t* vert;
@@ -260,23 +261,39 @@ void GLC_DrawSpriteModel(entity_t* e)
 
 	if (!frame || !R_TextureReferenceIsValid(frame->gl_texturenum))
 		return;
+	
+
+	//Con_Printf("Drawing sprite\n");
+	//Con_Printf("Drawing skinnum %d\n", e->skinnum);
+
+	//psprite->type = SPR_FACING_UPRIGHT;//Tei. hack test something
+	//psprite->type = 50;//Tei. hack test something
+		
+	//Tei: hack to force a type of render
+	if(e->skinnum){
+		psprite->type = e->skinnum;
+	}
 
 	if (psprite->type == SPR_ORIENTED) {
+		//Con_Printf("Old render\n");
 		// bullet marks on walls
 		AngleVectors(e->angles, NULL, right, up);
-	}
-	else if (psprite->type == SPR_FACING_UPRIGHT) {
+	} else if (psprite->type == SPR_FACING_UPRIGHT) {
 		VectorSet(up, 0, 0, 1);
 		right[0] = e->origin[1] - r_origin[1];
 		right[1] = -(e->origin[0] - r_origin[0]);
 		right[2] = 0;
 		VectorNormalizeFast(right);
-	}
-	else if (psprite->type == SPR_VP_PARALLEL_UPRIGHT) {
+	} 	else if (psprite->type == SPR_VP_PARALLEL_UPRIGHT) {
 		VectorSet(up, 0, 0, 1);
 		VectorCopy(vright, right);
-	}
-	else {	// normal sprite
+	} else if(psprite->type == SPR_TEI_TYPEHACK){
+		//Con_Printf("New render\n");		
+		e->renderfx|= RF_NOSHADOW;
+		e->renderfx|= RF_ALPHABLEND;		
+		e->alpha = 0.3;	
+		AngleVectors(e->angles, NULL, right, up);
+	}else{ 	// normal sprite
 		VectorCopy(vup, up);
 		VectorCopy(vright, right);
 	}

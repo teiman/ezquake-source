@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2018 ezQuake team.
+Copyright (C) 2018 tkQuake team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef EZQUAKE_GLM_VAO_HEADER
-#define EZQUAKE_GLM_VAO_HEADER
+#ifndef TKQUAKE_GLM_VAO_HEADER
+#define TKQUAKE_GLM_VAO_HEADER
 
 #include "gl_local.h"
 #include "r_vao.h"
@@ -36,4 +36,4 @@ void GLM_ConfigureVertexAttribIPointer(r_vao_id vao, r_buffer_id vbo, GLuint ind
 
 void GLM_BindVertexArrayElementBuffer(r_vao_id, r_buffer_id ref);
 
-#endif // EZQUAKE_GLM_VAO_HEADER
+#endif // TKQUAKE_GLM_VAO_HEADER

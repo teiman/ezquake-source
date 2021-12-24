@@ -1,6 +1,6 @@
 #version 120
 
-#ezquake-definitions
+#tkquake-definitions
 
 #ifdef DRAW_SKYBOX
 uniform samplerCube skyTex;
